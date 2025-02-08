@@ -9,5 +9,5 @@
 \contentsline {subsection}{\numberline {3.2}1) Which values of \( \Delta \) lead to higher regret?}{6}{subsection.3.2}%
 \contentsline {subsection}{\numberline {3.3}2) Relative performance of the two parametrizations}{7}{subsection.3.3}%
 \contentsline {section}{\numberline {4}Example of Policies in RiverSwim}{7}{section.4}%
-\contentsline {section}{\numberline {5}Policy Evaluation in RiverSwim}{7}{section.5}%
-\contentsline {section}{\numberline {6}Robbing Banks}{7}{section.6}%
+\contentsline {section}{\numberline {5}Policy Evaluation in RiverSwim}{8}{section.5}%
+\contentsline {section}{\numberline {6}Robbing Banks}{8}{section.6}%

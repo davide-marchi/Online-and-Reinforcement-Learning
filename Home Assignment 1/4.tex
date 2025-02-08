@@ -1,0 +1,50 @@
+\subsection*{Part 1}
+
+We classify the given policies into one of the four policy classes: 
+\(\Pi^{SD}\) (stationary deterministic), \(\Pi^{SR}\) (stationary randomized), 
+\(\Pi^{HD}\) (history-dependent deterministic), and \(\Pi^{HR}\) (history-dependent randomized). 
+
+\begin{enumerate}
+    \item[\textbf{(i)}] \(\pi_a\): Swim to the right if the current state is not 1; otherwise, swim to the left.
+    
+    \textbf{Analysis:} This policy depends only on the current state, meaning it is \textbf{stationary}. Furthermore, it selects actions deterministically (without randomness). 
+    
+    \textbf{Conclusion:} \(\pi_a \in \Pi^{SD}\).
+
+    \item[\textbf{(ii)}] \(\pi_b\): If the time slot \(t\) is an even integer, swim to the right; otherwise, flip a fair coin and swim right (resp. left) if the outcome is ‘Head’ (resp. ‘Tail’).
+
+    \textbf{Analysis:} Since the decision process explicitly depends on \(t\), the policy is \textbf{history-dependent}. Additionally, since the agent flips a coin on odd time steps, it involves randomness. 
+
+    \textbf{Conclusion:} \(\pi_b \in \Pi^{HR}\) (history-dependent randomized).
+    
+    \item[\textbf{(iii)}] \(\pi_c\): At \(t=1\), swim to the left. For \(t>1\), swim to the right if the index of the previous state is odd; otherwise, swim to the left.
+
+    \textbf{Analysis:} The decision process depends on both the time step \(t\) and the previous state, meaning the policy is \textbf{history-dependent}. However, it does not involve randomness.
+
+    \textbf{Conclusion:} \(\pi_c \in \Pi^{HD}\) (history-dependent deterministic).
+
+    \item[\textbf{(iv)}] \(\pi_d\): Flip a fair coin. If the outcome is ‘Head’ and the current state is either \(L-1\) or \(L\), then swim to the right; otherwise, swim to the left.
+
+    \textbf{Analysis:} The decision depends only on the current state, meaning it is \textbf{stationary}. However, since it involves coin flips, it is a \textbf{randomized} policy.
+
+    \textbf{Conclusion:} \(\pi_d \in \Pi^{SR}\) (stationary randomized).
+
+    \item[\textbf{(v)}] \(\pi_e\): If it rains, swim to the right; otherwise, swim to the left. (Raining is independent of the agent’s swimming direction and position.)
+
+    \textbf{Analysis:} The decision at each time step depends only on the current state and an external random variable (whether it rains). Since rain is independent of past history, the policy is \textbf{stationary} but \textbf{randomized}.
+
+    \textbf{Conclusion:} \(\pi_e \in \Pi^{SR}\) (stationary randomized).
+
+\end{enumerate}
+
+\subsection*{Part 2}
+
+We construct an example of a history-dependent deterministic policy in RiverSwim that is not stationary. The proposed policy is:
+
+\begin{quote}
+\textit{Swim two times to the right, then rest for one step by following the current and actively swimming to the left. Repeat this pattern indefinitely.}
+\end{quote}
+
+\textbf{Analysis:} The policy follows a structured cycle (right-right-rest) based on past actions, meaning it is \textbf{history-dependent}. Since the decision at any given step is fully determined by the policy’s rule, it is \textbf{deterministic}.
+
+\textbf{Conclusion:} This policy belongs to \(\Pi^{HD}\) (history-dependent deterministic).
