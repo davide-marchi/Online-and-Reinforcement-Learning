@@ -1,0 +1,47 @@
+Exercise 5.1 (Find an online learning problem from real life). Find two examples of real life problems
+that fit into the online learning framework (online, not reinforcement!). For each of the two examples
+explain what is the set of actions an algorithm can take, what are the losses (or rewards) and what is the
+range of the losses/rewards, whether the problem is stateless or contextual, and whether the problem is
+i.i.d. or adversarial, and with full information or bandit feedback
+
+Post Recommendation on Social Media
+
+Deciding in real time which article or advertisement to display to a user.
+
+Actions:
+The algorithm chooses one item (news article or ad) from a finite set of options.
+
+Reward:
+1 if the user clicks on the suggested content, 0 if the user does not (range [0, 1]).
+In more sophisticated systems, the reward could be based on the time spent by the user on the suggested content.
+
+Stateless vs. Contextual:
+In the simplest implementation, it could be stateless, basing recommendations exclusively on the outcomes of previous interactions.
+However, in actual implementations, it is contextual, as the algorithm considers the user's profile and related information.
+
+Environment (i.i.d. vs. Adversarial):
+While an idealized model might assume users arrive from an i.i.d. process, real-world user behavior is often adversarial (or non-stationary) as preferences and trends shift over time.
+
+Feedback:
+The feedback is bandit feedback; the algorithm only observes the outcome (click or no click) for the displayed item, not for all items in the set.
+
+---
+
+Pricing of Products Over Time
+
+Set of Actions:
+Each day, the algorithm can change the price of a product, selecting from a fixed number of price options.
+
+Reward:
+The reward is defined as the profit obtained at the end of the day, which is the revenue from sales minus the cost of production.
+The range of the reward is (0, +∞) since we assume that none of the prices are lower than the production cost.
+
+Stateless vs. Contextual:
+The problem could be considered stateless if the algorithm only considers the prices and profits of the previous days.
+
+Environment (i.i.d. vs. Adversarial):
+The environment could be considered i.i.d. if the demand for the product remains constant over time.
+However, in reality, it is adversarial, as demand can change over time, especially for products that are not purchased repeatedly.
+
+Feedback Type:
+The feedback in dynamic pricing is of the bandit type, as the algorithm only observes the reward for the chosen action (applied price).
