@@ -1,0 +1,143 @@
+Exercise 5.2 (Follow The Leader (FTL) algorithm for i.i.d. full information games). Follow the leader
+(FTL) is a playing strategy that at round t plays the action that was most successful up to round t (“the
+leader”). Derive a bound for the pseudo regret of FTL in i.i.d. full information games with K possible
+actions and outcomes bounded in the [0, 1] interval (you can work with rewards or losses, as you like).
+
+\subsection*{1.\ Algorithm (FTL)}
+
+\begin{itemize}
+\item \textbf{Initialization:} At round $t=1$, pick any action (or pick each action once if you prefer to break ties).
+\item \textbf{For each round $t \ge 2$:}
+  \begin{enumerate}
+  \item Compute the empirical average reward \(\hat{\mu}_{t-1}(a)\) of each action \(a\) based on \emph{all past observations} of that action:
+  \[
+    \hat{\mu}_{t-1}(a)
+    \;=\;
+    \frac{1}{t-1} \sum_{s=1}^{t-1} X_s(a),
+  \]
+  where \(X_s(a)\) is the reward of action \(a\) at round $s$.  
+  \item Play the action
+  \[
+    A_t \;=\; \arg\max_{a} \; \hat{\mu}_{t-1}(a).
+  \]
+  \item Break ties arbitrarily if needed.
+  \end{enumerate}
+\end{itemize}
+
+Because we are in a \emph{full-information} setting, each round's reward for \emph{all} actions is observed, not only the one played.
+
+\subsection*{2.\ Notation and Goal}
+
+\begin{itemize}
+\item Let $\mu(a)$ be the true expected reward of action $a$.
+\item Let $a^*$ be an optimal action, \emph{i.e.},
+  \[
+    \mu(a^*) \;=\; \max_{a} \mu(a).
+  \]
+\item Define the \emph{gap} for a suboptimal action \(a\neq a^*\) by
+  \[
+    \Delta(a) \;=\; \mu(a^*) \;-\; \mu(a) \;>\; 0.
+  \]
+\item The \emph{pseudo-regret} over $T$ rounds is
+  \[
+    R_T
+    \;=\;
+    \sum_{t=1}^T \Bigl[\mu(a^*) - \mu(A_t)\Bigr].
+  \]
+  We aim to bound $R_T$.
+\end{itemize}
+
+\subsection*{3.\ Key Event: Picking a Suboptimal Action}
+
+For a single suboptimal action $a \neq a^*$, FTL picks $a$ at round $t$ if and only if
+\[
+  \hat{\mu}_{t-1}(a)
+  \;\ge\;
+  \hat{\mu}_{t-1}(a^*).
+\]
+Because the rewards are i.i.d.\ \emph{and} we have full information, each $\hat{\mu}_{t-1}(a)$ is the average of $(t-1)$ i.i.d.\ samples with mean $\mu(a)$.  Subtracting $\hat{\mu}_{t-1}(a^*)$ from $\hat{\mu}_{t-1}(a)$ yields:
+\[
+  \hat{\mu}_{t-1}(a) - \hat{\mu}_{t-1}(a^*)
+  \;=\;
+  \bigl[\hat{\mu}_{t-1}(a) - \mu(a)\bigr]
+  -
+  \bigl[\hat{\mu}_{t-1}(a^*) - \mu(a^*)\bigr]
+  -
+  \Delta(a).
+\]
+Hence the event $\{\hat{\mu}_{t-1}(a) \ge \hat{\mu}_{t-1}(a^*)\}$ implies
+\[
+  \hat{\mu}_{t-1}(a) - \mu(a)
+  \;\;\ge\;\;
+  \bigl[\hat{\mu}_{t-1}(a^*) - \mu(a^*)\bigr]
+  \;+\;
+  \Delta(a).
+\]
+This sort of ``overtaking'' event becomes very unlikely once $t$ grows, by standard concentration inequalities.
+
+\subsection*{4.\ Bounding the Probability of Overtaking}
+
+Using Hoeffding's (or Chernoff) bound for $[0,1]$-valued i.i.d.\ rewards, we have: if $\hat{\mu}_n(a)$ is the empirical average of $n$ i.i.d.\ samples with mean $\mu(a)$, then for any $\epsilon > 0$,
+\[
+  \mathbb{P}\bigl(\hat{\mu}_n(a) - \mu(a) \;\ge\; \epsilon\bigr)
+  \;\;\le\;\;
+  \exp\bigl(-2\,n\,\epsilon^2\bigr).
+\]
+Applying this to both $\hat{\mu}_{t-1}(a)$ and $\hat{\mu}_{t-1}(a^*)$ leads to a bound of the form
+\[
+  \mathbb{P}\Bigl[\hat{\mu}_{t-1}(a) \;\ge\; \hat{\mu}_{t-1}(a^*)\Bigr]
+  \;\;\le\;\;
+  \exp\!\bigl(-c \,(t-1)\,\Delta(a)^2\bigr)
+\]
+for some positive constant $c$.  Because these probabilities decay exponentially in $t$, the expected number of times a suboptimal arm ``overtakes'' the optimal one is finite.
+
+\subsection*{5.\ Summing Over $t$: Finite Number of Mistakes}
+
+Summing $\exp(-c(t-1)\Delta(a)^2)$ from $t=1$ to $\infty$ gives a convergent geometric series.  Hence, \emph{in expectation}, each suboptimal arm $a \ne a^*$ is chosen only a finite (constant) number of times (with respect to $T$).  That is, for each $a \ne a^*$,
+\[
+  \mathbb{E}[\,N_T(a)\,]
+  \;\le\;
+  \text{(some constant depending on $\Delta(a)$ but not on $T$)}.
+\]
+Since each time we pick $a\neq a^*$ we suffer regret $\Delta(a)$, the total regret from arm $a$ is at most
+\[
+  \Delta(a)\,\mathbb{E}[\,N_T(a)\,],
+\]
+which remains constant in $T$.  Summing over all suboptimal arms concludes the argument.
+
+\subsection*{6.\ Final Regret Bound}
+
+Overall, because each suboptimal arm is played only a constant (in $T$) number of times in expectation,
+\[
+  R_T 
+  \;=\;
+  \sum_{t=1}^T [\mu(a^*) - \mu(A_t)]
+  \;\le\;
+  \sum_{a:\,\Delta(a)>0}
+  \bigl[\text{constant depending on $\Delta(a)$}\bigr].
+\]
+Hence $R_T$ is $O(1)$ in $T$.  Concretely, a typical form is
+\[
+  R_T
+  \;\le\;
+  \sum_{a:\,\Delta(a)>0}
+  \left(
+    \frac{\text{constant}}{\Delta(a)^2}
+  \right)\Delta(a)
+  \;=\;
+  \sum_{a:\,\Delta(a)>0}\!\!
+  \left(\text{constant factor}\right),
+\]
+confirming that \emph{the regret does not grow with $T$}.
+
+\subsection*{7.\ Comparison with Bandits}
+
+In the \emph{full-information} case, we observe rewards of all actions each round, leading to fast (exponential) concentration of their empirical means.  Thus, FTL effectively ``locks onto'' the optimal action and stops making mistakes.  
+
+In contrast, in the \emph{bandit} setting, one only observes the reward of the \emph{played} arm, which forces explicit exploration.  The regret then typically grows \emph{logarithmically} with $T$, rather than staying constant.
+
+\bigskip
+
+\noindent\textbf{Summary:} In the i.i.d.\ full-information setting, Follow the Leader has a \emph{constant} (in $T$) regret bound, unlike the bandit setting where regret grows at least on the order of $\log T$.
+
+\end{document}
