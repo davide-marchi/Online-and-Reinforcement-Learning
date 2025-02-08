@@ -1,12 +1,21 @@
 # Fdb version 4
-["pdflatex"] 1739036802.6543 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL Template.tex" "OReL Template.pdf" "OReL Template" 1739036803.96012 0
+["bibtex OReL Template"] 0 "OReL Template.aux" "OReL Template.bbl" "OReL Template" 1739052626.52883 0
+  "OReL Template.aux" 0 -1 0 "pdflatex"
+  "bibliography.bib" 0 -1 0 ""
+  (generated)
+  "OReL Template.bbl"
+  "OReL Template.blg"
+  (rewritten before read)
+["pdflatex"] 1739052624.65719 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL Template.tex" "OReL Template.pdf" "OReL Template" 1739052626.52963 0
   "1.tex" 1739035423 2940 484183d040a6086e91ecb61dae96cd89 ""
-  "2.tex" 1739036800 4980 8aab3477c53597d0113811a8ae87ea1d ""
-  "OReL Template.aux" 1739036803 952 5f029042b311430896d235b982fbbebb "pdflatex"
-  "OReL Template.out" 1739036803 1163 720993a5fcb8f954546522b359167888 "pdflatex"
-  "OReL Template.tex" 1739034226 1992 7d0d7ea8721df9a4b5ff0cd91cf146cc ""
-  "OReL Template.toc" 1739036803 544 9c8819e433b0d18a9e70bbd8bfb52dac "pdflatex"
-  "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL Template.tex" 1739034226 1992 7d0d7ea8721df9a4b5ff0cd91cf146cc ""
+  "2.tex" 1739052267 4960 c889f254f5670b01b53ff7e78b541bb7 ""
+  "3.tex" 1739052623 3103 46570d2197232e41b5b4d387b68716fc ""
+  "OReL Template.aux" 1739052625 2094 db2f62adaef781665f5a5a262a574961 "pdflatex"
+  "OReL Template.bbl" 0 -1 0 "bibtex OReL Template"
+  "OReL Template.out" 1739052625 2680 2dc0ff44e2bcc688cdcc1b3648941997 "pdflatex"
+  "OReL Template.tex" 1739052278 2002 a000982e60d8387cc98d177902218034 ""
+  "OReL Template.toc" 1739052625 1194 ceed4220097699b50e8d5d6c96bbbc67 "pdflatex"
+  "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL Template.tex" 1739052278 2002 a000982e60d8387cc98d177902218034 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1739027330 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1739028126 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1739027782 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -18,9 +27,11 @@
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm" 1739026672 908 2921f8a10601f252058503cc6570e581 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm" 1739026672 940 75ac932a52f80982a9f8ea75d03a34cf ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm" 1739026672 940 228d6584342e91276bf566bcf9716b83 ""
+  "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1739027322 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1739027322 1324 c910af8c371558dc20f2d7822f66fe64 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm" 1739027322 1332 f817c21a1ba54560425663374f1b651a ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm" 1739027322 1344 8a0be4fe4d376203000810ad4dc81558 ""
+  "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm" 1739027322 1336 3125ccb448c1a09074e3aa4a9832f130 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm" 1739027322 1332 1fde11373e221473104d6cc5993f046e ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmex10.tfm" 1739027322 992 662f679a0b3d2d53c1b94050fdaa3f50 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm" 1739027322 1524 4414a8315f39513458b80dfc63bff03a ""
@@ -115,6 +126,7 @@
   "c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1739031613 5512124 2cf941ede77dae451992032562f7b65f ""
   "c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1739031871 3352881 067f38756de2c60ba1c16cb498e4bea9 ""
   "c:/texlive/2024/texmf.cnf" 1739031586 713 e69b156964470283e0530f5060668171 ""
+  "plots.png" 1739044373 94261 d0ae29e7957978d332fe93be3387b4df ""
   (generated)
   "OReL Template.aux"
   "OReL Template.log"

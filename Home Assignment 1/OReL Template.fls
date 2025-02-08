@@ -211,6 +211,16 @@ INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
+INPUT ./3.tex
+INPUT ./3.tex
+INPUT 3.tex
+INPUT ./plots.png
+INPUT ./plots.png
+INPUT ./plots.png
+INPUT ./plots.png
+INPUT ./plots.png
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm
 INPUT OReL Template.aux
 INPUT ./OReL Template.out
 INPUT ./OReL Template.out
