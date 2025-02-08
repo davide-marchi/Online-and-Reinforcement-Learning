@@ -2,73 +2,67 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def bernoulli_sample(p):
-    """Draw a Bernoulli( p ) sample, returning 0 or 1."""
+    # quick helper func for bernoulli trials - returns 0 or 1
     return 1 if (np.random.rand() < p) else 0
 
 def run_ucb(T, means, version='original'):
     """
-    Run one trial of a two-armed bandit for T steps using either:
-      - version='original': the standard UCB1 from Section 5.3
-      - version='modified': the improved UCB from Exercise 5.5
-    means = [mean_arm0, mean_arm1] are the Bernoulli parameters for arms 0 and 1.
+    Running the bandit stuff here. Two versions:
+    - normal UCB1 (the one from lecture)
+    - modified one from exercise 5.5 (slightly different bonus term)
     
-    Returns:
-      regrets: array of length T, where regrets[t] = cumulative pseudo-regret at time t+1
-               (i.e. sum_{s=1..t+1} Delta(A_s), using Delta(arm) = mu(a^*) - mu(arm)).
+    means = probabilities for each arm
+    returns the regrets over time - need this for plotting later
     """
     n_arms = 2
-    # Identify the best arm by maximum mean
+    # figure out which arm is the best one
     best_arm = np.argmax(means)
-    # The gap Delta(a) = mu(best_arm) - mu(a)
+    # calculate how much worse each arm is compared to the best one
     gap = [means[best_arm] - means[a] for a in range(n_arms)]
     
-    # Tracking counts and average rewards
-    counts = np.zeros(n_arms, dtype=int)
-    values = np.zeros(n_arms)  # empirical mean rewards
+    # keeping track of stuff
+    counts = np.zeros(n_arms, dtype=int)  # how many times we pulled each arm
+    values = np.zeros(n_arms)  # running average rewards
     
     regrets = np.zeros(T)
     cumulative_regret = 0.0
     
-    # --- Initialization: play each arm once to get non-zero counts ---
+    # gotta pull each arm once at the start (can't divide by zero)
     for a in range(n_arms):
         reward = bernoulli_sample(means[a])
         counts[a] = 1
         values[a] = reward
-        # Pseudo-regret update
-        cumulative_regret += gap[a]
+        cumulative_regret += gap[a]  # add up the regret
         regrets[a] = cumulative_regret
     
-    # Main loop
+    # main loop - this is where the magic happens
     for t in range(n_arms, T):
-        # Current time index is t+1 in 1-based
-        current_time = t + 1
+        current_time = t + 1  # t starts at 0 but formulas need t >= 1
         
-        # Compute UCB indices
+        # calculate UCB scores for each arm
         ucb_values = np.zeros(n_arms)
         for a in range(n_arms):
-            # Empirical mean
             avg_reward = values[a]
-            # Confidence radius depends on version
+            # here's where the two versions differ:
             if version == 'original':
-                # E.g. standard UCB1 from sec.5.3 with sqrt(1.5 ln t / N).
+                # this is the one from class with sqrt(1.5 ln t / N)
                 bonus = np.sqrt(1.5 * np.log(current_time) / counts[a])
             else:
-                # 'modified' version from exercise 5.5, with sqrt(ln t / N)
+                # modified version - just removed the 1.5 factor
                 bonus = np.sqrt(np.log(current_time) / counts[a])
             ucb_values[a] = avg_reward + bonus
         
-        # Choose the arm that maximizes the UCB index
+        # pick the arm with highest UCB score
         chosen_arm = np.argmax(ucb_values)
         
-        # Get the Bernoulli reward
+        # pull the arm and see what happens
         reward = bernoulli_sample(means[chosen_arm])
         
-        # Update counts and values
+        # update our stats
         counts[chosen_arm] += 1
-        # Incremental update of average
-        values[chosen_arm] += (reward - values[chosen_arm]) / counts[chosen_arm]
+        values[chosen_arm] += (reward - values[chosen_arm]) / counts[chosen_arm]  # running average update
         
-        # Update pseudo-regret
+        # keep track of regret
         cumulative_regret += gap[chosen_arm]
         regrets[t] = cumulative_regret
     
@@ -76,26 +70,25 @@ def run_ucb(T, means, version='original'):
 
 def run_experiment(T=100000, n_runs=20):
     """
-    Runs the experiment for Delta in {1/4, 1/8, 1/16}, both versions of UCB,
-    each repeated n_runs times, and produces comparison plots.
+    testing both UCB versions with different gaps (Delta)
+    running each combo multiple times to get averages
     """
-    deltas = [1/4, 1/8, 1/16]
+    deltas = [1/4, 1/8, 1/16]  # different gaps to test
     
-    # Prepare figure with one subplot per Delta
+    # setting up the plots - one for each delta
     fig, axes = plt.subplots(1, len(deltas), figsize=(18, 5))
     
-    # For consistent line colors/symbols
+    # just to keep colors consistent
     versions = ['original', 'modified']
     colors = ['red', 'blue']
     
     for idx, Delta in enumerate(deltas):
-        # Means for the two arms: arm0 is best
-        mu_arm0 = 0.5 + 0.5*Delta  # best arm
+        # set up the arms - arm0 is always the best one
+        mu_arm0 = 0.5 + 0.5*Delta
         mu_arm1 = 0.5 - 0.5*Delta
         means = [mu_arm0, mu_arm1]
         
-        # We'll store regrets across runs, for each version
-        # shape = (2 versions, n_runs, T)
+        # store results for all runs
         all_regrets = np.zeros((2, n_runs, T))
         
         for v, version in enumerate(versions):
@@ -103,17 +96,17 @@ def run_experiment(T=100000, n_runs=20):
                 regrets = run_ucb(T, means, version=version)
                 all_regrets[v, r, :] = regrets
         
-        # Compute mean and std over runs
+        # calculate stats across runs
         mean_regrets = np.mean(all_regrets, axis=1)
         std_regrets = np.std(all_regrets, axis=1)
         
-        # Plot
+        # make it pretty
         ax = axes[idx]
         x_vals = np.arange(1, T+1)
         for v, version in enumerate(versions):
             ax.plot(x_vals, mean_regrets[v],
                     label=f"{version} UCB", color=colors[v])
-            # Shaded area for +/- 1 std
+            # add those nice shaded confidence intervals
             ax.fill_between(x_vals,
                             mean_regrets[v] - std_regrets[v],
                             mean_regrets[v] + std_regrets[v],
@@ -128,5 +121,5 @@ def run_experiment(T=100000, n_runs=20):
     plt.show()
 
 if __name__ == "__main__":
-    # Run everything in one go
+    # let's run this thing
     run_experiment(T=100000, n_runs=20)
