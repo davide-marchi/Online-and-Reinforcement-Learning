@@ -2,3 +2,5 @@
 \contentsline {subsection}{\numberline {1.1}Post Recommendation on Social Media}{1}{subsection.1.1}%
 \contentsline {subsection}{\numberline {1.2}Pricing of Products Over Time}{2}{subsection.1.2}%
 \contentsline {section}{\numberline {2}Follow The Leader (FTL) algorithm for i.i.d.~full information games}{2}{section.2}%
+\contentsline {paragraph}{Regret definition.}{4}{section*.6}%
+\contentsline {paragraph}{Geometric series.}{4}{section*.7}%
