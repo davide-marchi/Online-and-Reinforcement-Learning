@@ -1,11 +1,11 @@
 \subsection*{Setting}
 
 \begin{itemize}
-\item We have \textbf{two actions}, $a^*$ and $a$, with rewards in $[0,1]$.
+\item We have \textbf{two actions}, $a^*$ and $a$, each with rewards in $[0,1]$.
 \item The rewards for each action are \emph{i.i.d.\ across rounds}, and \emph{fully observed} each round.
 \item Let $\mu(a)$ be the true expected reward of action $a$.  Without loss of generality, let
 \[
-  a^* \;=\;\arg\max_{a} \,\mu(a).
+  a^* \;=\;\arg\max_{a}\;\mu(a).
 \]
 \item Define the \emph{gap} of the suboptimal arm by
 \[
@@ -20,7 +20,7 @@
 \subsection*{Algorithm:\; Follow the Leader (FTL)}
 
 \begin{itemize}
-\item \textbf{Initialization:} In the very first round(s), you may pick any arm(s).  
+\item \textbf{Initialization:} In the very first round(s), you may pick either (or both) arms arbitrarily.
 \item \textbf{At each round $t \ge 2$:}
   \begin{enumerate}
   \item For each arm $b \in \{a,a^*\}$, compute its \emph{empirical mean} based on \emph{all} observed rewards of $b$ so far:
@@ -32,42 +32,98 @@
   where $X_s(b)$ is the reward observed for arm $b$ at round $s$.
   \item \emph{Choose} the arm whose empirical mean is larger:
   \[
-    A_t \;=\; \arg\max_{b \in \{a,a^*\}} \;\hat{\mu}_{t-1}(b).
+    A_t 
+    \;=\; 
+    \arg\max_{b \in \{a,a^*\}} \;\hat{\mu}_{t-1}(b).
   \]
   \end{enumerate}
 \end{itemize}
-Because this is a \textbf{full-information} setting, we observe $X_t(a)$ and $X_t(a^*)$ for both arms at every round $t$, not just the chosen one.
+Because this is a \textbf{full-information} setting, at round~$t$ we observe \emph{both} $X_t(a)$ and $X_t(a^*)$, not just the chosen one.
 
-\subsection*{Key Idea:\; Probability of Confusion}
+\subsection*{Key Idea:\; Probability of Picking the Wrong Arm}
 
-Let us define the event
+Define the event
 \[
+  E_t 
+  \;=\;
   \bigl\{\text{``FTL picks the suboptimal arm $a$ at round $t$''}\bigr\}
-  \quad\Longleftrightarrow\quad
+  \;\;\Longleftrightarrow\;\;
   \bigl\{\,\hat{\mu}_{t-1}(a) \;\ge\;\hat{\mu}_{t-1}(a^*)\bigr\}.
 \]
-Because $\Delta = \mu(a^*) - \mu(a) > 0,$ the only way for $\hat{\mu}_{t-1}(a)$ to overtake $\hat{\mu}_{t-1}(a^*)$ is if
+Because $\Delta = \mu(a^*) - \mu(a) > 0,$ if $\hat{\mu}_{t-1}(a) \ge \hat{\mu}_{t-1}(a^*)$, then
 \[
-   \bigl[\hat{\mu}_{t-1}(a) - \mu(a)\bigr]
-   \;\;-\;\;
-   \bigl[\hat{\mu}_{t-1}(a^*) - \mu(a^*)\bigr]
-   \;\;\ge\;\;\Delta.
+   \hat{\mu}_{t-1}(a) 
+   \;-\;
+   \hat{\mu}_{t-1}(a^*)
+   \;\;\ge\;\;0,
 \]
-By Hoeffding's inequality (for $[0,1]$-bounded i.i.d.\ samples),
+which can be rewritten as
 \[
-  \mathbb{P}\Bigl(\hat{\mu}_{n}(b) - \mu(b)\;\ge\;\epsilon\Bigr)
-  \;\le\;
-  \exp\bigl(-2\,n\,\epsilon^2\bigr),
+  \bigl[\hat{\mu}_{t-1}(a) - \mu(a)\bigr]
+  \;-\;
+  \bigl[\hat{\mu}_{t-1}(a^*) - \mu(a^*)\bigr]
+  \;\;\ge\;\;\Delta.
 \]
-one sees that
+Let us denote 
 \[
-  \mathbb{P}\!\Bigl(\hat{\mu}_{t-1}(a)\;\ge\;\hat{\mu}_{t-1}(a^*)\Bigr)
-  \;\le\;
-  \exp\bigl(-c\,(t-1)\,\Delta^2\bigr)
+  U \;=\;\hat{\mu}_{t-1}(a) - \mu(a), 
   \quad
-  \text{for some constant }c>0.
+  V \;=\;\hat{\mu}_{t-1}(a^*) - \mu(a^*).
 \]
-We will sometimes refer to this as the \emph{probability of confusion} at round~$t$.
+Then the above condition is $U - V \;\ge\; \Delta$.  
+
+\paragraph{Applying Hoeffding's inequality twice.}
+Since $U$ and $V$ are averages of $(t-1)$ i.i.d.\ $[0,1]$-bounded samples (one set for each arm), Hoeffding's inequality says:
+\[
+  \mathbb{P}\bigl(U \;\ge\; x\bigr)
+  \;\le\;
+  \exp\bigl(-2\,(t-1)\,x^2\bigr),
+  \quad
+  \mathbb{P}\bigl(V \;\le\; -y\bigr)
+  \;=\;
+  \mathbb{P}\bigl(-\,V \;\ge\; y\bigr)
+  \;\le\;
+  \exp\bigl(-2\,(t-1)\,y^2\bigr).
+\]
+Now, for $U - V \;\ge\;\Delta$ to hold, at least one of the following must happen:
+\[
+  U \;\ge\; \tfrac{\Delta}{2}
+  \quad\text{or}\quad
+  -\,V \;\ge\;\tfrac{\Delta}{2}.
+\]
+Thus, by the union bound,
+\[
+  \mathbb{P}\!\bigl(U - V \;\ge\;\Delta\bigr)
+  \;\le\;
+  \mathbb{P}\!\Bigl(U \;\ge\; \tfrac{\Delta}{2}\Bigr)
+  \;+\;
+  \mathbb{P}\!\Bigl(-\,V \;\ge\;\tfrac{\Delta}{2}\Bigr).
+\]
+Using Hoeffding on each term separately gives something like
+\[
+  \mathbb{P}\!\Bigl(U \;\ge\; \tfrac{\Delta}{2}\Bigr)
+  \;\le\;
+  \exp\bigl(-2\,(t-1)\,(\tfrac{\Delta}{2})^2\bigr)
+  \;=\;
+  \exp\bigl(-\tfrac{(t-1)\,\Delta^2}{2}\bigr),
+\]
+and the same for $-V \ge \tfrac{\Delta}{2}$.  Hence
+\[
+  \mathbb{P}\!\bigl(U - V \;\ge\;\Delta\bigr)
+  \;\le\;
+  2 \,\exp\bigl(-\tfrac{(t-1)\,\Delta^2}{2}\bigr).
+\]
+We can then absorb the factor of $2$ into a constant $c>0$ and write
+\[
+  \mathbb{P}\Bigl(\hat{\mu}_{t-1}(a) \;\ge\;\hat{\mu}_{t-1}(a^*)\Bigr)
+  \;=\;
+  \mathbb{P}\bigl(U - V \;\ge\;\Delta\bigr)
+  \;\le\;
+  \exp\bigl(-\,c\,(t-1)\,\Delta^2\bigr),
+\]
+for an appropriate $c>0$.  
+
+This is the \emph{probability of confusion} at round~$t$.
 
 \subsection*{Bounding the Regret}
 
@@ -77,9 +133,9 @@ The (pseudo-)regret is
   R_T
   \;=\;
   \sum_{t=1}^T
-  \bigl[\mu(a^*) \;-\;\mu(A_t)\bigr].
+  \Bigl[\mu(a^*) \;-\;\mu(A_t)\Bigr].
 \]
-Since $A_t\in\{a,a^*\}$, the only time we incur regret $\Delta>0$ is precisely when $A_t=a$.  Thus,
+Since $A_t \in \{\,a,\,a^*\!\}$, the only time we incur regret $\Delta>0$ is precisely when $A_t=a$.  Thus,
 \[
   R_T
   \;=\;
@@ -95,11 +151,11 @@ Taking expectation,
   \Delta \,\sum_{t=1}^T
   \mathbb{P}\!\Bigl(\hat{\mu}_{t-1}(a)\;\ge\;\hat{\mu}_{t-1}(a^*)\Bigr).
 \]
-Using the exponential bound from above, define
+Using the exponential bound, let us define
 \[
   \delta(t)
   \;=\;
-  \exp\bigl(-c\,(t-1)\,\Delta^2\bigr).
+  \exp\bigl(-\,c\,(t-1)\,\Delta^2\bigr).
 \]
 Hence,
 \[
@@ -109,18 +165,18 @@ Hence,
 \]
 
 \paragraph{Geometric series.}
-Note that $\sum_{t=1}^\infty \exp(-c\,(t-1)\,\Delta^2)$ converges (it is a geometric series).  Concretely,
+Note that $\sum_{t=1}^\infty \delta(t)$ converges, since
 \[
   \sum_{t=1}^\infty
-  \exp\bigl(-c\,(t-1)\,\Delta^2\bigr)
+  \exp\bigl(-\,c\,(t-1)\,\Delta^2\bigr)
   \;=\;
   \frac{1}{1 - e^{-\,c\,\Delta^2}}
   \;<\;\infty.
 \]
-Hence there is a constant $C(\Delta)$ such that
+So there is a constant $C(\Delta)$ such that
 \[
   \sum_{t=1}^T
-  \exp\bigl(-c\,(t-1)\,\Delta^2\bigr)
+  \delta(t)
   \;\le\;
   C(\Delta),
   \quad
@@ -132,28 +188,28 @@ Multiplying by $\Delta$,
   \;\le\;
   \Delta \,C(\Delta).
 \]
-That is, \emph{the total expected regret} remains \textbf{bounded} by a constant with respect to~$T$.
+Therefore, \emph{the total expected regret} remains \textbf{bounded} by a constant with respect to~$T$.
 
 \subsection*{Final Statement of the Bound}
 
-Because FTL eventually ``locks onto'' the better arm (and stays there with high probability), we conclude
+Because FTL eventually ``locks onto'' the better arm and almost never picks the suboptimal one again after some finite time, we conclude
 \[
   R_T
   \;=\;
   O(1)
-  \quad\text{as}\;T\to\infty.
+  \quad\text{as }T\to\infty.
 \]
-A more explicit expression for the constant bound is
+An explicit version of the constant bound is
 \[
   \mathbb{E}[\,R_T\,]
   \;\le\;
   \Delta
-  \;\frac{1}{1 - e^{-\,c\,\Delta^2}}
+  \,\frac{1}{1 - e^{-\,c\,\Delta^2}}
   \;\;=\;
   \frac{\Delta}{1 - e^{-\,c\,\Delta^2}},
 \]
-which is finite for every $\Delta>0$.  If there are multiple suboptimal arms $a=1,\dots,K-1$, one simply sums similar terms for each suboptimal $\Delta(a)$; the result is still a finite constant.
+which is finite for every $\Delta>0$.  If we had more than two arms, we would sum similar terms for each suboptimal gap $\Delta(a)$.
 
 \subsection*{Comparison with the Bandit Setting}
 
-In the professor's \emph{bandit} slides, one observes only the reward of the chosen arm each round and thus must \emph{explore} explicitly, leading to a regret growing like $\log T$.  Here, in \emph{full-information} feedback, both arms' rewards are seen every time, so $\hat{\mu}_t(a)$ and $\hat{\mu}_t(a^*)$ concentrate exponentially fast for \emph{both} arms.  As a result, FTL typically makes only a finite number of mistakes (suboptimal plays), yielding a \textbf{constant} regret bound.
+In the \emph{bandit} scenario, one observes only the reward of the chosen arm each round, which forces explicit exploration.  This generally leads to regret that grows (typically like $\log T$).  However, in our \emph{full-information} feedback, both arms' rewards are observed every time.  Consequently, $\hat{\mu}_{t}(a)$ and $\hat{\mu}_{t}(a^*)$ concentrate very quickly, and FTL makes only a finite number of mistakes, yielding a \textbf{constant} regret bound in expectation.
