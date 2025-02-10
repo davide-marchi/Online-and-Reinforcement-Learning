@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  9 FEB 2025 00:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  10 FEB 2025 19:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -282,7 +282,8 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 \Hy@SectionHShift=\skip54
 ) (c:/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
-) (./OReL Template.aux)
+)
+No file "OReL Template".aux.
 \openout1 = `"OReL Template.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
@@ -303,7 +304,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 47.
 LaTeX Font Info:    ... okay on input line 47.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 47.
 LaTeX Font Info:    ... okay on input line 47.
- (c:/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+(c:/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count306
 \scratchdimen=\dimen161
@@ -324,7 +325,6 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 \c@lstlisting=\count312
 Package hyperref Info: Link coloring OFF on input line 47.
- (./OReL Template.out) (./OReL Template.out)
 \@outlinefile=\write3
 \openout3 = `"OReL Template.out"'.
 
@@ -335,33 +335,30 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 LaTeX Font Info:    Trying to load font information for U+msb on input line 52.
  (c:/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) (./OReL Template.toc)
+)
+No file "OReL Template".toc.
 \tf@toc=\write4
 \openout4 = `"OReL Template.toc"'.
 
- (./1.tex
+(./1.tex
 
 [1
 
-{c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+{c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]) (./2.tex
 
-[2{c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]) (./2.tex
+[2]
 
 [3]
 
 [4]) (./3.tex
-<plots.png, id=97, 1112.2353pt x 361.35pt>
+<plots.png, id=48, 1112.2353pt x 361.35pt>
 File: plots.png Graphic file (type png)
 <use plots.png>
 Package pdftex.def Info: plots.png  used on input line 5.
 (pdftex.def)             Requested size: 460.72124pt x 149.68176pt.
 
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-
-[5]
+[5 <./plots.png>]
 Overfull \hbox (59.65718pt too wide) in paragraph at lines 14--15
 []\OT1/cmr/bx/n/12 Subplots\OT1/cmr/m/n/12 : from left to right, we show the same ex-per-i-ment but with $^^A = 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 25\OML/cmm/m/it/12 ;  \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 125\OML/cmm/m/it/12 ;  [] \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 0625$. 
  []
@@ -374,35 +371,251 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\Delta' on input line 19.
 
+) (./4.tex
+
+[6]
+
+[7]) (./5.tex
+./5.tex:28: Missing $ inserted.
+<inserted text> 
+                $
+l.28 ...ates of the agent and that the poilicy \pi
+                                                   is not defined,
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
 
-[6 <./plots.png>]) (./4.tex
+./5.tex:29: LaTeX Error: Bad math environment delimiter.
 
-[7])
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.29 ...on we will have to keep it explicit (as \(
+                                                   pi(a|s) \)) without havin...
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./5.tex:30: Missing $ inserted.
+<inserted text> 
+                $
+l.30 ...idering the fact that pi belongs to major_
+                                                  pi^SR (where the R is inro...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./5.tex:31: Missing $ inserted.
+<inserted text> 
+                $
+l.31 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./5.tex:31: Missing } inserted.
+<inserted text> 
+                }
+l.31 
+     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Overfull \hbox (130.29947pt too wide) in paragraph at lines 27--31
+\OT1/cmr/m/n/12 di-nates of the agent and that the poil-icy $\OML/cmm/m/it/12 ^^Yisnotdefined; andforthisresonwewillhavetokeepitexplicit\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 aspi\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 a\OMS/cmsy/m/n/12 j\OML/cmm/m/it/12 s\OT1/cmr/m/n/12 )$)
+ []
+
+
+Overfull \hbox (341.6259pt too wide) in paragraph at lines 27--31
+\OT1/cmr/m/n/12 sid-er-ing the fact that pi be-longs to major$[]\OML/cmm/m/it/12 i[]R\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 wheretheRisinroducedbytherandomicityofthepolice\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 thetransitionprobabilitymatrixisdefinedasfollow \OT1/cmr/m/n/12 :
+ []
+
+
+
+[8]
+./5.tex:31: Extra }, or forgotten \endgroup.
+\par ...m \@noitemerr {\@@par }\fi \else {\@@par }
+                                                  \fi 
+l.31 
+     
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./5.tex:36: Missing $ inserted.
+<inserted text> 
+                $
+l.36     P^
+           {\pi, s}(s') = \begin{bmatrix}
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+./5.tex:38: LaTeX Error: Command \end{bmatrix} invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.38 \end{enumerate}
+                    
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+./5.tex:38: Missing $ inserted.
+<inserted text> 
+                $
+l.38 \end{enumerate}
+                    
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./5.tex:38: Missing } inserted.
+<inserted text> 
+                }
+l.38 \end{enumerate}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./5.tex:38: Missing \cr inserted.
+<inserted text> 
+                \cr 
+l.38 \end{enumerate}
+                    
+I'm guessing that you meant to end an alignment here.
+
+./5.tex:38: Missing $ inserted.
+<inserted text> 
+                $
+l.38 \end{enumerate}
+                    
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+./5.tex:38: LaTeX Error: \begin{bmatrix} on input line 36 ended by \end{enumerate}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.38 \end{enumerate}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./5.tex:38: Missing } inserted.
+<inserted text> 
+                }
+l.38 \end{enumerate}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./5.tex:38: Missing \right. inserted.
+<inserted text> 
+                \right .
+l.38 \end{enumerate}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+)
+c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL Template.tex:76: Missing $ inserted.
+<inserted text> 
+                $
+l.76 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL Template.tex:76: Missing } inserted.
+<inserted text> 
+                }
+l.76 
+     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL Template.tex:76: Extra }, or forgotten \endgroup.
+\par ...m \@noitemerr {\@@par }\fi \else {\@@par }
+                                                  \fi 
+l.76 
+     
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
 No file "OReL Template".bbl.
 
+c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL Template.tex:85: LaTeX Error: \begin{enumerate} on input line 3 ended by \end{document}.
 
-[8] (./OReL Template.aux)
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 \end{document}
+                   
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+
+[9] (./OReL Template.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-Package rerunfilecheck Info: File `"OReL Template".out' has not changed.
-(rerunfilecheck)             Checksum: 2DC0FF44E2BCC688CDCC1B3648941997;2680.
- ) 
+
+
+Package rerunfilecheck Warning: File `"OReL Template".out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `"OReL Template".out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  2DC0FF44E2BCC688CDCC1B3648941997;2680.
+ )
+(\end occurred inside a group at level 1)
+
+### semi simple group (level 1) entered at line 3 (\begingroup)
+### bottom level 
 Here is how much of TeX's memory you used:
- 12115 strings out of 473201
- 185878 string characters out of 5720300
+ 12101 strings out of 473201
+ 185609 string characters out of 5720300
  866182 words of memory out of 5000000
- 35159 multiletter control sequences out of 15000+600000
+ 35149 multiletter control sequences out of 15000+600000
  570477 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 79i,6n,93p,709b,517s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 79i,9n,93p,709b,520s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on "OReL Template.pdf" (8 pages, 259774 bytes).
+Output written on "OReL Template.pdf" (9 pages, 266808 bytes).
 PDF statistics:
- 194 PDF objects out of 1000 (max. 8388607)
- 152 compressed objects within 2 object streams
- 34 named destinations out of 1000 (max. 500000)
- 94 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 153 PDF objects out of 1000 (max. 8388607)
+ 110 compressed objects within 2 object streams
+ 35 named destinations out of 1000 (max. 500000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

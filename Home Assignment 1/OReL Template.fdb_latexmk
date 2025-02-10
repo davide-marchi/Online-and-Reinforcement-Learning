@@ -1,22 +1,24 @@
 # Fdb version 4
-["bibtex OReL Template"] 0 "OReL Template.aux" "OReL Template.bbl" "OReL Template" 1739056677.13107 0
+["bibtex OReL Template"] 0 "OReL Template.aux" "OReL Template.bbl" "OReL Template" 1739212176.41833 0
   "OReL Template.aux" 0 -1 0 "pdflatex"
   "bibliography.bib" 0 -1 0 ""
   (generated)
   "OReL Template.bbl"
   "OReL Template.blg"
   (rewritten before read)
-["pdflatex"] 1739056675.20093 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL Template.tex" "OReL Template.pdf" "OReL Template" 1739056677.13206 0
+["pdflatex"] 1739212174.48664 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL Template.tex" "OReL Template.pdf" "OReL Template" 1739212176.41898 2
+  "/end" 1686762753 35 28d6814f309ea289f847c69cf91194c6 ""
   "1.tex" 1739035423 2940 484183d040a6086e91ecb61dae96cd89 ""
   "2.tex" 1739052267 4960 c889f254f5670b01b53ff7e78b541bb7 ""
   "3.tex" 1739052670 3103 46570d2197232e41b5b4d387b68716fc ""
-  "4.tex" 1739056677 3264 62481297f4c80af6953399e9a48c42d5 ""
-  "OReL Template.aux" 1739056676 2094 47164d747d733d579dfcf5f76c68f73b "pdflatex"
+  "4.tex" 1739056682 3264 62481297f4c80af6953399e9a48c42d5 ""
+  "5.tex" 1739212170 2416 9f161490e618490d5f063e95a89ebd61 ""
+  "OReL Template.aux" 1739212175 2094 3ab7b55cb6165ee99838aaafeede336f "pdflatex"
   "OReL Template.bbl" 0 -1 0 "bibtex OReL Template"
-  "OReL Template.out" 1739056676 2680 2dc0ff44e2bcc688cdcc1b3648941997 "pdflatex"
-  "OReL Template.tex" 1739056603 2044 1c4c7bb92d6f435a882eca3923e2453f ""
-  "OReL Template.toc" 1739056676 1194 ab7d59626b73acc0413c6d9c079f053c "pdflatex"
-  "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL Template.tex" 1739056603 2044 1c4c7bb92d6f435a882eca3923e2453f ""
+  "OReL Template.out" 1739212175 2680 2dc0ff44e2bcc688cdcc1b3648941997 "pdflatex"
+  "OReL Template.tex" 1739203262 2057 5aa48bd0885ecc43fdece2b24ff076bc ""
+  "OReL Template.toc" 1739212175 1194 688dd81e1ad3d26a66552f0fcf2cc15b "pdflatex"
+  "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL Template.tex" 1739203262 2057 5aa48bd0885ecc43fdece2b24ff076bc ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1739027330 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1739028126 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1739027782 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""

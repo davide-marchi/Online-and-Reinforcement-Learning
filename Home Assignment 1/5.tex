@@ -1,0 +1,38 @@
+To formulate the problem as a MDP:
+
+\begin{enumerate}
+
+    \item[\textbf{(i)}] We define the notion of state as a couple: Coordinates of the agent and coordinates of the police.
+    So a state \( s \) consists of 4 numbers: \( (row_{\text{agent}}, col_{\text{agent}}, row_{\text{police}}, col_{\text{police}}) \).
+    Where \( row_{\text{agent}} \) and \( row_{\text{police}} \) are integers in the interval \([0, 5]\) and \( col_{\text{agent}} \) and \( col_{\text{police}} \) are in the interval \([0, 2]\).
+    This leaves us with a state-space \( S \) of size \((6 \times 3)^2 = 324\).
+    The initial state \( s_{\text{init}} = (0, 0, 1, 2) \).
+
+    Regarding the action-space we we distinguish five different actions performable by the agent (arrow up, arrow left, arrow right, arrow down, stay).
+    Leaving us an action space of size 5.
+
+    \item[\textbf{(ii)}] The reward function \( R(s, a) \) can be defined as follows:
+
+    \[
+    R(s, a) =
+    \begin{cases} 
+    100000, & \text{if the agent is in the bank and the police is not there,} \\
+    -10000, & \text{if the agent and the police are at the same coordinates,} \\
+    0, & \text{otherwise.}
+    \end{cases}
+    \]
+
+    To also include the fact that we are in the context of an Infinite-Horizon Discounted MDP, we could choose to incorporate the discount directly into the loss. This could be done by adding \( t \) to the state and adjusting the reward to discount accordingly. However, since it is not specifically requested, and during the lessons the discount is applied to the reward rather than being included in it, I preferred to follow the same approach.
+
+    \item[\textbf{(iii)}] Regarding the ransition probabilities when the agent is at Bank 1 and the police is at Bank 4
+    we first have to keep in mind that considering that the states include the coordinates of the agent and that the poilicy \pi is not defined,
+    and for this reson we will have to keep it explicit (as \( pi(a|s) \)) without having the possibility to calculate the effective transition probabilities.
+    Considering the fact that pi belongs to major_pi^SR (where the R is inroduced by the randomicity of the police) the transition probability matrix is defined as follow:
+
+    formula from the slides
+
+    Considering that we can't make assumption on the policy  
+
+    P^{\pi, s}(s') = \begin{bmatrix}
+
+\end{enumerate}
