@@ -3,7 +3,7 @@
 \begin{enumerate}
 
   \item[\textbf{(i)}]
-    \textbf{State and Action Spaces.} \\[6pt]
+    \textbf{State and Action Spaces.} \\
     We define each state \(s\) as a 4-tuple:
     \[
       s \;=\; \bigl(r_{\text{agent}},\,c_{\text{agent}},\,r_{\text{police}},\,c_{\text{police}}\bigr),
@@ -30,13 +30,13 @@
     Hence, \(\lvert A \rvert = 5\).
 
   \item[\textbf{(ii)}]
-    \textbf{Reward Function.} \\[6pt]
+    \textbf{Reward Function.} \\
     We define the per-step reward function \(R(s,a)\) as follows:
     \[
       R(s, a) \;=\;
       \begin{cases}
-        100000, & \text{if the agent is on a bank and the police is not there,} \\[3pt]
-        -10000, & \text{if the agent and the police share the same coordinates,} \\[3pt]
+        100000, & \text{if the agent is on a bank and the police is not there,} \\
+        -10000, & \text{if the agent and the police share the same coordinates,} \\
         0, & \text{otherwise.}
       \end{cases}
     \]
@@ -44,7 +44,7 @@
     \(\gamma \in (0,1)\).  As discussed in class, we do not explicitly encode \(\gamma\) into the states.
 
   \item[\textbf{(iii)}]
-    \textbf{Transition Probabilities.} \\[6pt]
+    \textbf{Transition Probabilities.} \\
     We now specify the transition kernel
     \[
       P\bigl(s' \mid s, a\bigr),
@@ -63,50 +63,40 @@
     \end{itemize}
 
     \paragraph{Agent's move.}
-    From \(\,(r_{\text{agent}},\,c_{\text{agent}}) = (0,\,0)\),
-    the next agent position \(\,(r_{\text{agent}}',\,c_{\text{agent}}')\) is:
+    From \(
+    (r_{\text{agent}},c_{\text{agent}}) = (0,0)\),
+    the next agent position \((r_{\text{agent}}',c_{\text{agent}}')\) is:
     \begin{itemize}
-      \item \(\uparrow\):  attempts to go out of the grid (row~\(-1\)), then reflects and ends at \((1,\,0)\).
-      \item \(\downarrow\): moves to \((1,\,0)\) normally (assuming row~\(0\) is top).
-      \item \(\leftarrow\): attempts \((0,\,-1)\), reflects to \((0,\,1)\).
-      \item \(\rightarrow\): moves to \((0,\,1)\) normally.
-      \item \(\text{stay}\): remains at \((0,\,0)\).
+      \item \(\uparrow\):  attempts to go out of the grid (row~\(-1\)), then reflects and ends at \((1,0)\).
+      \item \(\downarrow\): moves to \((1,0)\) normally (assuming row~\(0\) is top).
+      \item \(\leftarrow\): attempts \((0,-1)\), reflects to \((0,1)\).
+      \item \(\rightarrow\): moves to \((0,1)\) normally.
+      \item \(\text{stay}\): remains at \((0,0)\).
     \end{itemize}
 
     \paragraph{Police's move.}
-    Meanwhile, since the police is in the same row as the agent but to the right 
-    \(\bigl( (0,2) \text{ vs. } (0,0) \bigr)\), the problem statement tells us that it moves 
+    Meanwhile, since the police is in the same row as the agent but to the right
+    \(\bigl( (0,2) \text{ vs. } (0,0) \bigr)\), the problem statement tells us that it moves
     \(\uparrow\), \(\downarrow\), or \(\leftarrow\) with probability \(1/3\) each, again with reflection at the walls as described. Specifically:
-    \[
-      \begin{aligned}
-        &\text{With probability } \tfrac13: \text{ police tries ``Up''}; \\[-3pt]
-        &\quad \text{since it's at row~0, it bounces to row~1, yielding } (1,2).\\[3pt]
-        &\text{With probability } \tfrac13: \text{ police tries ``Down''}; \\[-3pt]
-        &\quad \text{this is valid and leads to }(1,2).\\[3pt]
-        &\text{With probability } \tfrac13: \text{ police tries ``Left''}; \\[-3pt]
-        &\quad \text{this moves it from }(0,2)\text{ to }(0,1).
-      \end{aligned}
-    \]
+    \begin{itemize}
+      \item With probability \(\frac{1}{3}\): police tries "Up"; since it's at row 0, it bounces to row 1, yielding \((1,2)\).
+      \item With probability \(\frac{1}{3}\): police tries "Down"; this is valid and leads to \((1,2)\).
+      \item With probability \(\frac{1}{3}\): police tries "Left"; this moves it from \((0,2)\) to \((0,1)\).
+    \end{itemize}
 
     \paragraph{Combining to get next-state probabilities.}
-    The next state
-    \(\,s' = (r_{\text{agent}}', c_{\text{agent}}',\,r_{\text{police}}', c_{\text{police}}')\)
-    is thus determined by the chosen action \(a\) (the agent's move, which is deterministic given reflection rules), and then by the police's random move (with probabilities \(1/3\) or \(1/4\) depending on whether they are on the same row/column or neither).  More explicitly, for the example action \(a = \rightarrow\), the agent's location becomes \((0,1)\).  The police's location then becomes:
-    \[
-      (1,2) \quad \text{with probability } \tfrac23 \quad \text{(sum of Up/Down probabilities)},
-      \quad\quad
-      (0,1) \quad \text{with probability } \tfrac13.
-    \]
-    So the next state is
-    \[
-      (\,0,1,\,1,2) \quad \text{with probability } \tfrac23, 
-      \qquad
-      (\,0,1,\,0,1) \quad \text{with probability } \tfrac13.
-    \]
+    \begin{itemize}
+      \item \((1,2)\) with probability \(\frac{2}{3}\) (sum of Up/Down probabilities).
+      \item \((0,1)\) with probability \(\frac{1}{3}\).
+    \end{itemize}
+
+    So the next state is:
+    \begin{itemize}
+      \item \((0,1,1,2)\) with probability \(\frac{2}{3}\).
+      \item \((0,1,0,1)\) with probability \(\frac{1}{3}\).
+    \end{itemize}
+
     One can similarly list the possible next states and their probabilities for the other agent actions.
 
-    In this manner, the transition probabilities 
-    \(\,P(s' \mid s,a)\) 
-    are obtained for all \(\,s\in S\) and \(a\in A\).  When the agent is caught, one may either define an immediate penalty and restart the game in state \(\,(0,0,\,1,2)\), or encode that penalty in \(R(s,a)\) as above (i.e.\ \(-10000\)) and transition to a reset state.
-
 \end{enumerate}
+

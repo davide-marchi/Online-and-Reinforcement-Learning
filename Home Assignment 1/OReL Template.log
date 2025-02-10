@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  10 FEB 2025 20:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  10 FEB 2025 20:14
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -382,17 +382,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
 [8]
 
-[9]
-Overfull \hbox (56.93347pt too wide) in paragraph at lines 92--95
- []\OT1/cmr/bx/n/12 Combining to get next-state prob-a-bil-i-ties.[] \OT1/cmr/m/n/12 The next state $ \OML/cmm/m/it/12 s[] \OT1/cmr/m/n/12 = (\OML/cmm/m/it/12 r[]; c[];  r[]; c[]\OT1/cmr/m/n/12 )$
- []
-
-
-Overfull \hbox (40.61128pt too wide) detected at line 99
-\OT1/cmr/m/n/12 (1\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 2) [][] []\OML/cmm/m/it/12 ;   \OT1/cmr/m/n/12 (0\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 1) [][]\OML/cmm/m/it/12 :
- []
-
-)
+[9])
 No file "OReL Template".bbl.
 
 
@@ -405,15 +395,15 @@ Package rerunfilecheck Info: File `"OReL Template".out' has not changed.
 (rerunfilecheck)             Checksum: 2DC0FF44E2BCC688CDCC1B3648941997;2680.
  ) 
 Here is how much of TeX's memory you used:
- 12131 strings out of 473201
- 186100 string characters out of 5720300
- 867182 words of memory out of 5000000
- 35166 multiletter control sequences out of 15000+600000
+ 12129 strings out of 473201
+ 186042 string characters out of 5720300
+ 866182 words of memory out of 5000000
+ 35164 multiletter control sequences out of 15000+600000
  570477 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  79i,9n,93p,709b,603s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on "OReL Template.pdf" (10 pages, 269759 bytes).
+Output written on "OReL Template.pdf" (10 pages, 268840 bytes).
 PDF statistics:
  209 PDF objects out of 1000 (max. 8388607)
  165 compressed objects within 2 object streams
