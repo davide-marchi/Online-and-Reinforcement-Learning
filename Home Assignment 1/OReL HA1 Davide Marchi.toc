@@ -1,17 +1,17 @@
 \contentsline {section}{\numberline {1}Find an online learning problem from real life}{1}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Post Recommendation on Social Media}{1}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.1}Contents Recommendation on Social Media}{1}{subsection.1.1}%
 \contentsline {subsection}{\numberline {1.2}Pricing of Products Over Time}{2}{subsection.1.2}%
 \contentsline {section}{\numberline {2}Follow The Leader (FTL) algorithm for i.i.d.~full information games}{3}{section.2}%
 \contentsline {paragraph}{Applying Hoeffding's inequality twice.}{4}{section*.5}%
 \contentsline {paragraph}{Regret definition.}{5}{section*.7}%
 \contentsline {paragraph}{Geometric series.}{5}{section*.8}%
 \contentsline {section}{\numberline {3}Improved Parametrization of UCB1}{6}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Plot Description}{7}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.1}Plot Description}{6}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}1) Which values of \( \Delta \) lead to higher regret?}{7}{subsection.3.2}%
 \contentsline {subsection}{\numberline {3.3}2) Relative performance of the two parametrizations}{7}{subsection.3.3}%
-\contentsline {section}{\numberline {4}Example of Policies in RiverSwim}{8}{section.4}%
+\contentsline {section}{\numberline {4}Example of Policies in RiverSwim}{7}{section.4}%
 \contentsline {section}{\numberline {5}Policy Evaluation in RiverSwim}{9}{section.5}%
 \contentsline {section}{\numberline {6}Robbing Banks}{9}{section.6}%
-\contentsline {paragraph}{Agent's move.}{10}{section*.14}%
-\contentsline {paragraph}{Police's move.}{11}{section*.15}%
-\contentsline {paragraph}{Combining to get next-state probabilities.}{11}{section*.16}%
+\contentsline {paragraph}{Agent's move.}{10}{section*.13}%
+\contentsline {paragraph}{Police's move.}{10}{section*.14}%
+\contentsline {paragraph}{Combining to get next-state probabilities.}{11}{section*.15}%

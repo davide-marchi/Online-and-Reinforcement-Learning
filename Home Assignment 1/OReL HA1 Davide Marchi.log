@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  10 FEB 2025 20:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  12 FEB 2025 13:36
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL Template.tex"
-(c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL Template.tex
+**"c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL HA1 Davide Marchi.tex"
+(c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL HA1 Davide Marchi.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (c:/texlive/2024/texmf-dist/tex/latex/base/article.cls
@@ -282,8 +282,8 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 \Hy@SectionHShift=\skip54
 ) (c:/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
-) (./OReL Template.aux)
-\openout1 = `"OReL Template.aux"'.
+) (./OReL HA1 Davide Marchi.aux)
+\openout1 = `"OReL HA1 Davide Marchi.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
 LaTeX Font Info:    ... okay on input line 47.
@@ -324,9 +324,9 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 \c@lstlisting=\count312
 Package hyperref Info: Link coloring OFF on input line 47.
- (./OReL Template.out) (./OReL Template.out)
+ (./OReL HA1 Davide Marchi.out) (./OReL HA1 Davide Marchi.out)
 \@outlinefile=\write3
-\openout3 = `"OReL Template.out"'.
+\openout3 = `"OReL HA1 Davide Marchi.out"'.
 
 LaTeX Font Info:    Trying to load font information for U+msa on input line 52.
  (c:/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -335,9 +335,9 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 LaTeX Font Info:    Trying to load font information for U+msb on input line 52.
  (c:/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) (./OReL Template.toc)
+) (./OReL HA1 Davide Marchi.toc)
 \tf@toc=\write4
-\openout4 = `"OReL Template.toc"'.
+\openout4 = `"OReL HA1 Davide Marchi.toc"'.
 
  (./1.tex
 
@@ -349,21 +349,22 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 [3]
 
-[4]
+[4])
 
-[5]) (./3.tex
+[5] (./3.tex
 <plots.png, id=104, 1112.2353pt x 361.35pt>
 File: plots.png Graphic file (type png)
 <use plots.png>
 Package pdftex.def Info: plots.png  used on input line 5.
 (pdftex.def)             Requested size: 460.72124pt x 149.68176pt.
 
-
-[6 <./plots.png>]
 Overfull \hbox (59.65718pt too wide) in paragraph at lines 14--15
 []\OT1/cmr/bx/n/12 Subplots\OT1/cmr/m/n/12 : from left to right, we show the same ex-per-i-ment but with $^^A = 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 25\OML/cmm/m/it/12 ;  \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 125\OML/cmm/m/it/12 ;  [] \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 0625$. 
  []
 
+
+
+[6 <./plots.png>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 19.
@@ -374,37 +375,37 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
 ) (./4.tex
 
-[7]
+[7])
 
-[8]) (./5.tex
+[8] (./5.tex
 
 [9]
 
 [10])
-No file "OReL Template".bbl.
+No file "OReL HA1 Davide Marchi".bbl.
 
 
-[11] (./OReL Template.aux)
+[11] (./OReL HA1 Davide Marchi.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-Package rerunfilecheck Info: File `"OReL Template".out' has not changed.
-(rerunfilecheck)             Checksum: 2DC0FF44E2BCC688CDCC1B3648941997;2680.
+Package rerunfilecheck Info: File `"OReL HA1 Davide Marchi".out' has not changed.
+(rerunfilecheck)             Checksum: F78F0C1323FEA4465A6637FFEC9D1154;2700.
  ) 
 Here is how much of TeX's memory you used:
- 12131 strings out of 473201
- 186060 string characters out of 5720300
- 870182 words of memory out of 5000000
+ 12130 strings out of 473201
+ 186319 string characters out of 5720300
+ 870200 words of memory out of 5000000
  35164 multiletter control sequences out of 15000+600000
  570477 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 79i,9n,93p,697b,604s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 79i,9n,93p,623b,594s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on "OReL Template.pdf" (11 pages, 271386 bytes).
+Output written on "OReL HA1 Davide Marchi.pdf" (11 pages, 271366 bytes).
 PDF statistics:
- 214 PDF objects out of 1000 (max. 8388607)
- 169 compressed objects within 2 object streams
- 42 named destinations out of 1000 (max. 500000)
+ 213 PDF objects out of 1000 (max. 8388607)
+ 168 compressed objects within 2 object streams
+ 41 named destinations out of 1000 (max. 500000)
  94 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -20,7 +20,7 @@
 \subsection*{Algorithm:\; Follow the Leader (FTL)}
 
 \begin{itemize}
-\item \textbf{Initialization:} In the very first round(s), you may pick either (or both) arms arbitrarily.
+\item \textbf{Initialization:} In the very first round, you may pick either (or both) arms arbitrarily.
 \item \textbf{At each round $t \ge 2$:}
   \begin{enumerate}
   \item For each arm $b \in \{a,a^*\}$, compute its \emph{empirical mean} based on \emph{all} observed rewards of $b$ so far:
@@ -209,7 +209,3 @@ An explicit version of the constant bound is
   \frac{\Delta}{1 - e^{-\,c\,\Delta^2}},
 \]
 which is finite for every $\Delta>0$.  If we had more than two arms, we would sum similar terms for each suboptimal gap $\Delta(a)$.
-
-\subsection*{Comparison with the Bandit Setting}
-
-In the \emph{bandit} scenario, one observes only the reward of the chosen arm each round, which forces explicit exploration.  This generally leads to regret that grows (typically like $\log T$).  However, in our \emph{full-information} feedback, both arms' rewards are observed every time.  Consequently, $\hat{\mu}_{t}(a)$ and $\hat{\mu}_{t}(a^*)$ concentrate very quickly, and FTL makes only a finite number of mistakes, yielding a \textbf{constant} regret bound in expectation.

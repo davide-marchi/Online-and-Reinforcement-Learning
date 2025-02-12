@@ -2,8 +2,8 @@ PWD c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online an
 INPUT c:/texlive/2024/texmf.cnf
 INPUT c:/texlive/2024/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL Template.tex
-OUTPUT OReL Template.log
+INPUT c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL HA1 Davide Marchi.tex
+OUTPUT OReL HA1 Davide Marchi.log
 INPUT c:/texlive/2024/texmf-dist/tex/latex/base/article.cls
 INPUT c:/texlive/2024/texmf-dist/tex/latex/base/article.cls
 INPUT c:/texlive/2024/texmf-dist/tex/latex/base/size12.clo
@@ -132,10 +132,10 @@ INPUT c:/texlive/2024/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
 INPUT c:/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
 INPUT c:/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
 INPUT c:/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
-INPUT ./OReL Template.aux
-INPUT ./OReL Template.aux
-INPUT OReL Template.aux
-OUTPUT OReL Template.aux
+INPUT ./OReL HA1 Davide Marchi.aux
+INPUT ./OReL HA1 Davide Marchi.aux
+INPUT OReL HA1 Davide Marchi.aux
+OUTPUT OReL HA1 Davide Marchi.aux
 INPUT c:/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 INPUT c:/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 INPUT c:/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -144,14 +144,14 @@ INPUT c:/texlive/2024/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 INPUT c:/texlive/2024/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 INPUT c:/texlive/2024/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 INPUT c:/texlive/2024/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-INPUT ./OReL Template.out
-INPUT ./OReL Template.out
-INPUT OReL Template.out
-INPUT OReL Template.out
-OUTPUT OReL Template.pdf
-INPUT ./OReL Template.out
-INPUT ./OReL Template.out
-OUTPUT OReL Template.out
+INPUT ./OReL HA1 Davide Marchi.out
+INPUT ./OReL HA1 Davide Marchi.out
+INPUT OReL HA1 Davide Marchi.out
+INPUT OReL HA1 Davide Marchi.out
+OUTPUT OReL HA1 Davide Marchi.pdf
+INPUT ./OReL HA1 Davide Marchi.out
+INPUT ./OReL HA1 Davide Marchi.out
+OUTPUT OReL HA1 Davide Marchi.out
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm
@@ -172,9 +172,9 @@ INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT ./OReL Template.toc
-INPUT ./OReL Template.toc
-INPUT OReL Template.toc
+INPUT ./OReL HA1 Davide Marchi.toc
+INPUT ./OReL HA1 Davide Marchi.toc
+INPUT OReL HA1 Davide Marchi.toc
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr8.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr6.tfm
@@ -193,7 +193,7 @@ INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam7.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
-OUTPUT OReL Template.toc
+OUTPUT OReL HA1 Davide Marchi.toc
 INPUT ./1.tex
 INPUT ./1.tex
 INPUT 1.tex
@@ -227,9 +227,9 @@ INPUT 4.tex
 INPUT ./5.tex
 INPUT ./5.tex
 INPUT 5.tex
-INPUT OReL Template.aux
-INPUT ./OReL Template.out
-INPUT ./OReL Template.out
+INPUT OReL HA1 Davide Marchi.aux
+INPUT ./OReL HA1 Davide Marchi.out
+INPUT ./OReL HA1 Davide Marchi.out
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb

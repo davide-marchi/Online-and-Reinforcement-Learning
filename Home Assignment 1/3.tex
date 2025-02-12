@@ -20,20 +20,22 @@ In all three cases, the \textbf{blue (modified UCB)} curve remains below the \te
 
 We see from the three subplots that:
 \begin{itemize}
-    \item \( \Delta=0.25 \) (left) yields smaller final regrets, on the order of \( \approx 80 \) for the original UCB and \( \approx 50 \) for the modified UCB by \( t=100000 \).
-    \item \( \Delta=0.125 \) (middle) has higher final regret (\( \approx 140 \) vs. \( \approx 100 \)).
-    \item \( \Delta=0.0625 \) (right) yields still higher regrets (\( \approx 220 \) vs. \( \approx 160 \)).
+    \item \( \Delta=0.25 \) (left) yields smaller final regrets, on the order of \( \approx 60 \) for the original UCB and \( \approx 40 \) for the modified UCB by \( t=100000 \).
+    \item \( \Delta=0.125 \) (middle) has higher final regret (\( \approx 120 \) vs. \( \approx 60 \)).
+    \item \( \Delta=0.0625 \) (right) yields still higher regrets (\( \approx 170 \) vs. \( \approx 120 \)).
 \end{itemize}
 
 Hence, \textbf{the smaller \( \Delta \) is, the higher the pseudo-regret} tends to be. Intuitively, when the arms’ means are closer together, it is harder to distinguish the optimal arm from the suboptimal arm; more exploration is needed before we can reliably exploit.
 
 \subsection{2) Relative performance of the two parametrizations}
 
-Throughout the plots, the \textbf{modified UCB} (“blue”) systematically attains lower pseudo-regret than the “original UCB” (“red”), and the gap between them grows larger over time. This is consistent with the theoretical claim that using a \( \sqrt{\ln t} \) (rather than \( \sqrt{\ln t^3} \) or similar) confidence term can remove an unnecessary union-bound factor, thereby tightening the exploration bonus and improving performance. In short:
+Throughout the plots, the \textbf{modified UCB} (blue) consistently achieves lower pseudo-regret than the \textbf{original UCB} (red), with the difference becoming more pronounced over time. This matches the theoretical expectation that using a confidence term of \( \sqrt{\ln t} \) instead of \( \sqrt{\ln t^3} \) results in a tighter exploration bonus, leading to better performance.
+
+The key difference is that the modified parametrization adjusts the confidence radius more efficiently, reducing excessive exploration while still maintaining sufficient uncertainty control. As a result:
 
 \begin{itemize}
-    \item \textbf{Modified UCB} explores more selectively, resulting in \textbf{lower regret} in practice.
-    \item \textbf{Original UCB} maintains a bigger confidence-radius term and thus “over-explores” somewhat, leading to a higher cumulative regret curve.
+    \item \textbf{Modified UCB} adapts the confidence intervals in a way that prioritizes more selective exploration, leading to \textbf{lower regret}.
+    \item \textbf{Original UCB} uses a slightly larger confidence bound, which results in more cautious exploration and higher cumulative regret over time.
 \end{itemize}
 
-Hence, \textbf{the modified parametrization outperforms the original} for all three gap values, especially noticeable when the gap is small.
+Overall, the modified parametrization demonstrates superior performance across all tested gap values.
