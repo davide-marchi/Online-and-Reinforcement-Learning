@@ -40,7 +40,10 @@
         0, & \text{otherwise.}
       \end{cases}
     \]
-    We then discount the reward by multiplying it by \(\gamma^{t-1}\), to encourage the agents to choose the best actions from the very beginning.
+    After defining \( R \), we can also specify the expected cumulative discounted reward that we aim to maximize. Since we are in the context of an \textbf{Infinite-Horizon Discounted MDP}, this objective takes the following form:
+    \[
+    \max_{\text{all strategies}} \mathbb{E} \left[ \sum_{t=1}^{\infty} \gamma^{t-1} r(s_t, a_t) \right]
+    \]
 
   \item[\textbf{(iii)}]
     \textbf{Transition Probabilities (with reflecting walls).} \\
