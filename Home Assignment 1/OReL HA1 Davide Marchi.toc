@@ -12,6 +12,7 @@
 \contentsline {section}{\numberline {4}Example of Policies in RiverSwim}{7}{section.4}%
 \contentsline {section}{\numberline {5}Policy Evaluation in RiverSwim}{9}{section.5}%
 \contentsline {section}{\numberline {6}Robbing Banks}{9}{section.6}%
-\contentsline {paragraph}{Agent's move.}{10}{section*.13}%
-\contentsline {paragraph}{Police's move.}{10}{section*.14}%
-\contentsline {paragraph}{Combining to get next-state probabilities.}{11}{section*.15}%
+\contentsline {paragraph}{Wall dynamics.}{10}{section*.13}%
+\contentsline {paragraph}{Agent's move.}{10}{section*.14}%
+\contentsline {paragraph}{Police's move.}{10}{section*.15}%
+\contentsline {paragraph}{Combining to get next‐state probabilities.}{11}{section*.16}%
