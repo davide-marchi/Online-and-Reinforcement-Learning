@@ -1,22 +1,22 @@
 # Fdb version 4
-["bibtex OReL HA1 Davide Marchi"] 0 "OReL HA1 Davide Marchi.aux" "OReL HA1 Davide Marchi.bbl" "OReL HA1 Davide Marchi" 1739373310.5593 0
+["bibtex OReL HA1 Davide Marchi"] 0 "OReL HA1 Davide Marchi.aux" "OReL HA1 Davide Marchi.bbl" "OReL HA1 Davide Marchi" 1739375670.22025 0
   "OReL HA1 Davide Marchi.aux" 0 -1 0 "pdflatex"
   "bibliography.bib" 0 -1 0 ""
   (generated)
   "OReL HA1 Davide Marchi.bbl"
   "OReL HA1 Davide Marchi.blg"
   (rewritten before read)
-["pdflatex"] 1739373308.59581 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL HA1 Davide Marchi.tex" "OReL HA1 Davide Marchi.pdf" "OReL HA1 Davide Marchi" 1739373310.55998 0
+["pdflatex"] 1739375668.28974 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL HA1 Davide Marchi.tex" "OReL HA1 Davide Marchi.pdf" "OReL HA1 Davide Marchi" 1739375670.22091 0
   "1.tex" 1739372194 2941 a1fe314b09d1dfb9015d8bcadc53a5e6 ""
   "2.tex" 1739361936 5709 3fec3c6f4a6a5384c86b6ce12b5ce7ea ""
   "3.tex" 1739363788 3243 369271016d7fe9ea64c3879b30596238 ""
   "4.tex" 1739373125 3410 8fd37df0e575532ea761cb58bcb08965 ""
-  "5.tex" 1739373307 4486 42da6afaa46220896790bf5dd35c0e7d ""
-  "OReL HA1 Davide Marchi.aux" 1739373309 2552 7ee6c2f642493c9587118915affde7ca "pdflatex"
+  "5.tex" 1739375667 4347 e275a90b4f0489f71c903d34304a90fb ""
+  "OReL HA1 Davide Marchi.aux" 1739375669 2552 7ee6c2f642493c9587118915affde7ca "pdflatex"
   "OReL HA1 Davide Marchi.bbl" 0 -1 0 "bibtex OReL HA1 Davide Marchi"
-  "OReL HA1 Davide Marchi.out" 1739373309 2700 f78f0c1323fea4465a6637ffec9d1154 "pdflatex"
+  "OReL HA1 Davide Marchi.out" 1739375669 2700 f78f0c1323fea4465a6637ffec9d1154 "pdflatex"
   "OReL HA1 Davide Marchi.tex" 1739203262 2057 5aa48bd0885ecc43fdece2b24ff076bc ""
-  "OReL HA1 Davide Marchi.toc" 1739373309 1487 bc09b5cc4d47c79b365e5e43c4c619a0 "pdflatex"
+  "OReL HA1 Davide Marchi.toc" 1739375669 1487 bc09b5cc4d47c79b365e5e43c4c619a0 "pdflatex"
   "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 1/OReL HA1 Davide Marchi.tex" 1739203262 2057 5aa48bd0885ecc43fdece2b24ff076bc ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1739027330 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1739028126 3524 cb3e574dea2d1052e39280babc910dc8 ""
