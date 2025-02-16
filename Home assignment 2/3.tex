@@ -1,0 +1,59 @@
+We provide here a short report on the Monte Carlo simulation and exact computation of 
+\(V^\pi\) for the RiverSwim MDP, where the policy \(\pi\) takes \emph{right} action 
+with probability \(0.65\) in states \(\{1,2,3\}\) and always takes \emph{right} 
+in states \(\{4,5\}\). 
+The code used to run the experiments is contained in 
+\texttt{HA2\_RiverSwim.py}.
+
+\medskip
+
+\noindent
+\textbf{i) Monte Carlo Estimation of \(\boldsymbol{V^\pi}\).}
+
+\noindent
+We generated \(n=50\) trajectories of length \(T=300\) each, for each possible start state, 
+accumulating returns
+\[
+  G \;=\;\sum_{t=0}^{T-1}\gamma^{\,t}\,r_t,
+\]
+and then averaged over the simulated trajectories to obtain 
+an approximate value \(V^\pi(s)\). 
+We used the discount factor \(\gamma = 0.96\). 
+Below are the resulting Monte Carlo estimates (in a few seconds of execution time):
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+State & MC Estimate & Exact Value \\ 
+\midrule
+1 & 4.01793 & 4.12090 \\
+2 & 4.61536 & 4.71119 \\
+3 & 5.96556 & 6.33460 \\
+4 & 9.47802 & 9.73803 \\
+5 & 11.21253 & 11.17784 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+\textbf{ii) Exact Computation using the Bellman Equation.}
+
+\noindent
+We also computed the exact value function 
+\[
+   V^\pi \;=\;\bigl(I - \gamma\,P^\pi\bigr)^{-1}\,r^\pi
+\]
+by constructing the transition matrix \(P^\pi\) and reward vector \(r^\pi\) under policy 
+\(\pi\), and then numerically solving the linear system 
+\(\,(I - \gamma\,P^\pi)\,v = r^\pi\) in Python with \texttt{numpy.linalg.solve}. 
+The table above (right column) presents the resulting exact values of 
+\(V^\pi(s)\) for \(s=1,\dots,5.\)
+
+\medskip
+
+\noindent
+\textbf{Comment:} 
+Although the Monte Carlo estimates are not the finest approximation and slightly deviate 
+from the exact values (particularly in states 3 and 4) due to limited sample size, 
+they were obtained in just a few seconds of execution. Increasing the number of trajectories 
+(or their length) would make the approximation even closer in practice.

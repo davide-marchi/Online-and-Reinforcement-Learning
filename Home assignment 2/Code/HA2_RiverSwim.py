@@ -58,109 +58,101 @@ class riverswim():
 	
 
 ###########################################################################
-# 1) Monte Carlo approximation of V^pi
+# i) Monte Carlo approximation of V^pi
 ###########################################################################
 
-# --- USER PARAMETERS ---
-gamma = 0.96         # discount factor
-num_episodes = 50    # number of trajectories for each initial state
-T = 300              # length of each trajectory
+# Parameters for the simulation
+gamma = 0.96         # discount factor - from the exercise requirements
+num_episodes = 50    # number of episodes to run (more = better approximation but slower)
+T = 300             # max steps per episode (should be enough to converge)
 
-# We define the policy pi(s):
-#  - for states s in [0,1,2], go RIGHT with prob 0.65 and LEFT with prob 0.35
-#  - for states s in [3,4], always go RIGHT (prob = 1).
+# Policy implementation:
+# For the given policy:
+# - If we're in states 0,1,2: mostly go right (65% chance) but sometimes left (35%)
+# - If we're in states 3,4: always go right (trying to get that sweet reward at the end)
 def sample_action_from_policy(s):
     """
-    Returns 0 for 'left' or 1 for 'right', 
-    according to the desired policy pi(s).
+    Gets an action based on our policy.
+    Note to self: 0=left, 1=right!
     """
     if s <= 2:
-        # with prob 0.65 pick 'right' (action=1), else 'left' (action=0)
+        # Using np.random.choice to implement the 65-35 split
         return np.random.choice([0,1], p=[0.35,0.65])
     else:
-        # states 4 or 5 -> always right
+        # In states 3,4 we always go right
         return 1
 
-# Create the environment
+# Initialize our river environment with 5 states (0-4 not 1-5, but we can add 1 later)
 env = riverswim(5)
 
-# This array will store our Monte Carlo estimate of V^pi(s)
+# Array to store our MC estimates - one value for each state
 Vhat_MC = np.zeros(env.nS)
 
-# Loop over every state s as the "start state"
+# Main Monte Carlo estimation loop
+# Need to try from every starting state to get full V function
 for s in range(env.nS):
-    returns_sum = 0.0
+    returns_sum = 0.0    # Accumulator for returns from this state
 
-    # We'll simulate 'num_episodes' trajectories from each state s
+    # Run multiple episodes to get a good average
     for _ in range(num_episodes):
-        # Manually set the env's current state to s
-        env.s = s
+        env.s = s        # Force starting state
         
-        G = 0.0      # discounted return
-        discount = 1.0
+        # Variables for calculating discounted return
+        G = 0.0          # Total return for this episode
+        discount = 1.0   # Current discount factor (will multiply by gamma each step)
+        
+        # Run one episode
         for t in range(T):
-            # Sample action from our policy
             a = sample_action_from_policy(env.s)
             s_next, r = env.step(a)
             
-            G += discount * r
-            discount *= gamma
-            # proceed to next state
-            # env.s is already updated to s_next
+            G += discount * r    # Add discounted reward to return
+            discount *= gamma    # Update discount for next step
+            # State automatically updates in env.step
+
         returns_sum += G
 
-    # Average over all episodes
+    # Average returns to get value estimate for this state
     Vhat_MC[s] = returns_sum / num_episodes
 
 print("Monte Carlo estimates of V^pi(s) for s=0..4:")
 for s in range(env.nS):
-    print(f"State {s}: {Vhat_MC[s]:.5f}")
+    print(f"State {s+1}: {Vhat_MC[s]:.5f}")
 print()
 
 ###########################################################################
-# 2) Exact value of V^pi by direct computation
+# ii) Exact value of V^pi by direct computation
 ###########################################################################
 
-# We need to build the transition matrix P^pi and the reward vector r^pi
-# for the policy above, then solve the linear system:
-#    (I - gamma * P^pi) * v = r^pi
-
-# Build P^pi: an nS x nS matrix
+# Need to solve (I - gamma*P^pi)v = r^pi
+# First build P^pi and r^pi for our policy
 P_pi = np.zeros((env.nS, env.nS))
-
-# Build r^pi: an nS-dimensional vector
 r_pi = np.zeros(env.nS)
 
 def policy_prob(s, a):
     """
-    Probability that policy pi takes action a in state s.
-    a=0->left, a=1->right
+    Helper function to get pi(a|s)
+    Basically translates our policy into probabilities
     """
     if s <= 2:
-        # prob 0.35 for action=0, 0.65 for action=1
-        if a==0:
-            return 0.35
-        else:
-            return 0.65
+        # States 0,1,2: 35% left, 65% right
+        return 0.35 if a==0 else 0.65
     else:
-        # states 4,5 always right -> action=1
-        if a==1:
-            return 1.0
-        else:
-            return 0.0
+        # States 3,4: always right
+        return 0.0 if a==0 else 1.0
 
+# Build P^pi and r^pi matrices based on our policy
 for s in range(env.nS):
-    # r^pi(s) = sum_{a} pi(a|s)* R(s,a)
+    # r^pi is weighted average of rewards for each action
     r_pi[s] = (policy_prob(s,0)*env.R[s,0]) + (policy_prob(s,1)*env.R[s,1])
     
-    # P^pi(s->s') = sum_{a} pi(a|s)* P(s->s'|s,a)
+    # P^pi combines transition probs weighted by policy probs
     for s_next in range(env.nS):
         P_pi[s, s_next] = (policy_prob(s,0)*env.P[s,0,s_next]
                            + policy_prob(s,1)*env.P[s,1,s_next])
 
-# Now solve for v: (I - gamma P^pi)*v = r^pi
-# -> v = inverse(I - gamma P^pi) * r^pi
-# We'll use np.linalg.solve for numerical stability
+# Solve the system (I - gamma*P^pi)v = r^pi
+# Using numpy's solver because it's more stable than matrix inversion
 I = np.eye(env.nS)
 A = I - gamma * P_pi
 b = r_pi
@@ -169,5 +161,5 @@ v_exact = np.linalg.solve(A, b)
 
 print("Exact solution of V^pi(s) using linear system:")
 for s in range(env.nS):
-    print(f"State {s}: {v_exact[s]:.5f}")
+    print(f"State {s+1}: {v_exact[s]:.5f}")
 print()
