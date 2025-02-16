@@ -1,158 +1,195 @@
-We have two finite discounted MDPs:
+We recall the setting: two finite discounted MDPs
 \[
-  M_{1} \;=\; (S, A, P_{1}, R_{1}, \gamma)
+  M_1 \;=\; (S,A,P_1,R_1,\gamma)
   \quad\text{and}\quad
-  M_{2} \;=\; (S, A, P_{2}, R_{2}, \gamma),
+  M_2 \;=\;(S,A,P_2,R_2,\gamma),
 \]
-with the same discount factor \(\gamma\in(0,1)\) and the same finite state--action 
-space \(S\times A\). The reward functions satisfy \(R_{m}(s,a)\in [0, R_{\max}]\), 
-and for all \((s,a)\):
+with the same discount factor $0<\gamma<1$ and finite state--action space. 
+For each $(s,a)$ we have:
 \[
-  \bigl| R_{1}(s,a) \;-\; R_{2}(s,a) \bigr| \;\le\; \alpha,
-  \qquad
-  \bigl\|P_{1}(\,\cdot\,\vert s,a)\;-\;P_{2}(\,\cdot\,\vert s,a)\bigr\|_{1} \;\le\; \beta.
-\]
-We let \(\pi\) be any fixed \emph{stationary deterministic} (or stationary randomized) 
-policy, and write \(V^{\pi}_m\) to denote its value function in \(M_m\). 
-We want to prove:
-
-\[
-  \bigl|V_{1}^{\pi}(s)\;-\;V_{2}^{\pi}(s)\bigr|
-  \;\le\;
-  \frac{\alpha \;+\;\gamma \,R_{\max}\,\beta}{\bigl(1-\gamma\bigr)^{2}}
+  \bigl|R_1(s,a)-R_2(s,a)\bigr|\;\le\;\alpha,
   \quad
-  \text{for every state }s \in S.
+  \bigl\|P_1(\cdot\mid s,a)\;-\;P_2(\cdot\mid s,a)\bigr\|_1\;\le\;\beta,
+  \quad
+  R_1(s,a),\,R_2(s,a)\;\in\;[0,R_{\max}].
+\]
+Let $\pi$ be any fixed stationary policy (deterministic or randomized), and let 
+$V^\pi_1,\;V^\pi_2$ denote its value functions in $M_1$ and $M_2$, respectively. 
+We wish to show that, for every $s\in S$,
+\[
+  \bigl|V_1^\pi(s)\;-\;V_2^\pi(s)\bigr|
+  \;\;\le\;\;
+  \frac{\alpha\;+\;\gamma\,R_{\max}\,\beta}{(1-\gamma)^2}.
 \]
 
 \medskip
-\noindent \textbf{Proof of (ii):}  
-Fix \(s\in S\).  By definition of the value function under policy \(\pi\), we have
+\noindent
+\textbf{Bellman Operators.} 
+Define the Bellman operator $T_m^\pi$ for each $M_m$ ($m=1,2$) by
 \[
-  V_m^{\pi}(s)
+  (T_m^\pi V)(s)
   \;=\;
-  \sum_{a\in A} \pi(a\mid s)\,\Bigl[
-       R_{m}(s,a)
-       \;+\;\gamma\,\sum_{x\in S}P_{m}\bigl(x\mid s,a\bigr)\,V_m^{\pi}(x)
-  \Bigr]
-  \quad\text{for }m=1,2.
+  \sum_{a\in A}\pi(a\mid s)
+  \Bigl[\,R_m(s,a)\;+\;\gamma\,\sum_{s'}P_m(s'\mid s,a)\,V(s')\Bigr].
 \]
-Taking their difference:
+Then $V_m^\pi$ is the unique fixed point: $V_m^\pi = T_m^\pi\,V_m^\pi$, i.e.
 \[
-  \bigl|V_{1}^{\pi}(s)\;-\;V_{2}^{\pi}(s)\bigr|
+  V_m^\pi(s)
   \;=\;
+  (T_m^\pi V_m^\pi)(s)
+  \;=\;
+  \sum_{a}\pi(a\mid s)
+  \Bigl[R_m(s,a)
+        \;+\;\gamma\,\sum_{s'}P_m(s'\mid s,a)\,V_m^\pi(s')\Bigr].
+\]
+
+\medskip
+\noindent
+\textbf{Step 1: Decompose the difference.}  
+For each $s\in S$, we have
+\[
+  V_1^\pi(s)\;-\;V_2^\pi(s)
+  \;=\;
+  \bigl(T_1^\pi V_1^\pi\bigr)(s)\;-\;\bigl(T_2^\pi V_2^\pi\bigr)(s).
+\]
+Add and subtract $\bigl(T_1^\pi V_2^\pi\bigr)(s)$ inside the absolute value:
+\[
+  \begin{aligned}
+  \bigl|V_1^\pi(s)-V_2^\pi(s)\bigr|
+  &=\;
+  \bigl|\,T_1^\pi V_1^\pi(s)\;-\;T_2^\pi V_2^\pi(s)\bigr|
+  \\
+  &\le\;
+  \underbrace{\bigl|\,T_1^\pi V_1^\pi(s)\;-\;T_1^\pi V_2^\pi(s)\bigr|}%
+            _{\text{(1) same operator, diff in values}}
+  \;+\;
+  \underbrace{\bigl|\,T_1^\pi V_2^\pi(s)\;-\;T_2^\pi V_2^\pi(s)\bigr|}%
+             _{\text{(2) same value, diff in operators}}
+  \,.
+  \end{aligned}
+\]
+
+\smallskip
+\noindent
+\textbf{(1) Same operator, difference in the value functions.}\\
+Since $T_1^\pi$ has discount factor $\gamma$,
+\[
+  \bigl|\,T_1^\pi V_1^\pi(s) \;-\;T_1^\pi V_2^\pi(s)\bigr|
+  \;=\;
+  \gamma\;\sum_{a}\pi(a\mid s)\,
+  \bigl|\sum_{s'}P_1(s'\mid s,a)\,V_1^\pi(s')
+         -\sum_{s'}P_1(s'\mid s,a)\,V_2^\pi(s')
+  \bigr|
+  \;\le\;
+  \gamma\,\max_{x}\bigl|\,V_1^\pi(x)-V_2^\pi(x)\bigr|.
+\]
+Define 
+\[
+  \Delta\;=\;\sup_{s\in S}\,\bigl|\,V_1^\pi(s)-V_2^\pi(s)\bigr|.
+\]
+Thus the first portion is at most $\gamma\,\Delta$.
+
+\smallskip
+\noindent
+\textbf{(2) Same value function, difference in operators.}\\
+Next,
+\[
+  \bigl|\,T_1^\pi V_2^\pi(s) \;-\;T_2^\pi V_2^\pi(s)\bigr|
+  \;\;=\;\;
   \Bigl|\;
-     \sum_{a}\pi(a\mid s)
-     \Bigl[
-       R_{1}(s,a) + \gamma\,\sum_{x}P_{1}(x\mid s,a)\,V_{1}^{\pi}(x)
-       \;-\;
-       \bigl(R_{2}(s,a) + \gamma\,\sum_{x}P_{2}(x\mid s,a)\,V_{2}^{\pi}(x)\bigr)
-     \Bigr]
+  \sum_{a}\pi(a\mid s)\,\bigl[R_1(s,a)+\gamma\!\!\sum_{s'}P_1(s'\mid s,a)\,V_2^\pi(s')\bigr]
+  \;-\;
+  \sum_{a}\pi(a\mid s)\,\bigl[R_2(s,a)+\gamma\!\!\sum_{s'}P_2(s'\mid s,a)\,V_2^\pi(s')\bigr]
   \Bigr|.
 \]
-Use the triangle inequality, plus linearity of the sum:
+We can group the terms:
 \[
-  \le
-  \sum_{a}\pi(a\mid s)\biggl|\,
-       \underbrace{R_{1}(s,a) - R_{2}(s,a)}_{\le\,\alpha}
-       \;+\;
-       \gamma\,\sum_{x}P_{1}(x\mid s,a)\,V_{1}^{\pi}(x)
-       \;-\;
-       \gamma\,\sum_{x}P_{2}(x\mid s,a)\,V_{2}^{\pi}(x)
-  \biggr|.
+  \le\;
+  \sum_{a}\pi(a\mid s)
+  \Bigl|\,
+    \underbrace{R_1(s,a)-R_2(s,a)}_{\le\,\alpha}
+    \;+\;
+    \gamma\!\sum_{s'}\bigl[P_1(s'\mid s,a)-P_2(s'\mid s,a)\bigr]\,V_2^\pi(s')
+  \Bigr|.
 \]
 Hence
 \[
-  \bigl|V_{1}^{\pi}(s)\;-\;V_{2}^{\pi}(s)\bigr|
+  \bigl|\,T_1^\pi V_2^\pi(s) - T_2^\pi V_2^\pi(s)\bigr|
   \;\le\;
   \sum_{a}\pi(a\mid s)\Bigl[
-     \alpha
-     \;+\;
-     \gamma \,\Bigl|\sum_{x}P_{1}(x\mid s,a)\,V_{1}^{\pi}(x)\;-\;\sum_{x}P_{2}(x\mid s,a)\,V_{2}^{\pi}(x)\Bigr|
+    \alpha
+    \;+\;
+    \gamma\,\Bigl|\sum_{s'}\bigl[P_1(s'\mid s,a)-P_2(s'\mid s,a)\bigr]\,
+         V_2^\pi(s')\Bigr|
   \Bigr].
 \]
-We now split that big absolute difference into two parts:
+Since 
 \[
-  \begin{aligned}
-  &\quad
-  \Bigl|\sum_{x}P_{1}(x\mid s,a)\,V_{1}^{\pi}(x)\;-\;\sum_{x}P_{2}(x\mid s,a)\,V_{2}^{\pi}(x)\Bigr|
-  \\
-  &\le
-  \Bigl|\sum_{x}P_{1}(x\mid s,a)\,\bigl(V_{1}^{\pi}(x)-V_{2}^{\pi}(x)\bigr)\Bigr|
-  \;+\;
-  \Bigl|\sum_{x}\bigl(P_{1}(x\mid s,a)-P_{2}(x\mid s,a)\bigr)\,V_{2}^{\pi}(x)\Bigr|
-  \\
-  &\le
-  \sum_{x}P_{1}(x\mid s,a)\,\bigl|V_{1}^{\pi}(x)-V_{2}^{\pi}(x)\bigr|
-  \;+\;
-  \sum_{x}\bigl|P_{1}(x\mid s,a)-P_{2}(x\mid s,a)\bigr|\;\bigl|V_{2}^{\pi}(x)\bigr|.
-  \end{aligned}
-\]
-Since \(\bigl|V_{2}^{\pi}(x)\bigr|\le \frac{R_{\max}}{1-\gamma}\) for discounted MDPs, 
-and 
-\(\sum_{x}\bigl|P_{1}(x\mid s,a)-P_{2}(x\mid s,a)\bigr|\le \beta\), 
-it follows that:
-\[
-  \Bigl|\sum_{x}P_{1}(x\mid s,a)\,V_{1}^{\pi}(x)
-          \;-\;\sum_{x}P_{2}(x\mid s,a)\,V_{2}^{\pi}(x)\Bigr|
+  \sum_{s'} \bigl|P_1(s'\mid s,a)-P_2(s'\mid s,a)\bigr|
   \;\le\;
-  \sup_{x}\,\bigl|V_{1}^{\pi}(x)-V_{2}^{\pi}(x)\bigr|
-  \;+\;\beta \,\frac{R_{\max}}{1-\gamma}.
+  \beta,
+  \quad\text{and}\quad
+  \bigl|V_2^\pi(s')\bigr|\;\le\;\frac{R_{\max}}{1-\gamma},
 \]
-Let
+it follows that
 \[
-   \Delta \;=\;\sup_{s\in S}\,\bigl|\,V_{1}^{\pi}(s)\;-\;V_{2}^{\pi}(s)\bigr|.
-\]
-Then combining everything above,
-\[
-  \bigl|V_{1}^{\pi}(s)\;-\;V_{2}^{\pi}(s)\bigr|
+  \Bigl|\sum_{s'}\bigl[P_1(s'\mid s,a)-P_2(s'\mid s,a)\bigr]\,
+        V_2^\pi(s')
+  \Bigr|
   \;\le\;
-  \alpha \;+\;\gamma\,\Bigl(\,\Delta \;+\;\beta\,\frac{R_{\max}}{1-\gamma}\Bigr).
+  \beta\,\frac{R_{\max}}{\,1-\gamma\,}.
 \]
-Taking the supremum in \(s\) on the left side gives
+Hence
+\[
+  \bigl|\,T_1^\pi V_2^\pi(s) - T_2^\pi V_2^\pi(s)\bigr|
+  \;\le\;
+  \alpha \;+\;\gamma\,\beta\,\frac{R_{\max}}{1-\gamma}.
+\]
+
+\medskip
+\noindent
+\textbf{Combine (1) \& (2).}\\
+Putting the two pieces together:
+\[
+  \bigl|V_1^\pi(s)-V_2^\pi(s)\bigr|
+  \;\le\;
+  \underbrace{\gamma\,\Delta}_{\text{from (1)}}
+  \;+\;\underbrace{\alpha + \gamma\,\beta\,\frac{R_{\max}}{1-\gamma}}_{\text{from (2)}}.
+\]
+Therefore, taking supremum over $s\in S$:
 \[
   \Delta 
-  \;\le\;
-  \alpha \;+\;\gamma\,\Delta 
-  \;+\;\gamma\,\beta\,\frac{R_{\max}}{1-\gamma}.
-\]
-Hence,
-\[
-  (\,1-\gamma)\,\Delta
-  \;\le\;
-  \alpha \;+\;\gamma\,\beta\,\frac{R_{\max}}{1-\gamma}
-  \quad\Longrightarrow\quad
-  \Delta 
-  \;\le\;
-  \frac{\alpha}{1-\gamma}
-  \;+\;
-  \frac{\gamma\,\beta\,R_{\max}}{(1-\gamma)^2}
-  \;.
-\]
-Finally, we can note that \(\alpha\le \alpha/(1-\gamma)\), 
-or equivalently multiply out and observe
-\[
-  \frac{\alpha}{1-\gamma}
   \;=\;
-  \frac{\alpha\,\bigl(1-\gamma\bigr)}{(1-\gamma)^2}
+  \sup_{s}\bigl|\,V_1^\pi(s)-V_2^\pi(s)\bigr|
   \;\le\;
-  \frac{\alpha}{(1-\gamma)^2}\;.
+  \gamma\,\Delta \;+\; \alpha 
+  \;+\;\gamma\,\beta\,\frac{R_{\max}}{\,1-\gamma\,}.
 \]
-So we get
+Rearranging gives
+\[
+  (1-\gamma)\,\Delta 
+  \;\le\;
+  \alpha \;+\;\gamma\,\beta\,\frac{R_{\max}}{1-\gamma},
+  \quad\Longrightarrow\quad
+  \Delta
+  \;\le\;
+  \frac{\alpha}{\,1-\gamma\,}
+  \;+\;
+  \frac{\gamma\,\beta\,R_{\max}}{(1-\gamma)^2}.
+\]
+As in the usual derivations, since $\alpha/(1-\gamma)\,\le\,\alpha/(1-\gamma)^2$
+whenever $0<\gamma<1$, one can in fact write
 \[
   \Delta 
-  \;\;\le\;\;
-  \frac{\alpha}{1-\gamma} 
-  \;+\;
-  \frac{\gamma\,\beta\,R_{\max}}{(1-\gamma)^2}
-  \;\;\le\;\;
-  \frac{\alpha + \gamma\,\beta\,R_{\max}}{(1-\gamma)^2}.
+  \;\;\le\;\;  
+  \frac{\alpha \;+\; \gamma\,\beta\,R_{\max}}{(1-\gamma)^2}.
 \]
-Thus, for every state \(s\),
+Thus, for every $s\in S$,
 \[
-  \bigl|\,V_{1}^{\pi}(s)\;-\;V_{2}^{\pi}(s)\bigr|
+  \bigl|\,V_1^\pi(s)\;-\;V_2^\pi(s)\bigr|
   \;\le\;
   \Delta
   \;\le\;
-  \frac{\alpha \;+\;\gamma\,\beta\,R_{\max}}{\,(1-\gamma)^2}\,.
+  \frac{\alpha \;+\;\gamma\,\beta\,R_{\max}}{(1-\gamma)^2}.
 \]
-This completes the proof of part (ii).
+This completes the alternate proof via Bellman equations.
