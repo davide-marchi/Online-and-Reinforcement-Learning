@@ -70,16 +70,20 @@ Substituting this back, we obtain:
 \bigskip
 \noindent
 \textbf{Step 3: Take norms and use triangle/inequality bounds.}\\
-Taking the supremum norm ($\|\cdot\|_\infty$) on both sides,
+Taking the supremum norm ($\|\cdot\|_{\infty}$) on both sides we obtain
 \[
-  \|\delta\|_{\infty}
-  \;\le\;
-  \|\,r_{1}^{\pi}-r_{2}^{\pi}\|_{\infty}
-  \;+\;
-  \gamma\,\|\;P_{1}^{\pi}\,\delta\;\|_{\infty}
-  \;+\;
-  \gamma\,\|\;\bigl(P_{1}^{\pi}-P_{2}^{\pi}\bigr)\,V_{2}^{\pi}\|_{\infty}.
+\|\delta\|_{\infty} = \bigl\| (r_1^\pi - r_2^\pi) + \gamma P_1^\pi \delta + \gamma (P_1^\pi - P_2^\pi) V_2^\pi \bigr\|_{\infty}.
 \]
+By the \textit{triangle inequality}, the norm of a sum is at most the sum of the norms, so we can split the right-hand side as:
+\[
+\|\delta\|_{\infty} 
+\;\le\;
+\| r_1^\pi - r_2^\pi \|_{\infty} 
++ \gamma \| P_1^\pi \delta \|_{\infty} 
++ \gamma \| (P_1^\pi - P_2^\pi) V_2^\pi \|_{\infty}.
+\]
+
+Now we can proceed with:
 
 \begin{itemize}
   \item \textit{Reward difference:}\\
