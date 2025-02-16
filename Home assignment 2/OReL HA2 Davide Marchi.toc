@@ -1,5 +1,5 @@
 \contentsline {section}{\numberline {1}Short Questions}{2}{section.1}%
 \contentsline {section}{\numberline {2}MDPs with Similar Parameters Have Similar Values}{3}{section.2}%
-\contentsline {section}{\numberline {3}Policy Evaluation in RiverSwim}{3}{section.3}%
-\contentsline {section}{\numberline {4}Solving a Discounted Grid-World}{3}{section.4}%
-\contentsline {section}{\numberline {5}Off-Policy Evaluation in Episode-Based River-Swim}{3}{section.5}%
+\contentsline {section}{\numberline {3}Policy Evaluation in RiverSwim}{4}{section.3}%
+\contentsline {section}{\numberline {4}Solving a Discounted Grid-World}{4}{section.4}%
+\contentsline {section}{\numberline {5}Off-Policy Evaluation in Episode-Based River-Swim}{4}{section.5}%

@@ -1,0 +1,158 @@
+We have two finite discounted MDPs:
+\[
+  M_{1} \;=\; (S, A, P_{1}, R_{1}, \gamma)
+  \quad\text{and}\quad
+  M_{2} \;=\; (S, A, P_{2}, R_{2}, \gamma),
+\]
+with the same discount factor \(\gamma\in(0,1)\) and the same finite state--action 
+space \(S\times A\). The reward functions satisfy \(R_{m}(s,a)\in [0, R_{\max}]\), 
+and for all \((s,a)\):
+\[
+  \bigl| R_{1}(s,a) \;-\; R_{2}(s,a) \bigr| \;\le\; \alpha,
+  \qquad
+  \bigl\|P_{1}(\,\cdot\,\vert s,a)\;-\;P_{2}(\,\cdot\,\vert s,a)\bigr\|_{1} \;\le\; \beta.
+\]
+We let \(\pi\) be any fixed \emph{stationary deterministic} (or stationary randomized) 
+policy, and write \(V^{\pi}_m\) to denote its value function in \(M_m\). 
+We want to prove:
+
+\[
+  \bigl|V_{1}^{\pi}(s)\;-\;V_{2}^{\pi}(s)\bigr|
+  \;\le\;
+  \frac{\alpha \;+\;\gamma \,R_{\max}\,\beta}{\bigl(1-\gamma\bigr)^{2}}
+  \quad
+  \text{for every state }s \in S.
+\]
+
+\medskip
+\noindent \textbf{Proof of (ii):}  
+Fix \(s\in S\).  By definition of the value function under policy \(\pi\), we have
+\[
+  V_m^{\pi}(s)
+  \;=\;
+  \sum_{a\in A} \pi(a\mid s)\,\Bigl[
+       R_{m}(s,a)
+       \;+\;\gamma\,\sum_{x\in S}P_{m}\bigl(x\mid s,a\bigr)\,V_m^{\pi}(x)
+  \Bigr]
+  \quad\text{for }m=1,2.
+\]
+Taking their difference:
+\[
+  \bigl|V_{1}^{\pi}(s)\;-\;V_{2}^{\pi}(s)\bigr|
+  \;=\;
+  \Bigl|\;
+     \sum_{a}\pi(a\mid s)
+     \Bigl[
+       R_{1}(s,a) + \gamma\,\sum_{x}P_{1}(x\mid s,a)\,V_{1}^{\pi}(x)
+       \;-\;
+       \bigl(R_{2}(s,a) + \gamma\,\sum_{x}P_{2}(x\mid s,a)\,V_{2}^{\pi}(x)\bigr)
+     \Bigr]
+  \Bigr|.
+\]
+Use the triangle inequality, plus linearity of the sum:
+\[
+  \le
+  \sum_{a}\pi(a\mid s)\biggl|\,
+       \underbrace{R_{1}(s,a) - R_{2}(s,a)}_{\le\,\alpha}
+       \;+\;
+       \gamma\,\sum_{x}P_{1}(x\mid s,a)\,V_{1}^{\pi}(x)
+       \;-\;
+       \gamma\,\sum_{x}P_{2}(x\mid s,a)\,V_{2}^{\pi}(x)
+  \biggr|.
+\]
+Hence
+\[
+  \bigl|V_{1}^{\pi}(s)\;-\;V_{2}^{\pi}(s)\bigr|
+  \;\le\;
+  \sum_{a}\pi(a\mid s)\Bigl[
+     \alpha
+     \;+\;
+     \gamma \,\Bigl|\sum_{x}P_{1}(x\mid s,a)\,V_{1}^{\pi}(x)\;-\;\sum_{x}P_{2}(x\mid s,a)\,V_{2}^{\pi}(x)\Bigr|
+  \Bigr].
+\]
+We now split that big absolute difference into two parts:
+\[
+  \begin{aligned}
+  &\quad
+  \Bigl|\sum_{x}P_{1}(x\mid s,a)\,V_{1}^{\pi}(x)\;-\;\sum_{x}P_{2}(x\mid s,a)\,V_{2}^{\pi}(x)\Bigr|
+  \\
+  &\le
+  \Bigl|\sum_{x}P_{1}(x\mid s,a)\,\bigl(V_{1}^{\pi}(x)-V_{2}^{\pi}(x)\bigr)\Bigr|
+  \;+\;
+  \Bigl|\sum_{x}\bigl(P_{1}(x\mid s,a)-P_{2}(x\mid s,a)\bigr)\,V_{2}^{\pi}(x)\Bigr|
+  \\
+  &\le
+  \sum_{x}P_{1}(x\mid s,a)\,\bigl|V_{1}^{\pi}(x)-V_{2}^{\pi}(x)\bigr|
+  \;+\;
+  \sum_{x}\bigl|P_{1}(x\mid s,a)-P_{2}(x\mid s,a)\bigr|\;\bigl|V_{2}^{\pi}(x)\bigr|.
+  \end{aligned}
+\]
+Since \(\bigl|V_{2}^{\pi}(x)\bigr|\le \frac{R_{\max}}{1-\gamma}\) for discounted MDPs, 
+and 
+\(\sum_{x}\bigl|P_{1}(x\mid s,a)-P_{2}(x\mid s,a)\bigr|\le \beta\), 
+it follows that:
+\[
+  \Bigl|\sum_{x}P_{1}(x\mid s,a)\,V_{1}^{\pi}(x)
+          \;-\;\sum_{x}P_{2}(x\mid s,a)\,V_{2}^{\pi}(x)\Bigr|
+  \;\le\;
+  \sup_{x}\,\bigl|V_{1}^{\pi}(x)-V_{2}^{\pi}(x)\bigr|
+  \;+\;\beta \,\frac{R_{\max}}{1-\gamma}.
+\]
+Let
+\[
+   \Delta \;=\;\sup_{s\in S}\,\bigl|\,V_{1}^{\pi}(s)\;-\;V_{2}^{\pi}(s)\bigr|.
+\]
+Then combining everything above,
+\[
+  \bigl|V_{1}^{\pi}(s)\;-\;V_{2}^{\pi}(s)\bigr|
+  \;\le\;
+  \alpha \;+\;\gamma\,\Bigl(\,\Delta \;+\;\beta\,\frac{R_{\max}}{1-\gamma}\Bigr).
+\]
+Taking the supremum in \(s\) on the left side gives
+\[
+  \Delta 
+  \;\le\;
+  \alpha \;+\;\gamma\,\Delta 
+  \;+\;\gamma\,\beta\,\frac{R_{\max}}{1-\gamma}.
+\]
+Hence,
+\[
+  (\,1-\gamma)\,\Delta
+  \;\le\;
+  \alpha \;+\;\gamma\,\beta\,\frac{R_{\max}}{1-\gamma}
+  \quad\Longrightarrow\quad
+  \Delta 
+  \;\le\;
+  \frac{\alpha}{1-\gamma}
+  \;+\;
+  \frac{\gamma\,\beta\,R_{\max}}{(1-\gamma)^2}
+  \;.
+\]
+Finally, we can note that \(\alpha\le \alpha/(1-\gamma)\), 
+or equivalently multiply out and observe
+\[
+  \frac{\alpha}{1-\gamma}
+  \;=\;
+  \frac{\alpha\,\bigl(1-\gamma\bigr)}{(1-\gamma)^2}
+  \;\le\;
+  \frac{\alpha}{(1-\gamma)^2}\;.
+\]
+So we get
+\[
+  \Delta 
+  \;\;\le\;\;
+  \frac{\alpha}{1-\gamma} 
+  \;+\;
+  \frac{\gamma\,\beta\,R_{\max}}{(1-\gamma)^2}
+  \;\;\le\;\;
+  \frac{\alpha + \gamma\,\beta\,R_{\max}}{(1-\gamma)^2}.
+\]
+Thus, for every state \(s\),
+\[
+  \bigl|\,V_{1}^{\pi}(s)\;-\;V_{2}^{\pi}(s)\bigr|
+  \;\le\;
+  \Delta
+  \;\le\;
+  \frac{\alpha \;+\;\gamma\,\beta\,R_{\max}}{\,(1-\gamma)^2}\,.
+\]
+This completes the proof of part (ii).

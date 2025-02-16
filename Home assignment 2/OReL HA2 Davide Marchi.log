@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  16 FEB 2025 18:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  16 FEB 2025 18:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -343,13 +343,20 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 [1
 
-{c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./1.tex)
+{c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./1.tex) (./2.tex
+
+[2]
+Overfull \hbox (89.69513pt too wide) detected at line 51
+[]\OML/cmm/m/it/12 V[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 s\OT1/cmr/m/n/12 )  \OMS/cmsy/m/n/12 ^^@  \OML/cmm/m/it/12 V[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 s\OT1/cmr/m/n/12 )[]  =  [] [] \OML/cmm/m/it/12 ^^Y\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 a \OMS/cmsy/m/n/12 j \OML/cmm/m/it/12 s\OT1/cmr/m/n/12 )[]\OML/cmm/m/it/12 R[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 s; a\OT1/cmr/m/n/12 ) + \OML/cmm/m/it/12 ^^M  [] P[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 x \OMS/cmsy/m/n/12 j \OML/cmm/m/it/12 s; a\OT1/cmr/m/n/12 ) \OML/cmm/m/it/12 V[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 )  \OMS/cmsy/m/n/12 ^^@  []\OML/cmm/m/it/12 R[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 s; a\OT1/cmr/m/n/12 ) + \OML/cmm/m/it/12 ^^M  [] P[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 x \OMS/cmsy/m/n/12 j \OML/cmm/m/it/12 s; a\OT1/cmr/m/n/12 ) \OML/cmm/m/it/12 V[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 )[][][]\OML/cmm/m/it/12 :
+ []
+
+
+
+[3])
 No file "OReL HA2 Davide Marchi".bbl.
 
 
-[2]
-
-[3] (./OReL HA2 Davide Marchi.aux)
+[4] (./OReL HA2 Davide Marchi.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -358,18 +365,18 @@ Package rerunfilecheck Info: File `"OReL HA2 Davide Marchi".out' has not changed
 (rerunfilecheck)             Checksum: 115EC07177E84CA2AD4F4F43026CEF46;1131.
  ) 
 Here is how much of TeX's memory you used:
- 12037 strings out of 473201
- 185189 string characters out of 5720300
- 863200 words of memory out of 5000000
- 35119 multiletter control sequences out of 15000+600000
+ 12046 strings out of 473201
+ 185306 string characters out of 5720300
+ 875200 words of memory out of 5000000
+ 35124 multiletter control sequences out of 15000+600000
  567640 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 79i,6n,93p,562b,440s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on "OReL HA2 Davide Marchi.pdf" (3 pages, 112138 bytes).
+ 79i,11n,93p,562b,450s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on "OReL HA2 Davide Marchi.pdf" (4 pages, 145517 bytes).
 PDF statistics:
- 100 PDF objects out of 1000 (max. 8388607)
- 76 compressed objects within 1 object stream
- 14 named destinations out of 1000 (max. 500000)
+ 114 PDF objects out of 1000 (max. 8388607)
+ 85 compressed objects within 1 object stream
+ 15 named destinations out of 1000 (max. 500000)
  41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
