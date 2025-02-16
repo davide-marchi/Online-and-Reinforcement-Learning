@@ -1,195 +1,143 @@
-We recall the setting: two finite discounted MDPs
+We have two finite discounted MDPs
 \[
-  M_1 \;=\; (S,A,P_1,R_1,\gamma)
+  M_{1} = (S, A, P_{1}, R_{1}, \gamma)
   \quad\text{and}\quad
-  M_2 \;=\;(S,A,P_2,R_2,\gamma),
+  M_{2} = (S, A, P_{2}, R_{2}, \gamma)
 \]
-with the same discount factor $0<\gamma<1$ and finite state--action space. 
-For each $(s,a)$ we have:
+with the same discount factor $\gamma \in (0,1)$ and state--action space $S \times A$. 
+Suppose the reward functions satisfy 
+$R_m(s,a)\in[0,R_{\max}]$, and for all $(s,a)$:
 \[
-  \bigl|R_1(s,a)-R_2(s,a)\bigr|\;\le\;\alpha,
-  \quad
-  \bigl\|P_1(\cdot\mid s,a)\;-\;P_2(\cdot\mid s,a)\bigr\|_1\;\le\;\beta,
-  \quad
-  R_1(s,a),\,R_2(s,a)\;\in\;[0,R_{\max}].
+  |R_{1}(s,a) - R_{2}(s,a)| \;\le\;\alpha,
+  \qquad
+  \bigl\|P_{1}(\cdot \mid s,a) \;-\; P_{2}(\cdot \mid s,a)\bigr\|_{1} \;\le\;\beta.
 \]
-Let $\pi$ be any fixed stationary policy (deterministic or randomized), and let 
-$V^\pi_1,\;V^\pi_2$ denote its value functions in $M_1$ and $M_2$, respectively. 
-We wish to show that, for every $s\in S$,
+Fix a stationary (deterministic) policy $\pi$. Define the ``reward'' and ``transition'' components in each MDP as follows:
 \[
-  \bigl|V_1^\pi(s)\;-\;V_2^\pi(s)\bigr|
+  r_{1}^{\pi}(s) \;=\; R_{1}\bigl(s,\pi(s)\bigr), 
+  \quad
+  (P_{1}^{\pi} f)(s) \;=\; \sum_{s'} P_{1}\bigl(s'\mid s, \pi(s)\bigr)\,f(s'),
+\]
+\[
+  r_{2}^{\pi}(s) \;=\; R_{2}\bigl(s,\pi(s)\bigr), 
+  \quad
+  (P_{2}^{\pi} f)(s) \;=\; \sum_{s'} P_{2}\bigl(s'\mid s, \pi(s)\bigr)\,f(s').
+\]
+Then the respective value functions satisfy the Bellman equations:
+\[
+  V_{1}^{\pi} \;=\; r_{1}^{\pi} \;+\; \gamma\,P_{1}^{\pi} V_{1}^{\pi},
+  \qquad
+  V_{2}^{\pi} \;=\; r_{2}^{\pi} \;+\; \gamma\,P_{2}^{\pi} V_{2}^{\pi}.
+\]
+Let $\delta \;=\; V_{1}^{\pi} \;-\; V_{2}^{\pi}$.  Subtracting the two equations gives
+\[
+  \delta \;=\; (r_{1}^{\pi}-r_{2}^{\pi})
+              \;+\;\gamma\,(P_{1}^{\pi}V_{1}^{\pi} - P_{2}^{\pi} V_{2}^{\pi}).
+\]
+We add and subtract the term $\gamma P_{1}^{\pi} V_{2}^{\pi}$:
+\[
+  \delta \;=\; (r_{1}^{\pi}-r_{2}^{\pi})
+              \;+\;\gamma\,P_{1}^{\pi}\bigl(V_{1}^{\pi} - V_{2}^{\pi}\bigr)
+              \;+\;\gamma\,\bigl(P_{1}^{\pi} - P_{2}^{\pi}\bigr)\,V_{2}^{\pi},
+\]
+or equivalently
+\[
+  \delta \;=\;(r_{1}^{\pi}-r_{2}^{\pi})
+             \;+\;\gamma\,P_{1}^{\pi}\,\delta
+             \;+\;\gamma\,\bigl(P_{1}^{\pi}-P_{2}^{\pi}\bigr)\,V_{2}^{\pi}.
+\]
+Taking the supremum norm (i.e.\ $\|\cdot\|_{\infty}$) on both sides yields
+\[
+  \|\delta\|_{\infty}
   \;\;\le\;\;
-  \frac{\alpha\;+\;\gamma\,R_{\max}\,\beta}{(1-\gamma)^2}.
+  \|\,r_{1}^{\pi}-r_{2}^{\pi}\|_{\infty}
+  \;+\;\gamma\,\bigl\|P_{1}^{\pi}\,\delta\bigr\|_{\infty}
+  \;+\;\gamma\,\bigl\|\bigl(P_{1}^{\pi}-P_{2}^{\pi}\bigr)\,V_{2}^{\pi}\bigr\|_{\infty}.
 \]
 
-\medskip
-\noindent
-\textbf{Bellman Operators.} 
-Define the Bellman operator $T_m^\pi$ for each $M_m$ ($m=1,2$) by
+\paragraph{Step 1: Bounding the Rewards.}
+By assumption,
 \[
-  (T_m^\pi V)(s)
-  \;=\;
-  \sum_{a\in A}\pi(a\mid s)
-  \Bigl[\,R_m(s,a)\;+\;\gamma\,\sum_{s'}P_m(s'\mid s,a)\,V(s')\Bigr].
+   \bigl|r_{1}^{\pi}(s) - r_{2}^{\pi}(s)\bigr|
+   \;=\;
+   \bigl|R_{1}(s,\pi(s)) - R_{2}(s,\pi(s))\bigr|
+   \;\le\;\alpha,
 \]
-Then $V_m^\pi$ is the unique fixed point: $V_m^\pi = T_m^\pi\,V_m^\pi$, i.e.
-\[
-  V_m^\pi(s)
-  \;=\;
-  (T_m^\pi V_m^\pi)(s)
-  \;=\;
-  \sum_{a}\pi(a\mid s)
-  \Bigl[R_m(s,a)
-        \;+\;\gamma\,\sum_{s'}P_m(s'\mid s,a)\,V_m^\pi(s')\Bigr].
-\]
+so $\|\,r_{1}^{\pi} - r_{2}^{\pi}\|_{\infty} \le \alpha$.
 
-\medskip
-\noindent
-\textbf{Step 1: Decompose the difference.}  
-For each $s\in S$, we have
+\paragraph{Step 2: Bounding $\|P_{1}^{\pi}\,\delta\|_{\infty}$.}
+Since $P_{1}^{\pi}$ is a probability kernel,
 \[
-  V_1^\pi(s)\;-\;V_2^\pi(s)
+  \bigl|(P_{1}^{\pi}\,\delta)(s)\bigr|
   \;=\;
-  \bigl(T_1^\pi V_1^\pi\bigr)(s)\;-\;\bigl(T_2^\pi V_2^\pi\bigr)(s).
-\]
-Add and subtract $\bigl(T_1^\pi V_2^\pi\bigr)(s)$ inside the absolute value:
-\[
-  \begin{aligned}
-  \bigl|V_1^\pi(s)-V_2^\pi(s)\bigr|
-  &=\;
-  \bigl|\,T_1^\pi V_1^\pi(s)\;-\;T_2^\pi V_2^\pi(s)\bigr|
-  \\
-  &\le\;
-  \underbrace{\bigl|\,T_1^\pi V_1^\pi(s)\;-\;T_1^\pi V_2^\pi(s)\bigr|}%
-            _{\text{(1) same operator, diff in values}}
-  \;+\;
-  \underbrace{\bigl|\,T_1^\pi V_2^\pi(s)\;-\;T_2^\pi V_2^\pi(s)\bigr|}%
-             _{\text{(2) same value, diff in operators}}
-  \,.
-  \end{aligned}
-\]
-
-\smallskip
-\noindent
-\textbf{(1) Same operator, difference in the value functions.}\\
-Since $T_1^\pi$ has discount factor $\gamma$,
-\[
-  \bigl|\,T_1^\pi V_1^\pi(s) \;-\;T_1^\pi V_2^\pi(s)\bigr|
-  \;=\;
-  \gamma\;\sum_{a}\pi(a\mid s)\,
-  \bigl|\sum_{s'}P_1(s'\mid s,a)\,V_1^\pi(s')
-         -\sum_{s'}P_1(s'\mid s,a)\,V_2^\pi(s')
-  \bigr|
+  \Bigl|\sum_{s'} P_{1}\bigl(s'\mid s,\pi(s)\bigr)\,\delta(s')\Bigr|
   \;\le\;
-  \gamma\,\max_{x}\bigl|\,V_1^\pi(x)-V_2^\pi(x)\bigr|.
+  \sum_{s'}P_{1}(s'\mid s,\pi(s))\,|\delta(s')|
+  \;\le\;\|\delta\|_{\infty}.
 \]
-Define 
-\[
-  \Delta\;=\;\sup_{s\in S}\,\bigl|\,V_1^\pi(s)-V_2^\pi(s)\bigr|.
-\]
-Thus the first portion is at most $\gamma\,\Delta$.
+Hence $\bigl\|P_{1}^{\pi}\,\delta\bigr\|_{\infty} \le \|\delta\|_{\infty}.$
 
-\smallskip
-\noindent
-\textbf{(2) Same value function, difference in operators.}\\
-Next,
+\paragraph{Step 3: Bounding $\|\,(P_{1}^{\pi}-P_{2}^{\pi})\,V_{2}^{\pi}\|\_{\infty}$.}
+We have, for each $s$,
 \[
-  \bigl|\,T_1^\pi V_2^\pi(s) \;-\;T_2^\pi V_2^\pi(s)\bigr|
-  \;\;=\;\;
-  \Bigl|\;
-  \sum_{a}\pi(a\mid s)\,\bigl[R_1(s,a)+\gamma\!\!\sum_{s'}P_1(s'\mid s,a)\,V_2^\pi(s')\bigr]
-  \;-\;
-  \sum_{a}\pi(a\mid s)\,\bigl[R_2(s,a)+\gamma\!\!\sum_{s'}P_2(s'\mid s,a)\,V_2^\pi(s')\bigr]
-  \Bigr|.
+  \bigl|\bigl((P_{1}^{\pi}-P_{2}^{\pi})\,V_{2}^{\pi}\bigr)(s)\bigr|
+  \;=\;
+  \bigl|\sum_{s'}\bigl[P_{1}(s'\mid s,\pi(s))-P_{2}(s'\mid s,\pi(s))\bigr]
+                \,V_{2}^{\pi}(s')\bigr|.
 \]
-We can group the terms:
+By the triangle inequality and definition of the $L_1$ norm,
 \[
   \le\;
-  \sum_{a}\pi(a\mid s)
-  \Bigl|\,
-    \underbrace{R_1(s,a)-R_2(s,a)}_{\le\,\alpha}
-    \;+\;
-    \gamma\!\sum_{s'}\bigl[P_1(s'\mid s,a)-P_2(s'\mid s,a)\bigr]\,V_2^\pi(s')
-  \Bigr|.
+  \sum_{s'}
+  \bigl|P_{1}(s'\mid s,\pi(s)) - P_{2}(s'\mid s,\pi(s))\bigr|\,
+  \bigl|\,V_{2}^{\pi}(s')\bigr|
+  \;\;\le\;\;
+  \Bigl\|\bigl(P_{1}-P_{2}\bigr)(s,\cdot)\Bigr\|_{1}\;\cdot\;\|V_{2}^{\pi}\|_{\infty}.
 \]
-Hence
+Since $\|(P_{1}-P_{2})(s,\cdot)\|_{1}\le \beta$, and $V_{2}^{\pi}$ is bounded by 
+$\|V_{2}^{\pi}\|_{\infty}\le \frac{R_{\max}}{1-\gamma}$, we get
 \[
-  \bigl|\,T_1^\pi V_2^\pi(s) - T_2^\pi V_2^\pi(s)\bigr|
-  \;\le\;
-  \sum_{a}\pi(a\mid s)\Bigl[
-    \alpha
-    \;+\;
-    \gamma\,\Bigl|\sum_{s'}\bigl[P_1(s'\mid s,a)-P_2(s'\mid s,a)\bigr]\,
-         V_2^\pi(s')\Bigr|
-  \Bigr].
-\]
-Since 
-\[
-  \sum_{s'} \bigl|P_1(s'\mid s,a)-P_2(s'\mid s,a)\bigr|
-  \;\le\;
-  \beta,
-  \quad\text{and}\quad
-  \bigl|V_2^\pi(s')\bigr|\;\le\;\frac{R_{\max}}{1-\gamma},
-\]
-it follows that
-\[
-  \Bigl|\sum_{s'}\bigl[P_1(s'\mid s,a)-P_2(s'\mid s,a)\bigr]\,
-        V_2^\pi(s')
-  \Bigr|
-  \;\le\;
+  \bigl\|\,(P_{1}^{\pi}-P_{2}^{\pi})\,V_{2}^{\pi}\bigr\|_{\infty}
+  \;\;\le\;\;
   \beta\,\frac{R_{\max}}{\,1-\gamma\,}.
 \]
-Hence
-\[
-  \bigl|\,T_1^\pi V_2^\pi(s) - T_2^\pi V_2^\pi(s)\bigr|
-  \;\le\;
-  \alpha \;+\;\gamma\,\beta\,\frac{R_{\max}}{1-\gamma}.
-\]
 
-\medskip
-\noindent
-\textbf{Combine (1) \& (2).}\\
-Putting the two pieces together:
+\paragraph{Combining the Bounds.}
+Putting all parts together in
 \[
-  \bigl|V_1^\pi(s)-V_2^\pi(s)\bigr|
+  \|\delta\|_{\infty}
   \;\le\;
-  \underbrace{\gamma\,\Delta}_{\text{from (1)}}
-  \;+\;\underbrace{\alpha + \gamma\,\beta\,\frac{R_{\max}}{1-\gamma}}_{\text{from (2)}}.
+  \alpha
+  \;+\;\gamma\,\|\delta\|_{\infty}
+  \;+\;\gamma\,\beta\,\frac{R_{\max}}{1-\gamma},
 \]
-Therefore, taking supremum over $s\in S$:
+we isolate $\|\delta\|_{\infty}$:
 \[
-  \Delta 
-  \;=\;
-  \sup_{s}\bigl|\,V_1^\pi(s)-V_2^\pi(s)\bigr|
+  (\,1-\gamma)\,\|\delta\|_{\infty}
   \;\le\;
-  \gamma\,\Delta \;+\; \alpha 
-  \;+\;\gamma\,\beta\,\frac{R_{\max}}{\,1-\gamma\,}.
-\]
-Rearranging gives
-\[
-  (1-\gamma)\,\Delta 
-  \;\le\;
-  \alpha \;+\;\gamma\,\beta\,\frac{R_{\max}}{1-\gamma},
+  \alpha
+  \;+\;
+  \gamma\,\frac{R_{\max}\,\beta}{\,1-\gamma\,},
   \quad\Longrightarrow\quad
-  \Delta
+  \|\delta\|_{\infty}
   \;\le\;
   \frac{\alpha}{\,1-\gamma\,}
   \;+\;
   \frac{\gamma\,\beta\,R_{\max}}{(1-\gamma)^2}.
 \]
-As in the usual derivations, since $\alpha/(1-\gamma)\,\le\,\alpha/(1-\gamma)^2$
-whenever $0<\gamma<1$, one can in fact write
+As a final simplification, we note that 
+\(\alpha/(1-\gamma)\,\le\,\alpha/(1-\gamma)^2\) since $0<\gamma<1$. 
+Hence 
 \[
-  \Delta 
-  \;\;\le\;\;  
-  \frac{\alpha \;+\; \gamma\,\beta\,R_{\max}}{(1-\gamma)^2}.
+  \|\delta\|_{\infty}
+  \;=\;\max_{s}\,\bigl|V_{1}^{\pi}(s)-V_{2}^{\pi}(s)\bigr|
+  \;\;\le\;\;
+  \frac{\alpha + \gamma\,R_{\max}\,\beta}{(1-\gamma)^2}.
 \]
-Thus, for every $s\in S$,
+In other words, for every $s\in S$,
 \[
-  \bigl|\,V_1^\pi(s)\;-\;V_2^\pi(s)\bigr|
-  \;\le\;
-  \Delta
-  \;\le\;
-  \frac{\alpha \;+\;\gamma\,\beta\,R_{\max}}{(1-\gamma)^2}.
+  \bigl|V_{1}^{\pi}(s)-V_{2}^{\pi}(s)\bigr|
+  \;\;\le\;\;
+  \frac{\alpha + \gamma\,R_{\max}\,\beta}{(1-\gamma)^2}.
 \]
-This completes the alternate proof via Bellman equations.
+This completes the proof.
