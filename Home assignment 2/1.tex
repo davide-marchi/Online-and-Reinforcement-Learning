@@ -1,0 +1,45 @@
+Determine whether each statement below is True or False and provide a very brief justification.
+
+\begin{enumerate}
+    \item \textbf{Statement:} 
+    \emph{``In a finite discounted MDP, every possible policy induces a Markov Reward Process.''}
+
+    \textbf{Answer: False.} 
+    This statement assumes that the policy depends only on the current state. 
+    If we allow policies to depend on the \emph{entire} past history 
+    (\emph{history-dependent} policies), 
+    then the resulting transitions in the state space may no longer satisfy the Markov property,
+    since the chosen action at each step might be a function of all previous states and actions. 
+    Hence not \emph{every} (fully history-dependent) policy necessarily induces a Markov Reward Process 
+    in the \emph{original} state space.
+
+  \item \textbf{Statement:}
+    \emph{``Consider a finite discounted MDP, and assume that $\pi$ is an optimal policy. Then,
+    the action(s) output by $\pi$ does not depend on history other than the current state
+    (i.e., $\pi$ is necessarily stationary).''}
+
+    \textbf{Answer: False.}
+    While it is true that there \emph{exists} an optimal policy which is stationary deterministic, 
+    it does not follow that \emph{all} optimal policies must be so. 
+    In fact, multiple distinct policies (some stationary, others possibly history-dependent or randomized) 
+    can achieve exactly the same optimal value. 
+    Hence it is incorrect to say that \emph{any} optimal policy $\pi$ must be purely state-dependent (stationary).
+
+  \item \textbf{Statement:}
+    \emph{``n a finite discounted MDP, a greedy policy with respect to optimal action-value
+    function, $Q^\ast$, corresponds to an optimal policy.''}
+
+    \textbf{Answer: True.}
+    From the Bellman optimality equations for $Q^\ast$, a policy that selects
+    \[
+      \arg\max_{a} \; Q^\ast(s,a)
+    \]
+    at each state $s$ is indeed an optimal policy. This policy attains the same value as $Q^\ast$ itself, thus achieving the optimal value.
+
+  \item \textbf{Statement:}
+    \emph{``Under the coverage assumption, the Weighted Importance Sampling Estimator $\widehat{V}_{\mathrm{wIS}}$ converges to $V^\pi$ with probability 1.''}
+
+    \textbf{Answer: True.}
+    The coverage assumption ensures that the target policy's state-action probabilities are absolutely continuous w.r.t.\ the behavior policy. Under this assumption, Weighted Importance Sampling (though slightly biased) is a \emph{consistent} estimator of $V^\pi$, meaning it converges almost surely to $V^\pi$ as the sample size grows unbounded.
+
+\end{enumerate}
