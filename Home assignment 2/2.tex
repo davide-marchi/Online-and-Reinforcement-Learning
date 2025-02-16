@@ -1,143 +1,157 @@
-We have two finite discounted MDPs
+\textbf{Setup:} We have two discounted MDPs 
 \[
-  M_{1} = (S, A, P_{1}, R_{1}, \gamma)
+  M_1 \;=\; (S, A, P_1, R_1, \gamma)
   \quad\text{and}\quad
-  M_{2} = (S, A, P_{2}, R_{2}, \gamma)
+  M_2 \;=\; (S, A, P_2, R_2, \gamma),
 \]
-with the same discount factor $\gamma \in (0,1)$ and state--action space $S \times A$. 
-Suppose the reward functions satisfy 
-$R_m(s,a)\in[0,R_{\max}]$, and for all $(s,a)$:
+sharing the same discount factor $\gamma \in (0,1)$, the same finite state--action space, and rewards bounded in $[0,R_{\max}]$.  
+For all state--action pairs $(s,a)$:
 \[
-  |R_{1}(s,a) - R_{2}(s,a)| \;\le\;\alpha,
-  \qquad
-  \bigl\|P_{1}(\cdot \mid s,a) \;-\; P_{2}(\cdot \mid s,a)\bigr\|_{1} \;\le\;\beta.
-\]
-Fix a stationary (deterministic) policy $\pi$. Define the ``reward'' and ``transition'' components in each MDP as follows:
-\[
-  r_{1}^{\pi}(s) \;=\; R_{1}\bigl(s,\pi(s)\bigr), 
+  \bigl|\,R_1(s,a) \;-\; R_2(s,a)\bigr|\;\le\;\alpha,
   \quad
-  (P_{1}^{\pi} f)(s) \;=\; \sum_{s'} P_{1}\bigl(s'\mid s, \pi(s)\bigr)\,f(s'),
+  \bigl\|\;P_1(\cdot \mid s,a)\;-\;P_2(\cdot \mid s,a)\bigr\|_{1}\;\le\;\beta.
 \]
+Consider a fixed stationary policy $\pi$, and let $V_{1}^{\pi}$ and $V_{2}^{\pi}$ be its value functions in $M_1$ and $M_2$, respectively. The goal is to show that
 \[
-  r_{2}^{\pi}(s) \;=\; R_{2}\bigl(s,\pi(s)\bigr), 
+  \bigl|\,V_{1}^{\pi}(s)\;-\;V_{2}^{\pi}(s)\bigr|
+  \;\le\;
+  \frac{\alpha \;+\;\gamma\,R_{\max}\,\beta}{(1-\gamma)^{2}}
   \quad
-  (P_{2}^{\pi} f)(s) \;=\; \sum_{s'} P_{2}\bigl(s'\mid s, \pi(s)\bigr)\,f(s').
+  \text{for every state }s\,\in\,S.
 \]
-Then the respective value functions satisfy the Bellman equations:
+
+\bigskip
+\noindent
+\textbf{Step 1: Write down the Bellman equations for each MDP.}\\
+By definition of $\pi$, the Bellman fixed-point form is:
 \[
-  V_{1}^{\pi} \;=\; r_{1}^{\pi} \;+\; \gamma\,P_{1}^{\pi} V_{1}^{\pi},
-  \qquad
-  V_{2}^{\pi} \;=\; r_{2}^{\pi} \;+\; \gamma\,P_{2}^{\pi} V_{2}^{\pi}.
+  V_{1}^{\pi} \;=\; r_{1}^{\pi} + \gamma\,P_{1}^{\pi}\,V_{1}^{\pi},
+  \quad
+  V_{2}^{\pi} \;=\; r_{2}^{\pi} + \gamma\,P_{2}^{\pi}\,V_{2}^{\pi},
 \]
-Let $\delta \;=\; V_{1}^{\pi} \;-\; V_{2}^{\pi}$.  Subtracting the two equations gives
+where
 \[
-  \delta \;=\; (r_{1}^{\pi}-r_{2}^{\pi})
-              \;+\;\gamma\,(P_{1}^{\pi}V_{1}^{\pi} - P_{2}^{\pi} V_{2}^{\pi}).
+  r_{m}^{\pi}(s) \;=\; R_{m}\bigl(s,\pi(s)\bigr), 
+  \quad
+  (P_{m}^{\pi} f)(s) \;=\;
+   \sum_{s'}P_{m}\bigl(s'\mid s,\pi(s)\bigr)\,f(s'),
+  \quad
+  m = 1,2.
 \]
-We add and subtract the term $\gamma P_{1}^{\pi} V_{2}^{\pi}$:
+
+Define $\delta \;=\; V_{1}^{\pi}-V_{2}^{\pi}$. Then
 \[
-  \delta \;=\; (r_{1}^{\pi}-r_{2}^{\pi})
-              \;+\;\gamma\,P_{1}^{\pi}\bigl(V_{1}^{\pi} - V_{2}^{\pi}\bigr)
-              \;+\;\gamma\,\bigl(P_{1}^{\pi} - P_{2}^{\pi}\bigr)\,V_{2}^{\pi},
+  \delta
+  \;=\;
+  \bigl(r_{1}^{\pi} - r_{2}^{\pi}\bigr)
+  \;+\;
+  \gamma\,\bigl(P_{1}^{\pi}V_{1}^{\pi} - P_{2}^{\pi}V_{2}^{\pi}\bigr).
 \]
-or equivalently
+To facilitate the separation of terms, we introduce and subtract $\gamma\,P_{1}^{\pi}V_{2}^{\pi}$, which allows us to rewrite the second term as:
 \[
-  \delta \;=\;(r_{1}^{\pi}-r_{2}^{\pi})
-             \;+\;\gamma\,P_{1}^{\pi}\,\delta
-             \;+\;\gamma\,\bigl(P_{1}^{\pi}-P_{2}^{\pi}\bigr)\,V_{2}^{\pi}.
+  P_{1}^{\pi}V_{1}^{\pi} - P_{2}^{\pi}V_{2}^{\pi}
+  \;=\;
+  (P_{1}^{\pi}V_{1}^{\pi} - P_{1}^{\pi}V_{2}^{\pi})
+  \;+\;
+  (P_{1}^{\pi}V_{2}^{\pi} - P_{2}^{\pi}V_{2}^{\pi}).
 \]
-Taking the supremum norm (i.e.\ $\|\cdot\|_{\infty}$) on both sides yields
+Substituting this back, we obtain:
+\[
+  \delta
+  \;=\;
+  \bigl(r_{1}^{\pi} - r_{2}^{\pi}\bigr)
+  \;+\;
+  \gamma\,P_{1}^{\pi}\bigl(V_{1}^{\pi}-V_{2}^{\pi}\bigr)
+  \;+\;
+  \gamma\,\bigl(P_{1}^{\pi}-P_{2}^{\pi}\bigr)\,V_{2}^{\pi}.
+\]
+
+
+\bigskip
+\noindent
+\textbf{Step 3: Take norms and use triangle/inequality bounds.}\\
+Taking the supremum norm ($\|\cdot\|_\infty$) on both sides,
 \[
   \|\delta\|_{\infty}
-  \;\;\le\;\;
-  \|\,r_{1}^{\pi}-r_{2}^{\pi}\|_{\infty}
-  \;+\;\gamma\,\bigl\|P_{1}^{\pi}\,\delta\bigr\|_{\infty}
-  \;+\;\gamma\,\bigl\|\bigl(P_{1}^{\pi}-P_{2}^{\pi}\bigr)\,V_{2}^{\pi}\bigr\|_{\infty}.
-\]
-
-\paragraph{Step 1: Bounding the Rewards.}
-By assumption,
-\[
-   \bigl|r_{1}^{\pi}(s) - r_{2}^{\pi}(s)\bigr|
-   \;=\;
-   \bigl|R_{1}(s,\pi(s)) - R_{2}(s,\pi(s))\bigr|
-   \;\le\;\alpha,
-\]
-so $\|\,r_{1}^{\pi} - r_{2}^{\pi}\|_{\infty} \le \alpha$.
-
-\paragraph{Step 2: Bounding $\|P_{1}^{\pi}\,\delta\|_{\infty}$.}
-Since $P_{1}^{\pi}$ is a probability kernel,
-\[
-  \bigl|(P_{1}^{\pi}\,\delta)(s)\bigr|
-  \;=\;
-  \Bigl|\sum_{s'} P_{1}\bigl(s'\mid s,\pi(s)\bigr)\,\delta(s')\Bigr|
   \;\le\;
-  \sum_{s'}P_{1}(s'\mid s,\pi(s))\,|\delta(s')|
-  \;\le\;\|\delta\|_{\infty}.
-\]
-Hence $\bigl\|P_{1}^{\pi}\,\delta\bigr\|_{\infty} \le \|\delta\|_{\infty}.$
-
-\paragraph{Step 3: Bounding $\|\,(P_{1}^{\pi}-P_{2}^{\pi})\,V_{2}^{\pi}\|\_{\infty}$.}
-We have, for each $s$,
-\[
-  \bigl|\bigl((P_{1}^{\pi}-P_{2}^{\pi})\,V_{2}^{\pi}\bigr)(s)\bigr|
-  \;=\;
-  \bigl|\sum_{s'}\bigl[P_{1}(s'\mid s,\pi(s))-P_{2}(s'\mid s,\pi(s))\bigr]
-                \,V_{2}^{\pi}(s')\bigr|.
-\]
-By the triangle inequality and definition of the $L_1$ norm,
-\[
-  \le\;
-  \sum_{s'}
-  \bigl|P_{1}(s'\mid s,\pi(s)) - P_{2}(s'\mid s,\pi(s))\bigr|\,
-  \bigl|\,V_{2}^{\pi}(s')\bigr|
-  \;\;\le\;\;
-  \Bigl\|\bigl(P_{1}-P_{2}\bigr)(s,\cdot)\Bigr\|_{1}\;\cdot\;\|V_{2}^{\pi}\|_{\infty}.
-\]
-Since $\|(P_{1}-P_{2})(s,\cdot)\|_{1}\le \beta$, and $V_{2}^{\pi}$ is bounded by 
-$\|V_{2}^{\pi}\|_{\infty}\le \frac{R_{\max}}{1-\gamma}$, we get
-\[
-  \bigl\|\,(P_{1}^{\pi}-P_{2}^{\pi})\,V_{2}^{\pi}\bigr\|_{\infty}
-  \;\;\le\;\;
-  \beta\,\frac{R_{\max}}{\,1-\gamma\,}.
+  \|\,r_{1}^{\pi}-r_{2}^{\pi}\|_{\infty}
+  \;+\;
+  \gamma\,\|\;P_{1}^{\pi}\,\delta\;\|_{\infty}
+  \;+\;
+  \gamma\,\|\;\bigl(P_{1}^{\pi}-P_{2}^{\pi}\bigr)\,V_{2}^{\pi}\|_{\infty}.
 \]
 
-\paragraph{Combining the Bounds.}
-Putting all parts together in
+\begin{itemize}
+  \item \textit{Reward difference:}\\
+    Since $\bigl|R_{1}(s,a) - R_{2}(s,a)\bigr|\le\alpha$, it follows that
+    \(
+       \|r_{1}^{\pi}-r_{2}^{\pi}\|_\infty \le \alpha.
+    \)
+
+  \item \textit{Term with $P_{1}^{\pi}\,\delta$:}\\
+    We have
+    \[
+      \bigl\|\;P_{1}^{\pi}\,\delta\;\bigr\|_{\infty}
+      \;\le\; \|\delta\|_{\infty},
+    \]
+    since $P_{1}^{\pi}$ is a probability kernel and thus a contraction in sup norm.
+
+  \item \textit{Term with $(P_{1}^{\pi}-P_{2}^{\pi})\,V_{2}^{\pi}$:}\\
+    For each $s$,
+    \[
+      \bigl|\,(P_{1}^{\pi}-P_{2}^{\pi})\,V_{2}^{\pi}(s)\bigr|
+      \;\le\;
+      \sum_{s'}\bigl|\,P_{1}(s'\mid s,\pi(s)) - P_{2}(s'\mid s,\pi(s))\bigr|\,
+      \bigl|\,V_{2}^{\pi}(s')\bigr|.
+    \]
+    By assumption, $\|P_{1}(\cdot\mid s,a)-P_{2}(\cdot\mid s,a)\|_{1}\le\beta$, 
+    and $\|V_{2}^{\pi}\|_{\infty}\le\frac{R_{\max}}{1-\gamma}$. Hence,
+    \[
+      \bigl\|\,(P_{1}^{\pi}-P_{2}^{\pi})\,V_{2}^{\pi}\bigr\|_{\infty}
+      \;\le\;\beta\,\frac{R_{\max}}{1-\gamma}.
+    \]
+\end{itemize}
+
+Putting these bounds together,
 \[
   \|\delta\|_{\infty}
   \;\le\;
   \alpha
   \;+\;\gamma\,\|\delta\|_{\infty}
-  \;+\;\gamma\,\beta\,\frac{R_{\max}}{1-\gamma},
+  \;+\;\gamma\,\beta\,\frac{R_{\max}}{\,1-\gamma\,}.
 \]
-we isolate $\|\delta\|_{\infty}$:
+
+\bigskip
+\noindent
+\textbf{Step 4: Solve for $\|\delta\|_{\infty}$.}\\
+We isolate $\|\delta\|_{\infty}$ on one side:
 \[
-  (\,1-\gamma)\,\|\delta\|_{\infty}
+  (1-\gamma)\,\|\delta\|_{\infty}
   \;\le\;
   \alpha
   \;+\;
-  \gamma\,\frac{R_{\max}\,\beta}{\,1-\gamma\,},
-  \quad\Longrightarrow\quad
+  \gamma\,\beta\,\frac{R_{\max}}{\,1-\gamma\,}.
+\]
+Thus
+\[
   \|\delta\|_{\infty}
   \;\le\;
   \frac{\alpha}{\,1-\gamma\,}
   \;+\;
   \frac{\gamma\,\beta\,R_{\max}}{(1-\gamma)^2}.
 \]
-As a final simplification, we note that 
-\(\alpha/(1-\gamma)\,\le\,\alpha/(1-\gamma)^2\) since $0<\gamma<1$. 
-Hence 
+Since $\alpha/(1-\gamma)\,\le\,\alpha/(1-\gamma)^2$ whenever $0<\gamma<1$, we can write 
 \[
   \|\delta\|_{\infty}
-  \;=\;\max_{s}\,\bigl|V_{1}^{\pi}(s)-V_{2}^{\pi}(s)\bigr|
-  \;\;\le\;\;
-  \frac{\alpha + \gamma\,R_{\max}\,\beta}{(1-\gamma)^2}.
+  \;\le\;
+  \frac{\alpha\;+\;\gamma\,\beta\,R_{\max}}{(1-\gamma)^2}.
 \]
-In other words, for every $s\in S$,
+Hence, for every state $s \in S$,
 \[
-  \bigl|V_{1}^{\pi}(s)-V_{2}^{\pi}(s)\bigr|
+  \bigl|\,V_{1}^{\pi}(s)-V_{2}^{\pi}(s)\bigr|
   \;\;\le\;\;
-  \frac{\alpha + \gamma\,R_{\max}\,\beta}{(1-\gamma)^2}.
+  \|\delta\|_{\infty}
+  \;\le\;
+  \frac{\alpha\;+\;\gamma\,R_{\max}\,\beta}{(1-\gamma)^2}.
 \]
-This completes the proof.
+This is the desired result.
