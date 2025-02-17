@@ -236,7 +236,7 @@ def VI(env, epsilon=1e-6, gamma=0.97):
         # The optimal action is the one that maximizes Q(s,a)
         policy[s] = np.argmax(Q_sa)
     
-    return policy, V
+    return iteration, policy, V
 
 
 # A naive function to output a readble matrix from a policy on the 4-room environment.
@@ -290,7 +290,8 @@ if __name__ == "__main__":
 
 	# Run PI on the environment with gamma = 0.97 and epsilon = 1e-6.
 	env = Four_Room()
-	optimal_policy, optimal_V = VI(env, epsilon=1e-6, gamma=0.97)
+	iterations, optimal_policy, optimal_V = VI(env, epsilon=1e-6, gamma=0.97)
+	print("Number of iterations for VI = ", iterations)
 	print("Optimal policy from VI = ", optimal_policy)
 	print("Optimal value function V* = ", np.round(optimal_V, 2))
 	print(display_4room_policy(optimal_policy))
@@ -301,7 +302,8 @@ if __name__ == "__main__":
 
 	# Run PI on the environment with gamma = 0.97 and epsilon = 1e-6.
 	env = Four_Room()
-	optimal_policy, optimal_V = VI(env, epsilon=1e-6, gamma=0.998)
+	iterations, optimal_policy, optimal_V = VI(env, epsilon=1e-6, gamma=0.998)
+	print("Number of iterations for VI = ", iterations)
 	print("Optimal policy from VI = ", optimal_policy)
 	print("Optimal value function V* = ", np.round(optimal_V, 2))
 	print(display_4room_policy(optimal_policy))
