@@ -195,6 +195,49 @@ def PI(env, gamma = 0.9):
 			policy1 = np.zeros(env.nS, dtype=int)
 
 
+# Implement the Value Iteration (VI) algorithm.
+# This function receives an MDP (env), an accuracy parameter epsilon, and a discount factor gamma.
+# It returns the optimal policy and the corresponding optimal value function.
+def VI(env, epsilon=1e-6, gamma=0.97):
+    # initialize value function V arbitrarily (here with zeros)
+    V = np.zeros(env.nS)
+    
+    # delta stores the maximum change over all states in one iteration.
+    delta = float('inf')
+    iteration = 0
+
+    # Loop until the value function converges (i.e., change is less than epsilon)
+    while delta > epsilon:
+        delta = 0
+        iteration += 1
+        # Create a new value function V_new for this iteration
+        V_new = np.zeros(env.nS)
+        # For each state, update its value according to the Bellman optimality equation
+        for s in range(env.nS):
+            # For state s, compute the value for each action a:
+            # Q(s,a) = R(s,a) + gamma * sum_{s'} P(s,a,s') * V(s')
+            Q_sa = np.zeros(env.nA)
+            for a in range(env.nA):
+                Q_sa[a] = env.R[s, a] + gamma * np.dot(env.P[s, a], V)
+            # The new value for state s is the maximum over all Q(s,a)
+            V_new[s] = max(Q_sa)
+            # Update delta with the max difference observed
+            delta = max(delta, abs(V_new[s] - V[s]))
+        # Update V with the new computed values
+        V = V_new.copy()
+
+    # After convergence of the value function, extract the optimal policy.
+    policy = np.zeros(env.nS, dtype=int)
+    for s in range(env.nS):
+        Q_sa = np.zeros(env.nA)
+        # Compute Q values again for each action on converged V
+        for a in range(env.nA):
+            Q_sa[a] = env.R[s, a] + gamma * np.dot(env.P[s, a], V)
+        # The optimal action is the one that maximizes Q(s,a)
+        policy[s] = np.argmax(Q_sa)
+    
+    return policy, V
+
 
 # A naive function to output a readble matrix from a policy on the 4-room environment.
 def display_4room_policy(policy):
@@ -226,14 +269,39 @@ def display_4room_policy(policy):
 
 	return np.array(res)
 
-	
-###########################################################################
-print("i) Solve the grid-world task above using PI")
-###########################################################################
 
-# Run PI on the environment with gamma = 0.97 and print the result.
-env = Four_Room()
-_, pi, V_opt = PI(env, 0.97)
-print("Optimal policy = ", pi)
-print("Optimal value function V^* = ", V_opt)
-print(display_4room_policy(pi))
+if __name__ == "__main__":
+
+	###########################################################################
+	print("\ni) Solve the grid-world task above using PI")
+	###########################################################################
+
+	# Run PI on the environment with gamma = 0.97 and print the result.
+	env = Four_Room()
+	iterations, pi, V_opt = PI(env, 0.97)
+	print("Number of iterations for PI = ", iterations)
+	print("Optimal policy from PI =", pi)
+	print("Optimal value function V* =", np.round(V_opt, 2))
+	print(display_4room_policy(pi))
+
+	###########################################################################
+	print("\nii) Implement VI and use it to solve the grid-world task above")
+	###########################################################################
+
+	# Run PI on the environment with gamma = 0.97 and epsilon = 1e-6.
+	env = Four_Room()
+	optimal_policy, optimal_V = VI(env, epsilon=1e-6, gamma=0.97)
+	print("Optimal policy from VI = ", optimal_policy)
+	print("Optimal value function V* = ", np.round(optimal_V, 2))
+	print(display_4room_policy(optimal_policy))
+
+	###########################################################################
+	print("\niii) Repeat Part (ii) with gamma = 0.998")
+	###########################################################################
+
+	# Run PI on the environment with gamma = 0.97 and epsilon = 1e-6.
+	env = Four_Room()
+	optimal_policy, optimal_V = VI(env, epsilon=1e-6, gamma=0.998)
+	print("Optimal policy from VI = ", optimal_policy)
+	print("Optimal value function V* = ", np.round(optimal_V, 2))
+	print(display_4room_policy(optimal_policy))
