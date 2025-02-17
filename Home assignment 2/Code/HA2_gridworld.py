@@ -1,4 +1,3 @@
-
 # Written by Hippolyte Bourel.
 # This code is proposed as a reference solution for various exercises of Home Assignements for the OReL course in 2024.
 # This solution is tailored for simplicity of understanding and is in no way optimal, nor the only way to implement the different elements!
@@ -196,38 +195,45 @@ def PI(env, gamma = 0.9):
 
 
 def VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=None):
-
-    nS, nA = env.nS, env.nA
-
+    """
+    VI function: Implements the Value Iteration algorithm
+    Inputs:
+      env: The environment with attributes nS (states), nA (actions), R (reward matrix), and P (transition probabilities)
+      epsilon: Convergence threshold
+      gamma: Discount factor, determines the weight of future rewards
+      anc: Flag to use anchored value iteration
+      V_zero: The anchor value function, used if anc is True
+	"""
+    
+    nS, nA = env.nS, env.nA   # nS: total number of states; nA: total number of actions
+    
     if V_zero is None:
-		# As in the pseudocode, we pick an initial "upper bound" value
-        Rmax = np.max(env.R)  # or a known bound if you prefer
+		# If no initial value function is provided, set V to an upper bound using the maximum reward
+        Rmax = np.max(env.R)  # Maximum reward from the reward matrix
         V = np.ones(nS) * (Rmax / (1.0 - gamma))
     else:
         V = V_zero.copy()
     
-    # If we do anchored VI and no anchor is provided, default to zero
+    # For anchored VI: default anchor is zeros if none provided
     if anc:
         if V_zero is None:
             V_zero = np.zeros(nS)
-
+    
     iteration = 0
     while True:
         iteration += 1
-        
-        # compute T(V) at each state
+        # Compute the Bellman backup T(V) for each state
         T_of_V = np.zeros(nS)
         for s in range(nS):
-            # Q(s,a) = R(s,a) + gamma sum_s' P[s,a,s'] * V[s']
+            # For each state, calculate Q(s, a) = R(s, a) + gamma * sum_{s'} P[s, a, s'] * V[s']
             Q_sa = np.zeros(nA)
             for a in range(nA):
-                Q_sa[a] = env.R[s,a] + gamma*np.dot(env.P[s,a], V)
+                Q_sa[a] = env.R[s,a] + gamma * np.dot(env.P[s,a], V)
             T_of_V[s] = np.max(Q_sa)
-
+        
         if anc:
-            # anchored update
-            # e.g. beta_n = gamma^{-2n}/ sum_{k=0}^n gamma^{-2k}
-            # or whichever anchor formula from the exercise
+            # Anchored VI update: blend the anchor V_zero with the Bellman backup using weight beta
+            # Here, beta is computed in a way that gives progressively less influence to V_zero
             r = gamma**(-2)
             numerator = (r ** iteration)
             denom = 0.0
@@ -235,27 +241,26 @@ def VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=None):
                 denom += (r**k)
             beta = numerator / denom
             
-            V_new = beta * V_zero + (1.0 - beta)*T_of_V
+            V_new = beta * V_zero + (1.0 - beta) * T_of_V
         else:
-            # standard VI update
+            # Standard VI update without anchoring
             V_new = T_of_V
-
+        
         diff = np.max(np.abs(V_new - V))
         V = V_new
-
-        # stopping condition from your slide:
-        # ||V_{n+1} - V_n|| < eps * (1-gamma) / (2 gamma)
-        if diff < epsilon*(1.0 - gamma)/(2.0*gamma):
+        
+        # Stopping condition: when the maximum update is below a threshold scaled by gamma
+        if diff < epsilon * (1.0 - gamma) / (2.0 * gamma):
             break
-
-    # Finally, extract the policy
+    
+    # After convergence, extract the policy from the resulting value function
     policy = np.zeros(nS, dtype=int)
     for s in range(nS):
         Q_sa = np.zeros(nA)
         for a in range(nA):
-            Q_sa[a] = env.R[s,a] + gamma*np.dot(env.P[s,a], V)
+            Q_sa[a] = env.R[s,a] + gamma * np.dot(env.P[s,a], V)
         policy[s] = np.argmax(Q_sa)
-
+    
     return iteration, policy, V
 
 
