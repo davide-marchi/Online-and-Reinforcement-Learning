@@ -369,31 +369,31 @@ if __name__ == "__main__":
 	print("\n(iv) Anchored Value Iteration with different initial points")
 	###########################################################################
 
-	# Example anchor choices:
+	# Anchor choices:
 	anchor_a = np.zeros(env.nS)                             # (a) V0 = 0
 	anchor_b = np.ones(env.nS)                              # (b) V0 = 1
-	anchor_c = np.random.rand(env.nS) / (1.0 - 0.97)         # (c) uniform random in [0, 1/(1-gamma)]
+	anchor_c = np.random.rand(env.nS) / (1.0 - 0.97)        # (c) uniform random in [0, 1/(1-gamma)]
 
 	# (a) Anc-VI with anchor 0
 	env = Four_Room()
 	it_a, pi_a, V_a = VI(env, epsilon=1e-6, gamma=0.97, anc=True, V_zero=anchor_a)
 	print(f"Anchored VI with anchor=0 took {it_a} iterations.")
 	print("Policy = ", pi_a)
-	print("Value  = ", np.round(V_a, 4))
+	print("Value  = ", np.round(V_a, 2))
 
 	# (b) Anc-VI with anchor=1
 	env = Four_Room()
 	it_b, pi_b, V_b = VI(env, epsilon=1e-6, gamma=0.97, anc=True, V_zero=anchor_b)
 	print(f"\nAnchored VI with anchor=1 took {it_b} iterations.")
 	print("Policy = ", pi_b)
-	print("Value  = ", np.round(V_b, 4))
+	print("Value  = ", np.round(V_b, 2))
 
 	# (c) Anc-VI with anchor ~ uniform random
 	env = Four_Room()
 	it_c, pi_c, V_c = VI(env, epsilon=1e-6, gamma=0.97, anc=True, V_zero=anchor_c)
 	print(f"\nAnchored VI with random anchor took {it_c} iterations.")
 	print("Policy = ", pi_c)
-	print("Value  = ", np.round(V_c, 4))
+	print("Value  = ", np.round(V_c, 2))
 
 	###########################################################################
 	print("\n(v) Compare the convergence speed of VI and Anchored VI (with e.g. anchor=0).")
@@ -404,18 +404,18 @@ if __name__ == "__main__":
 	it_a, pi_a, V_a = VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=anchor_a)
 	print(f"VI with anchor=0 took {it_a} iterations.")
 	print("Policy = ", pi_a)
-	print("Value  = ", np.round(V_a, 4))
+	print("Value  = ", np.round(V_a, 2))
 
 	# (b) VI with anchor=1
 	env = Four_Room()
 	it_b, pi_b, V_b = VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=anchor_b)
 	print(f"\nVI with anchor=1 took {it_b} iterations.")
 	print("Policy = ", pi_b)
-	print("Value  = ", np.round(V_b, 4))
+	print("Value  = ", np.round(V_b, 2))
 
 	# (c) VI with anchor ~ uniform random
 	env = Four_Room()
 	it_c, pi_c, V_c = VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=anchor_c)
 	print(f"\nVI with random anchor took {it_c} iterations.")
 	print("Policy = ", pi_c)
-	print("Value  = ", np.round(V_c, 4))
+	print("Value  = ", np.round(V_c, 2))
