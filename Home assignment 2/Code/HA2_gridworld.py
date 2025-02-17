@@ -195,44 +195,7 @@ def PI(env, gamma = 0.9):
 			policy1 = np.zeros(env.nS, dtype=int)
 
 
-import numpy as np
-
 def VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=None):
-    """
-    Value Iteration with optional Anchored VI, following the pseudocode 
-    from the provided slide:
-    
-    - Initialize V with R_max/(1 - gamma) for all states
-    - While ||V_{n+1} - V_n|| >= epsilon*(1-gamma)/(2*gamma), do:
-        * V_{n+1}(s) = max_a [ r(s,a) + gamma * sum_{s'} P(s'|s,a) V_n(s') ]
-    - Return policy from final V.
-    
-    Additional: If anc=True, do anchored updates instead of T(V).
-                i.e.   V_{n+1} = beta_n * V_zero + (1 - beta_n)* T(V_n)
-    
-    Parameters
-    ----------
-    env : 4_Room environment
-        Must have env.nS, env.nA, env.P[s,a,s'], env.R[s,a].
-    epsilon : float
-        The parameter for the stopping condition. 
-        (We use the condition: diff < epsilon*(1-gamma)/(2*gamma).)
-    gamma : float
-        Discount factor in (0,1).
-    anc : bool
-        If True, run Anchored Value Iteration.
-    V_zero : np.array or None
-        Anchor vector, shape (env.nS,). If None, uses zero-vector for anchor.
-    
-    Returns
-    -------
-    iteration : int
-        Number of iterations performed.
-    policy : np.array of ints, shape (env.nS,)
-        The extracted policy from final V.
-    V : np.array of floats, shape (env.nS,)
-        The final value function.
-    """
 
     nS, nA = env.nS, env.nA
 
