@@ -195,84 +195,99 @@ def PI(env, gamma = 0.9):
 			policy1 = np.zeros(env.nS, dtype=int)
 
 
+import numpy as np
+
 def VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=None):
     """
-    Value Iteration with optional Anchored Value Iteration (Anc-VI).
-
+    Value Iteration with optional Anchored VI, following the pseudocode 
+    from the provided slide:
+    
+    - Initialize V with R_max/(1 - gamma) for all states
+    - While ||V_{n+1} - V_n|| >= epsilon*(1-gamma)/(2*gamma), do:
+        * V_{n+1}(s) = max_a [ r(s,a) + gamma * sum_{s'} P(s'|s,a) V_n(s') ]
+    - Return policy from final V.
+    
+    Additional: If anc=True, do anchored updates instead of T(V).
+                i.e.   V_{n+1} = beta_n * V_zero + (1 - beta_n)* T(V_n)
+    
     Parameters
     ----------
-    env : Four_Room
-        The 4-room grid environment.
+    env : 4_Room environment
+        Must have env.nS, env.nA, env.P[s,a,s'], env.R[s,a].
     epsilon : float
-        Convergence threshold for the sup norm of (V_{n+1} - V_{n}).
+        The parameter for the stopping condition. 
+        (We use the condition: diff < epsilon*(1-gamma)/(2*gamma).)
     gamma : float
-        Discount factor.
+        Discount factor in (0,1).
     anc : bool
-        If True, run Anchored Value Iteration using the anchor vector V_zero.
+        If True, run Anchored Value Iteration.
     V_zero : np.array or None
-        The anchor vector (shape env.nS). If None, defaults to all-zero.
-
+        Anchor vector, shape (env.nS,). If None, uses zero-vector for anchor.
+    
     Returns
     -------
     iteration : int
-        Number of iterations until convergence.
-    policy : np.array
-        Near-optimal (or optimal) policy of shape (env.nS,).
-    V : np.array
-        The converged value function of shape (env.nS,).
+        Number of iterations performed.
+    policy : np.array of ints, shape (env.nS,)
+        The extracted policy from final V.
+    V : np.array of floats, shape (env.nS,)
+        The final value function.
     """
+
     nS, nA = env.nS, env.nA
 
-    # Default anchor is zero-vector if not supplied
-    if V_zero is None:
-        V_zero = np.zeros(nS)
-
-    # Start with an all-zero value function
-    V = V_zero.copy()
+    # As in the pseudocode, we pick an initial "upper bound" value
+    Rmax = np.max(env.R)  # or a known bound if you prefer
+    V = np.ones(nS) * (Rmax / (1.0 - gamma))
+    
+    # If we do anchored VI and no anchor is provided, default to zero
+    if anc:
+        if V_zero is None:
+            V_zero = np.zeros(nS)
 
     iteration = 0
     while True:
         iteration += 1
         
-        # Compute T(V): for each s, T(V)(s) = max_a [R(s,a) + gamma * sum_s' P(s,a,s') * V(s')]
+        # compute T(V) at each state
         T_of_V = np.zeros(nS)
         for s in range(nS):
+            # Q(s,a) = R(s,a) + gamma sum_s' P[s,a,s'] * V[s']
             Q_sa = np.zeros(nA)
             for a in range(nA):
-                Q_sa[a] = env.R[s,a] + gamma * np.dot(env.P[s,a], V)
+                Q_sa[a] = env.R[s,a] + gamma*np.dot(env.P[s,a], V)
             T_of_V[s] = np.max(Q_sa)
-        
+
         if anc:
-            # --- Anchored update ---
-            #  beta_{n} = gamma^{-2n} / sum_{k=0}^n gamma^{-2k}
-            #  We'll treat "iteration" as 'n' in that formula.
-            r = 1.0 / (gamma**2)  # base of exponent
-            # numerator = r^iteration
+            # anchored update
+            # e.g. beta_n = gamma^{-2n}/ sum_{k=0}^n gamma^{-2k}
+            # or whichever anchor formula from the exercise
+            r = gamma**(-2)
             numerator = (r ** iteration)
-            # denominator = sum_{k=0}^{iteration} r^k
-            denominator = 0.0
-            for k in range(iteration + 1):
-                denominator += (r ** k)
-            beta = numerator / denominator
+            denom = 0.0
+            for k in range(iteration+1):
+                denom += (r**k)
+            beta = numerator / denom
             
-            # V_{n+1} = beta * V_zero + (1 - beta) * T(V_n)
-            V_new = beta * V_zero + (1.0 - beta) * T_of_V
+            V_new = beta * V_zero + (1.0 - beta)*T_of_V
         else:
-            # --- Standard VI update ---
+            # standard VI update
             V_new = T_of_V
-        
-        # Check convergence
+
         diff = np.max(np.abs(V_new - V))
         V = V_new
-        if diff < epsilon:
+
+        # stopping condition from your slide:
+        # ||V_{n+1} - V_n|| < eps * (1-gamma) / (2 gamma)
+        if diff < epsilon*(1.0 - gamma)/(2.0*gamma):
             break
 
-    # After convergence of V, extract the policy:
+    # Finally, extract the policy
     policy = np.zeros(nS, dtype=int)
     for s in range(nS):
         Q_sa = np.zeros(nA)
         for a in range(nA):
-            Q_sa[a] = env.R[s,a] + gamma * np.dot(env.P[s,a], V)
+            Q_sa[a] = env.R[s,a] + gamma*np.dot(env.P[s,a], V)
         policy[s] = np.argmax(Q_sa)
 
     return iteration, policy, V
