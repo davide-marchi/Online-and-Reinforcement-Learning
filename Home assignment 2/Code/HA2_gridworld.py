@@ -236,9 +236,12 @@ def VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=None):
 
     nS, nA = env.nS, env.nA
 
-    # As in the pseudocode, we pick an initial "upper bound" value
-    Rmax = np.max(env.R)  # or a known bound if you prefer
-    V = np.ones(nS) * (Rmax / (1.0 - gamma))
+    if V_zero is None:
+		# As in the pseudocode, we pick an initial "upper bound" value
+        Rmax = np.max(env.R)  # or a known bound if you prefer
+        V = np.ones(nS) * (Rmax / (1.0 - gamma))
+    else:
+        V = V_zero.copy()
     
     # If we do anchored VI and no anchor is provided, default to zero
     if anc:
