@@ -228,7 +228,7 @@ def VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=None):
         V_zero = np.zeros(nS)
 
     # Start with an all-zero value function
-    V = np.zeros(nS)
+    V = V_zero.copy()
 
     iteration = 0
     while True:
