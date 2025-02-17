@@ -185,7 +185,10 @@ def PI(env, gamma = 0.9):
 
 		# If the policy did not change or the change was due to machine limitation in numerical values return the result.	
 		if test or (max(Vdiff) < 10**(-12)):
-			return niter, policy1
+			P_pi = np.array([[env.P[s, policy1[s], ss] for ss in range(env.nS)] for s in range(env.nS)])
+			R_pi = np.array([env.R[s, policy1[s]] for s in range(env.nS)])
+			V_opt = np.linalg.inv(np.eye(env.nS) - gamma * P_pi) @ R_pi
+			return niter, policy1, V_opt
 		else:
 			policy2 = policy0
 			policy0 = policy1
@@ -224,10 +227,13 @@ def display_4room_policy(policy):
 	return np.array(res)
 
 	
+###########################################################################
+print("i) Solve the grid-world task above using PI")
+###########################################################################
 
-
-
-# Run PI on the environment with gamma = 0.95 and print the result.
+# Run PI on the environment with gamma = 0.97 and print the result.
 env = Four_Room()
-_, pi = PI(env, 0.95)
+_, pi, V_opt = PI(env, 0.97)
+print("Optimal policy = ", pi)
+print("Optimal value function V^* = ", V_opt)
 print(display_4room_policy(pi))
