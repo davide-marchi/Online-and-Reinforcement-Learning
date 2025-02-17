@@ -1,0 +1,152 @@
+\emph{All of the Python code used to run these experiments (i.e.\ PI, VI, and Anc-VI, 
+plus the 4-room environment and the visualizations) can be found in the file 
+\texttt{HA2\_gridworld.py}.}
+
+\bigskip
+
+\noindent
+\textbf{Environment Setup:}\\
+We have a 7$\times$7 grid with walls, forming 20 accessible states. 
+We label them 0 to 19 in row-major order, skipping walls. 
+State 19 (the lower-right corner) has reward 1, then effectively absorbs. 
+The agent can pick among the 4 compass actions 
+(\texttt{0}=Up, \texttt{1}=Right, \texttt{2}=Down, \texttt{3}=Left), 
+but experiences slippery transitions (prob.\ 0.7 in the chosen direction, 0.1 each 
+for perpendicular directions, 0.1 for staying in place). 
+By default we use $\gamma=0.97$, except in part (iii), where we set $\gamma=0.998$.
+
+\subsection*{(i) Solve the grid-world task using PI (Policy Iteration).}
+
+\noindent
+We used:
+\[
+  \resizebox{\textwidth}{!}{
+  $\text{Policy Iteration:}\quad
+  \begin{cases}
+    \text{(a) Evaluate current policy }\pi: 
+      & V^\pi = (I - \gamma P^\pi)^{-1} r^\pi,\\
+    \text{(b) Improve } \pi: & 
+      \pi \leftarrow \arg\max_{a} 
+        \bigl[r(s,a)+\gamma\sum_{s'}P(s'\!\mid s,a)\,V^\pi(s')\bigr].
+  \end{cases}$
+  }
+\]
+It converged in 4 iterations. 
+The resulting \emph{optimal policy} (an array of 20 actions) is:
+\[
+  \pi_{\mathrm{PI}} \;=\; 
+  [\,1,\;1,\;1,\;2,\;2,\;2,\;0,\;2,\;3,\;2,\;2,\;1,\;1,\;1,\;1,\;2,\;1,\;0,\;1,\;0\,].
+\]
+The \emph{optimal value function} $V^*(s)$ (rounded to 2 decimals) is:
+\[
+  \resizebox{\textwidth}{!}{
+  $V^* \;=\;
+  [\,23.07,\;23.97,\;25.15,\;26.26,\;25.40,\;23.97,\;23.07,\;27.71,\;26.40,\;25.15,\;
+    29.12,\;26.26,\;27.71,\;29.12,\;30.40,\;31.74,\;25.40,\;26.40,\;31.74,\;33.33\,].$
+ }
+\]
+We visualize the policy on the 7$\times$7 map as follows 
+(\texttt{Up}, \texttt{Right}, \texttt{Down}, \texttt{Left}, or \texttt{Wall}):
+\[
+\begin{array}{l}
+\text{\ttfamily
+[ [Wall,  Wall,  Wall,  Wall,  Wall,  Wall,  Wall],}\\
+\quad \text{\ttfamily [Wall, Right, Right, Right, Down, Down, Wall],}\\
+\quad \text{\ttfamily [Wall, Down,  Up,   Wall, Down, Left, Wall],}\\
+\quad \text{\ttfamily [Wall, Down,  Wall, Wall, Down, Wall, Wall],}\\
+\quad \text{\ttfamily [Wall, Right, Right, Right, Right, Down, Wall],}\\
+\quad \text{\ttfamily [Wall, Right, Up,    Wall, Right, Up,   Wall],}\\
+\quad \text{\ttfamily [Wall, Wall,  Wall,  Wall, Wall, Wall, Wall] ]}.
+\end{array}
+\]
+
+\subsection*{(ii) Implement VI and use it to solve the grid-world task.}
+
+\noindent
+We then implemented \emph{Value Iteration}, which repeatedly applies
+\[
+  V_{n+1}(s) \;=\;\max_a\Bigl[r(s,a)\;+\;\gamma\sum_{s'}P(s'\mid s,a)\,V_n(s')\Bigr],
+\]
+starting from a suitable initial $V_0$. With $\gamma=0.97$, 
+this converged in 48 iterations and gave \emph{exactly the same policy} and value function 
+as in part (i). The same grid visualization thus applies.
+
+\subsection*{(iii) Repeat (ii) with $\gamma=0.998$.}
+
+\noindent
+Raising the discount factor to $\gamma=0.998$ made VI converge more slowly, requiring 
+about 56 iterations. The \emph{optimal policy} was slightly different in early states, but 
+overall is quite similar. The final \emph{value function} is large (in the hundreds) due to 
+the heavier weighting of future rewards. We show its policy map in the same 7$\times$7 
+format as above, verifying that it moves toward state 19.
+
+\[
+\begin{array}{l}
+\text{\ttfamily
+[ [Wall,  Wall,  Wall,  Wall,  Wall,  Wall,  Wall],}\\
+\quad \text{\ttfamily [Wall, Down ' 'Right' 'Right' 'Down ' 'Down, Wall],}\\
+\quad \text{\ttfamily [Wall, 'Down ' 'Left ' 'Wall ' 'Down ' 'Left  ', Wall],}\\
+\quad \text{\ttfamily [Wall, Down ' 'Wall ' 'Wall ' 'Down ' 'Wall, Wall],}\\
+\quad \text{\ttfamily [Wall, Right' 'Right' 'Right' 'Right' 'Down, Wall],}\\
+\quad \text{\ttfamily [Wall, Right' ' Up  ' 'Wall ' 'Right' ' Up,   Wall],}\\
+\quad \text{\ttfamily [Wall, Wall ' 'Wall ' 'Wall ' 'Wall ' 'Wall, Wall] ]}.
+\end{array}
+\]
+
+\subsection*{(iv) Anchored Value Iteration (Anc-VI).}
+
+\noindent
+We adapted VI to incorporate an anchor $V_0$ and a weight $\beta_n$, updating:
+\[
+  V_{n+1}
+  \;=\;\beta_{n+1}\,V_0 \;+\;\bigl(1-\beta_{n+1}\bigr)\,\max_{a}\Bigl[\dots\Bigr].
+\]
+We tried:
+\begin{enumerate}[label=(\alph*)]
+\item $V_0=0$,
+\item $V_0= \mathbf{1}$,
+\item $V_0$ randomly sampled in $\bigl[0,1/(1-\gamma)\bigr]^{nS}$.
+\end{enumerate}
+The iteration counts we observed were:
+\begin{enumerate}[label=(\alph*)]
+\item anchor = 0 $\rightarrow$ 300 iterations needed to converge,
+\item anchor = 1 $\rightarrow$ 300 iterations needed to converge,
+\item random anchor $\rightarrow$ 284 iterations needed to converge.
+\end{enumerate}
+The final policies in each case match an optimal path, 
+and the final $V$ values eventually coincide with the standard solution. 
+But the anchored updates took about 300 iterations in our example, 
+slightly sensitive to which anchor we picked.
+
+\subsection*{(v) Compare the convergence speed of VI vs.\ Anc-VI (with the same anchor).}
+
+\noindent
+Finally, we compared \emph{standard VI} vs.\ \emph{anchored VI} using the same starting values for $V_0$:
+\[
+  \begin{array}{lccc}
+  \toprule
+    & \multicolumn{1}{c}{\textbf{Anchor=0}} & 
+      \multicolumn{1}{c}{\textbf{Anchor=1}} &
+      \multicolumn{1}{c}{\textbf{Anchor=Random}} \\
+  \midrule
+    \textbf{Standard VI (anc=False)} 
+       & 592\,\text{iters} & 591\,\text{iters} & 543\,\text{iters} \\[6pt]
+    \textbf{Anchored VI (anc=True)} 
+       & 300\,\text{iters} & 300\,\text{iters} & 284\,\text{iters} \\
+  \bottomrule
+  \end{array}
+\]
+So in our runs, anchored VI required fewer iterations once we reached 
+the tolerance threshold, while standard VI needed 500+ iterations. 
+In principle, the anchored approach can converge faster (depending on starting values for the value function), 
+though actual speed can vary by problem.
+
+\bigskip
+
+\noindent
+\textbf{Conclusion.} 
+All code appears in \texttt{HA2\_gridworld.py}.  We verified that PI and VI 
+yield the same optimal policy for $\gamma=0.97$, 
+and that $\gamma=0.998$ both increases $V^*$ substantially 
+and slows down iteration convergence.  Anchored VI can reduce iteration counts, 
+depending on the chosen starting values.

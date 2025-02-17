@@ -2,4 +2,4 @@
 \contentsline {section}{\numberline {2}MDPs with Similar Parameters Have Similar Values}{3}{section.2}%
 \contentsline {section}{\numberline {3}Policy Evaluation in RiverSwim}{5}{section.3}%
 \contentsline {section}{\numberline {4}Solving a Discounted Grid-World}{5}{section.4}%
-\contentsline {section}{\numberline {5}Off-Policy Evaluation in Episode-Based River-Swim}{5}{section.5}%
+\contentsline {section}{\numberline {5}Off-Policy Evaluation in Episode-Based River-Swim}{8}{section.5}%
