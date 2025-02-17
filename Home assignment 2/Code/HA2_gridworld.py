@@ -239,6 +239,89 @@ def VI(env, epsilon=1e-6, gamma=0.97):
     return iteration, policy, V
 
 
+def VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=None):
+    """
+    Value Iteration with optional Anchored Value Iteration (Anc-VI).
+
+    Parameters
+    ----------
+    env : Four_Room
+        The 4-room grid environment.
+    epsilon : float
+        Convergence threshold for the sup norm of (V_{n+1} - V_{n}).
+    gamma : float
+        Discount factor.
+    anc : bool
+        If True, run Anchored Value Iteration using the anchor vector V_zero.
+    V_zero : np.array or None
+        The anchor vector (shape env.nS). If None, defaults to all-zero.
+
+    Returns
+    -------
+    iteration : int
+        Number of iterations until convergence.
+    policy : np.array
+        Near-optimal (or optimal) policy of shape (env.nS,).
+    V : np.array
+        The converged value function of shape (env.nS,).
+    """
+    nS, nA = env.nS, env.nA
+
+    # Default anchor is zero-vector if not supplied
+    if V_zero is None:
+        V_zero = np.zeros(nS)
+
+    # Start with an all-zero value function
+    V = np.zeros(nS)
+
+    iteration = 0
+    while True:
+        iteration += 1
+        
+        # Compute T(V): for each s, T(V)(s) = max_a [R(s,a) + gamma * sum_s' P(s,a,s') * V(s')]
+        T_of_V = np.zeros(nS)
+        for s in range(nS):
+            Q_sa = np.zeros(nA)
+            for a in range(nA):
+                Q_sa[a] = env.R[s,a] + gamma * np.dot(env.P[s,a], V)
+            T_of_V[s] = np.max(Q_sa)
+        
+        if anc:
+            # --- Anchored update ---
+            #  beta_{n} = gamma^{-2n} / sum_{k=0}^n gamma^{-2k}
+            #  We'll treat "iteration" as 'n' in that formula.
+            r = 1.0 / (gamma**2)  # base of exponent
+            # numerator = r^iteration
+            numerator = (r ** iteration)
+            # denominator = sum_{k=0}^{iteration} r^k
+            denominator = 0.0
+            for k in range(iteration + 1):
+                denominator += (r ** k)
+            beta = numerator / denominator
+            
+            # V_{n+1} = beta * V_zero + (1 - beta) * T(V_n)
+            V_new = beta * V_zero + (1.0 - beta) * T_of_V
+        else:
+            # --- Standard VI update ---
+            V_new = T_of_V
+        
+        # Check convergence
+        diff = np.max(np.abs(V_new - V))
+        V = V_new
+        if diff < epsilon:
+            break
+
+    # After convergence of V, extract the policy:
+    policy = np.zeros(nS, dtype=int)
+    for s in range(nS):
+        Q_sa = np.zeros(nA)
+        for a in range(nA):
+            Q_sa[a] = env.R[s,a] + gamma * np.dot(env.P[s,a], V)
+        policy[s] = np.argmax(Q_sa)
+
+    return iteration, policy, V
+
+
 # A naive function to output a readble matrix from a policy on the 4-room environment.
 def display_4room_policy(policy):
 	map = np.array([[-1, -1, -1, -1, -1, -1, -1],
@@ -307,3 +390,58 @@ if __name__ == "__main__":
 	print("Optimal policy from VI = ", optimal_policy)
 	print("Optimal value function V* = ", np.round(optimal_V, 2))
 	print(display_4room_policy(optimal_policy))
+
+	###########################################################################
+	print("\n(iv) Anchored Value Iteration with different initial points")
+	###########################################################################
+
+	# Example anchor choices:
+	anchor_a = np.zeros(env.nS)                             # (a) V0 = 0
+	anchor_b = np.ones(env.nS)                              # (b) V0 = 1
+	anchor_c = np.random.rand(env.nS) / (1.0 - 0.97)         # (c) uniform random in [0, 1/(1-gamma)]
+
+	# (a) Anc-VI with anchor 0
+	env = Four_Room()
+	it_a, pi_a, V_a = VI(env, epsilon=1e-6, gamma=0.97, anc=True, V_zero=anchor_a)
+	print(f"Anchored VI with anchor=0 took {it_a} iterations.")
+	print("Policy = ", pi_a)
+	print("Value  = ", np.round(V_a, 4))
+
+	# (b) Anc-VI with anchor=1
+	env = Four_Room()
+	it_b, pi_b, V_b = VI(env, epsilon=1e-6, gamma=0.97, anc=True, V_zero=anchor_b)
+	print(f"\nAnchored VI with anchor=1 took {it_b} iterations.")
+	print("Policy = ", pi_b)
+	print("Value  = ", np.round(V_b, 4))
+
+	# (c) Anc-VI with anchor ~ uniform random
+	env = Four_Room()
+	it_c, pi_c, V_c = VI(env, epsilon=1e-6, gamma=0.97, anc=True, V_zero=anchor_c)
+	print(f"\nAnchored VI with random anchor took {it_c} iterations.")
+	print("Policy = ", pi_c)
+	print("Value  = ", np.round(V_c, 4))
+
+	###########################################################################
+	print("\n(v) Compare the convergence speed of VI and Anchored VI (with e.g. anchor=0).")
+	###########################################################################
+
+	# (a) VI with anchor 0
+	env = Four_Room()
+	it_a, pi_a, V_a = VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=anchor_a)
+	print(f"VI with anchor=0 took {it_a} iterations.")
+	print("Policy = ", pi_a)
+	print("Value  = ", np.round(V_a, 4))
+
+	# (b) VI with anchor=1
+	env = Four_Room()
+	it_b, pi_b, V_b = VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=anchor_b)
+	print(f"\nVI with anchor=1 took {it_b} iterations.")
+	print("Policy = ", pi_b)
+	print("Value  = ", np.round(V_b, 4))
+
+	# (c) VI with anchor ~ uniform random
+	env = Four_Room()
+	it_c, pi_c, V_c = VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=anchor_c)
+	print(f"\nVI with random anchor took {it_c} iterations.")
+	print("Policy = ", pi_c)
+	print("Value  = ", np.round(V_c, 4))
