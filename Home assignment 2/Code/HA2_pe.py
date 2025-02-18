@@ -287,10 +287,11 @@ if __name__=="__main__":
     # 1) Load episodes from CSV
     episodes = load_episodes_from_csv(csv_file, terminal_state=5)
     gamma = 0.96  # discount factor, example
+    s_init = 0
     
     # 2) Model-Based OPE
     mb_ope_est = MB_OPE(episodes, gamma)
-    print("MB-OPE estimate of V^pi(s) for all states:", mb_ope_est)
+    print(f"MB-OPE estimate of V^pi(s_init): {mb_ope_est[s_init]:.4f}")
     
     # If we only care about s_init=0 (assuming all eps start in 0):
     # you can check mb_ope_est[0] for the MB-OPE of V^pi(0).
@@ -326,7 +327,51 @@ if __name__=="__main__":
 
     V_true = np.linalg.solve(A, b)
 
-    print("Exact solution of V^pi(s) using linear system:", V_true)
+    print(f"Exact solution of V^pi(s_init) using linear system: : {V_true[s_init]:.4f}")
 
     # Plot error curves.
     plot_errors(episodes, gamma, V_true)
+
+    # -------------------------------------------------------------------
+    # (iii) and (iv): Compute and compare errors across 10 datasets
+    # -------------------------------------------------------------------
+
+    methods = ["MB-OPE", "IS", "wIS", "PDIS"]
+    # Dictionaries to store the absolute errors and estimates for each method.
+    abs_errors = {m: [] for m in methods}
+    estimates_dict = {m: [] for m in methods}
+
+    # Loop over datasets dataset0.csv to dataset9.csv.
+    for i in range(10):
+        csv_file_i = f"Datasets/dataset{i}.csv"
+        eps_i = load_episodes_from_csv(csv_file_i, terminal_state=5)
+        
+        # Compute the estimates for state s_init using each method.
+        mb_est = MB_OPE(eps_i, gamma)[s_init]
+        is_est = V_pi_IS(eps_i, gamma)
+        wis_est = V_pi_wIS(eps_i, gamma)
+        pdis_est = V_pi_PDIS(eps_i, gamma)
+        
+        estimates_dict["MB-OPE"].append(mb_est)
+        estimates_dict["IS"].append(is_est)
+        estimates_dict["wIS"].append(wis_est)
+        estimates_dict["PDIS"].append(pdis_est)
+        
+        # Compute the absolute error relative to the exact V^pi(s_init)
+        abs_errors["MB-OPE"].append(abs(mb_est - V_true[s_init]))
+        abs_errors["IS"].append(abs(is_est - V_true[s_init]))
+        abs_errors["wIS"].append(abs(wis_est - V_true[s_init]))
+        abs_errors["PDIS"].append(abs(pdis_est - V_true[s_init]))
+
+    # You may also print the raw estimates if needed:
+    print("\nEstimates for V^pi(s_init) across datasets:")
+    for m in methods:
+        var_est = np.var(estimates_dict[m])
+        print(f"{m}: {np.array(estimates_dict[m]).round(4)}, Variance = {var_est:.4f}")
+
+    # Print the mean absolute error and its variance for each method.
+    print("\nEmpirical comparison across 10 datasets:")
+    for m in methods:
+        mean_error = np.mean(abs_errors[m])
+        var_error = np.var(abs_errors[m])  # sample variance
+        print(f"{m}: Mean Absolute Error = {mean_error:.4f}, Variance = {var_error:.4f}")
