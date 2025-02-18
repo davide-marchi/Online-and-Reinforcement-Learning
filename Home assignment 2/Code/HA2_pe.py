@@ -237,13 +237,12 @@ def V_pi_PDIS(episodes, gamma):
         accum += partial_sum
     return accum / n
 
-def plot_errors(episodes, gamma):
+def plot_errors(episodes, gamma, V_true):
     """ Computes the running OPE estimates as a function of the number of episodes,
     compares them to the 'true' V^pi (computed via MB-OPE on the full dataset),
     and plots the absolute error |V^pi(s_init) - estimate| for each method.
     """
-    # Use all episodes to compute a surrogate for the true V^pi.
-    V_true = [1]
+
     s_init = episodes[0][0][0] # initial state from the first episode
     true_value = V_true[s_init]
     # Lists to store errors and number of episodes used.
@@ -304,5 +303,33 @@ if __name__=="__main__":
     print(f"wIS estimate of V^pi(s_init): {v_wis:.4f}")
     print(f"PDIS estimate of V^pi(s_init): {v_pdis:.4f}")
 
+    env = riverswim(6)
+    # Need to solve (I - gamma*P^pi)v = r^pi
+    # First build P^pi and r^pi for our policy
+    P_pi = np.zeros((env.nS, env.nS))
+    r_pi = np.zeros(env.nS)
+    # Build P^pi and r^pi matrices based on our policy
+    for s in range(env.nS):
+        # r^pi is weighted average of rewards for each action
+        r_pi[s] = (pi(s,0)*env.R[s,0]) + (pi(s,1)*env.R[s,1])
+        
+        # P^pi combines transition probs weighted by policy probs
+        for s_next in range(env.nS):
+            P_pi[s, s_next] = (pi(s,0)*env.P[s,0,s_next]
+                            + pi(s,1)*env.P[s,1,s_next])
+
+    # Solve the system (I - gamma*P^pi)v = r^pi
+    # Using numpy's solver because it's more stable than matrix inversion
+    I = np.eye(env.nS)
+    A = I - gamma * P_pi
+    b = r_pi
+
+    V_true = np.linalg.solve(A, b)
+
+    print("Exact solution of V^pi(s) using linear system:")
+    for s in range(env.nS):
+        print(f"State {s+1}: {V_true[s]:.5f}")
+    print()
+
     # Plot error curves.
-    plot_errors(episodes, gamma)
+    plot_errors(episodes, gamma, V_true)
