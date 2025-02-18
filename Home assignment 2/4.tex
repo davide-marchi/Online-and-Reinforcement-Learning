@@ -114,6 +114,9 @@ The first two converge to a very similar optimal policy and value.
 indicating that certain initializations can cause local numerical issues and not allow to change from
 a suboptimal policy if the initialization is not good end they are "anchored" to it.
 
+Eventually we are expecting the anchor to have less and less influence as the iterations progress, but
+we probably can't converge to an optimal policies because we reach the convergence condition before that happens.
+
 \subsection*{(v) Compare the convergence speed of VI vs.\ Anc-VI for the same anchors.}
 
 \noindent
