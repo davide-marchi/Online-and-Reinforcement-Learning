@@ -365,31 +365,3 @@ if __name__ == "__main__":
 	print("Policy = ", pi_c)
 	print("Value  = ", np.round(V_c, 2))
 	print(display_4room_policy(pi_c))
-
-	###########################################################################
-	print("\n(v) Compare the convergence speed of VI and Anchored VI (with e.g. anchor=0).")
-	###########################################################################
-
-	# (a) VI with anchor 0
-	env = Four_Room()
-	it_a, pi_a, V_a = VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=anchor_a)
-	print(f"VI with anchor=0 took {it_a} iterations.")
-	print("Policy = ", pi_a)
-	print("Value  = ", np.round(V_a, 2))
-	print(display_4room_policy(pi_a))
-
-	# (b) VI with anchor=1
-	env = Four_Room()
-	it_b, pi_b, V_b = VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=anchor_b)
-	print(f"\nVI with anchor=1 took {it_b} iterations.")
-	print("Policy = ", pi_b)
-	print("Value  = ", np.round(V_b, 2))
-	print(display_4room_policy(pi_b))
-
-	# (c) VI with anchor ~ uniform random
-	env = Four_Room()
-	it_c, pi_c, V_c = VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=anchor_c)
-	print(f"\nVI with random anchor took {it_c} iterations.")
-	print("Policy = ", pi_c)
-	print("Value  = ", np.round(V_c, 2))
-	print(display_4room_policy(pi_c))
