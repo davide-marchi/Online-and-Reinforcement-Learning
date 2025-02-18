@@ -2,6 +2,7 @@ import csv
 import numpy as np
 from collections import defaultdict
 import os
+import matplotlib.pyplot as plt
 
 ###############################################################################
 # 1. Reading the dataset and grouping by episodes
@@ -205,6 +206,47 @@ def V_pi_PDIS(episodes, gamma):
         accum += partial_sum
     return accum / n
 
+def plot_errors(episodes, gamma):
+    """ Computes the running OPE estimates as a function of the number of episodes,
+    compares them to the 'true' V^pi (computed via MB-OPE on the full dataset),
+    and plots the absolute error |V^pi(s_init) - estimate| for each method.
+    """
+    # Use all episodes to compute a surrogate for the true V^pi.
+    V_true = [1]
+    s_init = episodes[0][0][0] # initial state from the first episode
+    true_value = V_true[s_init]
+    # Lists to store errors and number of episodes used.
+    errors_IS, errors_wIS, errors_PDIS, errors_MB = [], [], [], []
+    episode_counts = []
+
+    # For each prefix of the dataset, compute the running estimates.
+    for i in range(1, len(episodes)+1):
+        current_eps = episodes[:i]
+        v_is   = V_pi_IS(current_eps, gamma)
+        v_wis  = V_pi_wIS(current_eps, gamma)
+        v_pdis = V_pi_PDIS(current_eps, gamma)
+        v_mb   = MB_OPE(current_eps, gamma)[s_init]
+        
+        errors_IS.append(abs(true_value - v_is))
+        errors_wIS.append(abs(true_value - v_wis))
+        errors_PDIS.append(abs(true_value - v_pdis))
+        errors_MB.append(abs(true_value - v_mb))
+        episode_counts.append(i)
+
+    # Plot the error curves.
+    plt.figure(figsize=(10,6))
+    plt.plot(episode_counts, errors_IS, label='IS Error', marker='o')
+    plt.plot(episode_counts, errors_wIS, label='wIS Error', marker='s')
+    plt.plot(episode_counts, errors_PDIS, label='PDIS Error', marker='^')
+    plt.plot(episode_counts, errors_MB, label='MB-OPE Error', marker='d')
+    plt.xlabel('Number of Episodes')
+    plt.ylabel('Absolute Error |V^π(s_init) - Estimate|')
+    plt.title('OPE Estimate Errors vs. True V^π(s_init)')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+
 ###############################################################################
 # Example usage
 ###############################################################################
@@ -230,3 +272,6 @@ if __name__=="__main__":
     print(f"IS estimate of V^pi(s_init): {v_is:.4f}")
     print(f"wIS estimate of V^pi(s_init): {v_wis:.4f}")
     print(f"PDIS estimate of V^pi(s_init): {v_pdis:.4f}")
+
+    # Plot error curves.
+    plot_errors(episodes, gamma)
