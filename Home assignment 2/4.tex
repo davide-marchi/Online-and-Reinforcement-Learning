@@ -67,7 +67,7 @@ We then implemented \emph{Value Iteration}, repeatedly applying
    \;=\;\max_{a}\Bigl[r(s,a) + \gamma\sum_{s'}P(s'\mid s,a)\,V_{n}(s')\Bigr].
 \]
 With \(\gamma=0.97\), VI converged in 48 iterations and recovered \emph{the same} 
-optimal policy and value function as in part (i).  The same map display applies.
+optimal policy and value function as in part (i). The same map display applies.
 
 \subsection*{(iii) Repeat (ii) with \(\gamma=0.998\).}
 
@@ -77,6 +77,9 @@ The \emph{value function} is larger (about 487--500 in some states),
 and the policy is slightly modified in some early states.  
 We still see a path leading to state 19. 
 Overall, it remains optimal, just at a bigger scale of values.
+
+Regarding the increasing number of iterations to converge that is because when \(\gamma\) is larger (closer to 1), the updates contract the value function differences more slowly, so it typically takes \emph{more} iterations to reduce \( \|V_{n+1} - V_n\|_{\infty} \) below a given threshold. Intuitively, a higher \(\gamma\) means future rewards are weighted more heavily, causing bigger swings or slower settling of the estimated values across states, and thus lengthening the convergence process.
+
 
 \subsection*{(iv) Anchored Value Iteration (Anc-VI) with different initial points.}
 
