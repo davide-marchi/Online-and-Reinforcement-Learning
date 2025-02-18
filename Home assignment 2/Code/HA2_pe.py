@@ -290,7 +290,7 @@ if __name__=="__main__":
     
     # 2) Model-Based OPE
     mb_ope_est = MB_OPE(episodes, gamma)
-    print("MB-OPE estimate of V^pi(s) for all states:\n", mb_ope_est)
+    print("MB-OPE estimate of V^pi(s) for all states:", mb_ope_est)
     
     # If we only care about s_init=0 (assuming all eps start in 0):
     # you can check mb_ope_est[0] for the MB-OPE of V^pi(0).
@@ -326,10 +326,7 @@ if __name__=="__main__":
 
     V_true = np.linalg.solve(A, b)
 
-    print("Exact solution of V^pi(s) using linear system:")
-    for s in range(env.nS):
-        print(f"State {s+1}: {V_true[s]:.5f}")
-    print()
+    print("Exact solution of V^pi(s) using linear system:", V_true)
 
     # Plot error curves.
     plot_errors(episodes, gamma, V_true)
