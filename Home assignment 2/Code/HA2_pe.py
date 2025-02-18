@@ -151,7 +151,7 @@ def MB_OPE(episodes, gamma):
                 R_hat[s,a] = sumR_sa[s,a]/ N_sa[s,a]
                 P_hat[s,a,:] = N_sasprime[s,a,:]/ N_sa[s,a]
             else:
-                # If never visited, default to 0 reward and uniform transitions, e.g. #TODO: check
+                # If never visited, default to 0 reward and uniform transitions
                 P_hat[s,a,:] = 1.0/nS
     
     # Now form P^pi and r^pi
