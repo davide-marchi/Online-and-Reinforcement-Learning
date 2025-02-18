@@ -235,11 +235,10 @@ def VI(env, epsilon=1e-6, gamma=0.97, anc=False, V_zero=None):
             # Anchored VI update: blend the anchor V_zero with the Bellman backup using weight beta
             # Here, beta is computed in a way that gives progressively less influence to V_zero
             r = gamma**(-2)
-            numerator = (r ** iteration)
             denom = 0.0
             for k in range(iteration+1):
                 denom += (r**k)
-            beta = numerator / denom
+            beta = 1 / denom
             
             V_new = beta * V_zero + (1.0 - beta) * T_of_V
         else:
@@ -296,6 +295,42 @@ def display_4room_policy(policy):
 
 
 if __name__ == "__main__":
+	
+	###########################################################################
+	print("\ni) Solve the grid-world task above using PI")
+	###########################################################################
+
+	# Run PI on the environment with gamma = 0.97 and print the result.
+	env = Four_Room()
+	iterations, pi, V_opt = PI(env, 0.97)
+	print("Number of iterations for PI = ", iterations)
+	print("Optimal policy from PI =", pi)
+	print("Optimal value function V* =", np.round(V_opt, 2))
+	print(display_4room_policy(pi))
+
+	###########################################################################
+	print("\nii) Implement VI and use it to solve the grid-world task above")
+	###########################################################################
+
+	# Run PI on the environment with gamma = 0.97 and epsilon = 1e-6.
+	env = Four_Room()
+	iterations, optimal_policy, optimal_V = VI(env, epsilon=1e-6, gamma=0.97)
+	print("Number of iterations for VI = ", iterations)
+	print("Optimal policy from VI = ", optimal_policy)
+	print("Optimal value function V* = ", np.round(optimal_V, 2))
+	print(display_4room_policy(optimal_policy))
+
+	###########################################################################
+	print("\niii) Repeat Part (ii) with gamma = 0.998")
+	###########################################################################
+
+	# Run PI on the environment with gamma = 0.97 and epsilon = 1e-6.
+	env = Four_Room()
+	iterations, optimal_policy, optimal_V = VI(env, epsilon=1e-6, gamma=0.998)
+	print("Number of iterations for VI = ", iterations)
+	print("Optimal policy from VI = ", optimal_policy)
+	print("Optimal value function V* = ", np.round(optimal_V, 2))
+	print(display_4room_policy(optimal_policy))
 
 	###########################################################################
 	print("\n(iv) Anchored Value Iteration with different initial points")
