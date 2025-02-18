@@ -97,7 +97,7 @@ Using three different anchors:
 \end{enumerate}
 they all converged to an \emph{optimal policy} as well, matching the same final $V^*$ observed before.  
 
-\subsection*{(v) Compare the convergence speed of VI vs.\ Anc-VI (with the same anchor).}
+\subsection*{(v) Compare the convergence speed of VI vs.\ Anc-VI.}
 
 \noindent
 Finally, we compared standard VI \ (\texttt{anc=False}) and the anchored variant 
@@ -107,11 +107,20 @@ Finally, we compared standard VI \ (\texttt{anc=False}) and the anchored variant
   \toprule
     & \textbf{$V_0$ = 0} & \textbf{$V_0$ = 1} & \textbf{$V_0$ = Random} \\
   \midrule
-  \textbf{Standard VI} & 592\,\text{iters} & 591\,\text{iters} & 583\,\text{iters}\\[5pt]
   \textbf{Anchored VI} & 614\,\text{iters} & 613\,\text{iters} & 606\,\text{iters}\\
   \bottomrule
   \end{array}
 \]
-In this experiment, the \emph{anchored} method needed slightly \emph{more} iterations 
-than the standard VI.  However, they still converged to optimal policies. 
-With different discount factors or parameters, anchored VI can sometimes speed up or slow down convergence.
+\[
+  \begin{array}{lccc}
+  \toprule
+    & \textbf{Iterations to converge}\\
+  \midrule
+  \textbf{Standard VI} & 48\,\text{iters}\\
+  \bottomrule
+  \end{array}
+\]
+In this experiment, the \emph{anchored} method needed \emph{more} iterations 
+than the standard VI.
+However, all methods still converged to optimal policies. Depending on the scenario,
+anchored VI may either accelerate or delay convergence based on different discount factors or parameters.
