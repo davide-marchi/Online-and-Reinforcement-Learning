@@ -57,22 +57,18 @@ def pi_b(s, a):
     """
     # Example: Suppose behavior was 65% 'action=1' if s=0, else uniform. TOTALLY ARBITRARY
     # Adjust as needed:
-    nA = 2  # or whatever your action set size is
-    if s==0:
-        if a==1:
-            return 0.65
-        else:
-            return 0.35
+    if a==0:
+        return 0.35
+    elif a==1:
+        return 0.65
     else:
-        # uniform among 0..(nA-1)
-        return 1.0/nA
+        return 0.0
 
 def pi(s, a):
     """
     Target policy's probability of choosing action `a` in state `s`.
     For example, we can define a simple "go right" policy or anything relevant.
     """
-    nA = 2
     # Suppose the target policy always does action=1 (prob=1),
     # i.e. deterministic at 'action=1'.
     return 1.0 if (a==1) else 0.0
@@ -125,7 +121,7 @@ def MB_OPE(episodes, gamma):
                 R_hat[s,a] = sumR_sa[s,a]/ N_sa[s,a]
                 P_hat[s,a,:] = N_sasprime[s,a,:]/ N_sa[s,a]
             else:
-                # If never visited, default to 0 reward and uniform transitions, e.g.
+                # If never visited, default to 0 reward and uniform transitions, e.g. #TODO: check
                 P_hat[s,a,:] = 1.0/nS
     
     # Now form P^pi and r^pi
