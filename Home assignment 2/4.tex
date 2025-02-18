@@ -109,10 +109,10 @@ Below are the iteration counts needed:
   \item[(b)] \textbf{anchor=1:} 300 iterations
   \item[(c)] \textbf{random anchor:} 284 iterations
 \end{itemize}
-All converge to a very similar optimal policy and value.  
-\emph{However}, when using the randomized anchora the Anc-VI tends to converge to a suboptimal policy,
-indicating that certain initializations can cause local numerical issues 
-(or slower progress) in practice.
+The first two converge to a very similar optimal policy and value.  
+\emph{However}, when using the randomized anchor the Anc-VI tends to converge to a suboptimal policy,
+indicating that certain initializations can cause local numerical issues and not allow to change from
+a suboptimal policy if the initialization is not good end they are "anchored" to it.
 
 \subsection*{(v) Compare the convergence speed of VI vs.\ Anc-VI for the same anchors.}
 
