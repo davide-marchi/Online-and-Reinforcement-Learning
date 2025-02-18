@@ -7,7 +7,7 @@ import os
 # 1. Reading the dataset and grouping by episodes
 ###############################################################################
 
-def load_episodes_from_csv(csv_path):
+def load_episodes_from_csv(csv_path, terminal_state=None):
     """
     Reads dataset from csv_path, assumed to have lines like:
        state,action,reward,next_state
@@ -19,24 +19,22 @@ def load_episodes_from_csv(csv_path):
     current_episode = []
     
     with open(csv_path, 'r') as f:
-        reader = csv.DictReader(f)  # columns: state, action, reward, next_state
-        prev_next_state = None
+        reader = csv.DictReader(f)  # columns: state, action, reward, next state
         for row in reader:
-            s     = int(row['state'])
-            a     = int(row['action'])
-            r     = float(row['reward'])
-            s_next= int(row['next state'])
+            s = int(row['state'])
+            a = int(row['action'])
+            r = float(row['reward'])
+            s_next = int(row['next state'])
             
             current_episode.append((s, a, r, s_next))
             
-            # Here, as an example, we split episodes whenever s_next < s 
-            # or if you'd prefer a known terminal condition, 
-            # you can replace it with (s_next == terminal_state) etc.
-            # For a simpler demonstration, let's say we'll just continue
-            # one long trajectory. If your data truly has multiple episodes,
-            # insert your own splitting logic here.
+            # If a terminal state is reached, end the episode
+            if terminal_state is not None and s_next == terminal_state:
+                episodes.append(current_episode)
+                current_episode = []
             
-        # in the simplest case we treat everything as a single "episode"
+    # Append any remaining transitions as an episode.
+    if current_episode:
         episodes.append(current_episode)
     
     return episodes
@@ -215,7 +213,7 @@ if __name__=="__main__":
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     csv_file = "Datasets/dataset0.csv"
     # 1) Load episodes from CSV
-    episodes = load_episodes_from_csv(csv_file)
+    episodes = load_episodes_from_csv(csv_file, terminal_state=5)
     gamma = 0.96  # discount factor, example
     
     # 2) Model-Based OPE
