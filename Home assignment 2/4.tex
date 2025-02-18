@@ -81,7 +81,7 @@ Overall, it remains optimal, just at a bigger scale of values.
 Regarding the increasing number of iterations to converge that is because when \(\gamma\) is larger (closer to 1), the updates contract the value function differences more slowly, so it typically takes \emph{more} iterations to reduce \( \|V_{n+1} - V_n\|_{\infty} \) below a given threshold. Intuitively, a higher \(\gamma\) means future rewards are weighted more heavily, causing bigger swings or slower settling of the estimated values across states, and thus lengthening the convergence process.
 
 
-\subsection*{(iv) Anchored Value Iteration (Anc-VI) with different initial points.}
+\subsection*{(iv) Anc-VI with different initial points.}
 
 \noindent
 We added an anchoring approach with:
