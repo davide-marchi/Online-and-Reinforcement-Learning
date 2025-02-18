@@ -4,6 +4,37 @@ from collections import defaultdict
 import os
 import matplotlib.pyplot as plt
 
+class riverswim():
+
+	def __init__(self, nS):
+		self.nS = nS
+		self.nA = 2
+
+		# We build the transitions matrix P, and its associated support lists.
+		self.P = np.zeros((nS, 2, nS))
+		for s in range(nS):
+			if s == 0:
+				self.P[s, 0, s] = 1
+				self.P[s, 1, s] = 0.6
+				self.P[s, 1, s + 1] = 0.4
+			elif s == nS - 1:
+				self.P[s, 0, 0] = 1
+				self.P[s, 1, 0] = 1
+			else:
+				self.P[s, 0, s - 1] = 1
+				self.P[s, 1, s] = 0.55
+				self.P[s, 1, s + 1] = 0.4
+				self.P[s, 1, s - 1] = 0.05
+		
+		# We build the reward matrix R.
+		self.R = np.zeros((nS, 2))
+		self.R[0, 0] = 0.05
+		self.R[nS - 1, 0] = 1
+		self.R[nS - 1, 1] = 1
+
+		# We (arbitrarily) set the initial state in the leftmost position.
+		self.s = 0
+
 ###############################################################################
 # 1. Reading the dataset and grouping by episodes
 ###############################################################################
@@ -153,7 +184,7 @@ def V_pi_IS(episodes, gamma):
     Basic (Trajectory-level) Importance Sampling for V^pi(s_init).
     We assume all episodes start in the same state s_init,
     and define
-        Vhat_IS = 1/n \sum_{i=1}^n [ rho_{1:Ti}^{(i)} * sum_{t=1}^{Ti} gamma^{t-1} r_t^{(i)} ]
+        Vhat_IS = 1/n sum_{i=1}^n [ rho_{1:Ti}^{(i)} * sum_{t=1}^{Ti} gamma^{t-1} r_t^{(i)} ]
     with  rho_{1:T}^{(i)} = product_{t=1}^T [ pi(a_t|s_t)/ pi_b(a_t|s_t) ].
     """
     G = []
