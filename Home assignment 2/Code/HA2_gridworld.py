@@ -298,56 +298,22 @@ def display_4room_policy(policy):
 if __name__ == "__main__":
 
 	###########################################################################
-	print("\ni) Solve the grid-world task above using PI")
-	###########################################################################
-
-	# Run PI on the environment with gamma = 0.97 and print the result.
-	env = Four_Room()
-	iterations, pi, V_opt = PI(env, 0.97)
-	print("Number of iterations for PI = ", iterations)
-	print("Optimal policy from PI =", pi)
-	print("Optimal value function V* =", np.round(V_opt, 2))
-	print(display_4room_policy(pi))
-
-	###########################################################################
-	print("\nii) Implement VI and use it to solve the grid-world task above")
-	###########################################################################
-
-	# Run PI on the environment with gamma = 0.97 and epsilon = 1e-6.
-	env = Four_Room()
-	iterations, optimal_policy, optimal_V = VI(env, epsilon=1e-6, gamma=0.97)
-	print("Number of iterations for VI = ", iterations)
-	print("Optimal policy from VI = ", optimal_policy)
-	print("Optimal value function V* = ", np.round(optimal_V, 2))
-	print(display_4room_policy(optimal_policy))
-
-	###########################################################################
-	print("\niii) Repeat Part (ii) with gamma = 0.998")
-	###########################################################################
-
-	# Run PI on the environment with gamma = 0.97 and epsilon = 1e-6.
-	env = Four_Room()
-	iterations, optimal_policy, optimal_V = VI(env, epsilon=1e-6, gamma=0.998)
-	print("Number of iterations for VI = ", iterations)
-	print("Optimal policy from VI = ", optimal_policy)
-	print("Optimal value function V* = ", np.round(optimal_V, 2))
-	print(display_4room_policy(optimal_policy))
-
-	###########################################################################
 	print("\n(iv) Anchored Value Iteration with different initial points")
 	###########################################################################
 
+	env = Four_Room()
 	# Anchor choices:
 	anchor_a = np.zeros(env.nS)                             # (a) V0 = 0
 	anchor_b = np.ones(env.nS)                              # (b) V0 = 1
 	anchor_c = np.random.rand(env.nS) / (1.0 - 0.97)        # (c) uniform random in [0, 1/(1-gamma)]
 
 	# (a) Anc-VI with anchor 0
-	env = Four_Room()
+	
 	it_a, pi_a, V_a = VI(env, epsilon=1e-6, gamma=0.97, anc=True, V_zero=anchor_a)
 	print(f"Anchored VI with anchor=0 took {it_a} iterations.")
 	print("Policy = ", pi_a)
 	print("Value  = ", np.round(V_a, 2))
+	print(display_4room_policy(pi_a))
 
 	# (b) Anc-VI with anchor=1
 	env = Four_Room()
@@ -355,6 +321,7 @@ if __name__ == "__main__":
 	print(f"\nAnchored VI with anchor=1 took {it_b} iterations.")
 	print("Policy = ", pi_b)
 	print("Value  = ", np.round(V_b, 2))
+	print(display_4room_policy(pi_b))
 
 	# (c) Anc-VI with anchor ~ uniform random
 	env = Four_Room()
@@ -362,6 +329,7 @@ if __name__ == "__main__":
 	print(f"\nAnchored VI with random anchor took {it_c} iterations.")
 	print("Policy = ", pi_c)
 	print("Value  = ", np.round(V_c, 2))
+	print(display_4room_policy(pi_c))
 
 	###########################################################################
 	print("\n(v) Compare the convergence speed of VI and Anchored VI (with e.g. anchor=0).")
@@ -373,6 +341,7 @@ if __name__ == "__main__":
 	print(f"VI with anchor=0 took {it_a} iterations.")
 	print("Policy = ", pi_a)
 	print("Value  = ", np.round(V_a, 2))
+	print(display_4room_policy(pi_a))
 
 	# (b) VI with anchor=1
 	env = Four_Room()
@@ -380,6 +349,7 @@ if __name__ == "__main__":
 	print(f"\nVI with anchor=1 took {it_b} iterations.")
 	print("Policy = ", pi_b)
 	print("Value  = ", np.round(V_b, 2))
+	print(display_4room_policy(pi_b))
 
 	# (c) VI with anchor ~ uniform random
 	env = Four_Room()
@@ -387,3 +357,4 @@ if __name__ == "__main__":
 	print(f"\nVI with random anchor took {it_c} iterations.")
 	print("Policy = ", pi_c)
 	print("Value  = ", np.round(V_c, 2))
+	print(display_4room_policy(pi_c))
