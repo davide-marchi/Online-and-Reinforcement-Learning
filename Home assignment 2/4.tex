@@ -78,7 +78,7 @@ and the policy is slightly modified in some early states.
 We still see a path leading to state 19. 
 Overall, it remains optimal, just at a bigger scale of values.
 
-Regarding the increasing number of iterations to converge that is because when \(\gamma\) is larger (closer to 1), the updates contract the value function differences more slowly, so it typically takes \emph{more} iterations to reduce \( \|V_{n+1} - V_n\|_{\infty} \) below a given threshold. Intuitively, a higher \(\gamma\) means future rewards are weighted more heavily, causing bigger swings or slower settling of the estimated values across states, and thus lengthening the convergence process.
+Regarding the increasing number of iterations required for convergence, this occurs because when \(\gamma\) is larger (closer to 1), the updates contract the value function differences more slowly, so it typically takes \emph{more} iterations to reduce \( \|V_{n+1} - V_n\|_{\infty} \) below a given threshold. Intuitively, a higher \(\gamma\) means future rewards are weighted more heavily, causing bigger swings or slower settling of the estimated values across states, and thus lengthening the convergence process.
 
 
 \subsection*{(iv) Anc-VI with different initial points.}
