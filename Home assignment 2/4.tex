@@ -1,4 +1,4 @@
-\emph{All of the Python code used to run these experiments (i.e., PI, VI, and Anchored VI, 
+\emph{All of the Python code used to run these experiments (i.e.\ PI, VI, and Anchored VI, 
 plus the 4-room environment and the visualizations) can be found in the file 
 \texttt{HA2\_gridworld.py}.}
 
@@ -6,13 +6,13 @@ plus the 4-room environment and the visualizations) can be found in the file
 
 \noindent
 \textbf{Environment Setup:}\\
-We have a \(7\times 7\) grid with walls, yielding 20 accessible states labeled
+We have a \(7\times7\) grid with walls, yielding 20 accessible states labeled
 \(0\) to \(19\). State \(19\) (bottom-right corner) has reward \(1\) and 
 is effectively absorbing once reached. The agent chooses from 4 compass actions 
 (\(\mathtt{0}=\text{Up}\), \(\mathtt{1}=\text{Right}\), 
-\(\mathtt{2}=\text{Down}\), \(\mathtt{3}=\text{Left}\)) but transitions are 
-\emph{slippery}: with probability \(0.7\) it goes in the chosen direction, 
-\(0.1\) each for perpendicular directions, and \(0.1\) for staying in place. 
+\(\mathtt{2}=\text{Down}\), \(\mathtt{3}=\text{Left}\)), but transitions are 
+\emph{slippery}: probability \(0.7\) for the chosen direction, \(0.1\) each 
+for perpendicular directions, and \(0.1\) for staying in place. 
 We set \(\gamma=0.97\) by default, except in part (iii) where \(\gamma=0.998\).
 
 \subsection*{(i) Solve the grid-world task using PI (Policy Iteration).}
@@ -26,35 +26,35 @@ We implemented \emph{Policy Iteration}, which alternates:
     \text{(a) Evaluate current policy }\pi: 
       & V^\pi = (I - \gamma P^\pi)^{-1} \, r^\pi,\\
     \text{(b) Improve } \pi: & 
-      \pi \; \leftarrow \; \arg\max_{a} 
-        \Bigl[r(s,a)+\gamma\!\!\sum_{s'}\!P(s'\!\mid s,a)\,V^\pi(s')\Bigr].
+      \pi \;\gets\; \arg\max_{a} 
+        \Bigl[r(s,a) + \gamma\sum_{s'}P(s'\!\mid s,a)\,V^\pi(s')\Bigr].
   \end{cases}$
   }
 \]
-It converged in 4 iterations. The resulting \emph{optimal policy} (an array of size 20) is
+It converged in 5 iterations. The resulting \emph{optimal policy} (array of size 20) is
 \[
   \pi_{\mathrm{PI}} \;=\; 
-  [\,1,\;1,\;1,\;2,\;2,\;2,\;0,\;2,\;3,\;2,\;2,\;1,\;1,\;1,\;1,\;2,\;1,\;0,\;1,\;0\,].
+  [\,1,\,1,\,1,\,2,\,2,\,2,\,0,\,2,\,3,\,2,\,2,\,1,\,1,\,1,\,1,\,2,\,1,\,0,\,1,\,0\,].
 \]
 The \emph{optimal value function} \(V^*(s)\), rounded to 2 decimals, is
 \[
   \resizebox{\textwidth}{!}{
   $V^* \;=\;
-  [\,23.07,\;23.97,\;25.15,\;26.26,\;25.40,\;23.97,\;23.07,\;27.71,\;26.40,\;25.15,\;
-    29.12,\;26.26,\;27.71,\;29.12,\;30.40,\;31.74,\;25.40,\;26.40,\;31.74,\;33.33\,].$
+  [\,23.07,\,23.97,\,25.15,\,26.26,\,25.40,\,23.97,\,23.07,\,27.71,\,26.40,\,25.15,\,
+    29.12,\,26.26,\,27.71,\,29.12,\,30.40,\,31.74,\,25.40,\,26.40,\,31.74,\,33.33\,].$
   }
 \]
-Graphically, we can visualize \(\pi\) on the \(7\times 7\) grid as:
+We can visualize \(\pi\) on the \(7\times7\) grid as:
 \[
 \begin{array}{l}
 \text{\ttfamily
 [ [Wall,  Wall,  Wall,  Wall,  Wall,  Wall,  Wall],}\\
 \quad \text{\ttfamily [Wall, Right, Right, Right, Down, Down, Wall],}\\
 \quad \text{\ttfamily [Wall, Down,  Up,   Wall,  Down, Left,  Wall],}\\
-\quad \text{\ttfamily [Wall, Down,  Wall,  Wall,  Down, Wall,  Wall],}\\
+\quad \text{\ttfamily [Wall, Down,  Wall, Wall,  Down, Wall,  Wall],}\\
 \quad \text{\ttfamily [Wall, Right, Right, Right, Right, Down, Wall],}\\
-\quad \text{\ttfamily [Wall, Right, Up,   Wall,  Right, Up,   Wall],}\\
-\quad \text{\ttfamily [Wall, Wall,  Wall,  Wall,  Wall, Wall,  Wall] ]}.
+\quad \text{\ttfamily [Wall, Right, Up,    Wall, Right, Up,   Wall],}\\
+\quad \text{\ttfamily [Wall, Wall,  Wall,  Wall, Wall,  Wall,  Wall] ]}.
 \end{array}
 \]
 
@@ -63,75 +63,52 @@ Graphically, we can visualize \(\pi\) on the \(7\times 7\) grid as:
 \noindent
 We then implemented \emph{Value Iteration}, repeatedly applying
 \[
-  V_{n+1}(s) \;=\;\max_{a}\Bigl[r(s,a)+\gamma\!\!\sum_{s'}\!P(s'\mid s,a)\,V_{n}(s')\Bigr].
+  V_{n+1}(s) 
+   \;=\;\max_{a}\Bigl[r(s,a) + \gamma\sum_{s'}P(s'\mid s,a)\,V_{n}(s')\Bigr].
 \]
 With \(\gamma=0.97\), VI converged in 48 iterations and recovered \emph{the same} 
-optimal policy and value function as in part (i).  The same 7$\times$7 map of actions
-applies.
+optimal policy and value function as in part (i).  The same map display applies.
 
 \subsection*{(iii) Repeat (ii) with \(\gamma=0.998\).}
 
 \noindent
 Now we let \(\gamma=0.998\).  VI converged more slowly (56 iterations). 
-The final value function is larger (in the 400--500 range). 
-The \emph{policy map} is mostly similar, but with some minor differences in early states, 
-reflecting the higher weighting of future rewards:
-\[
-\begin{array}{l}
-\text{\ttfamily
-[ [Wall,  Wall,  Wall,  Wall,  Wall,  Wall,  Wall],}\\
-\quad \text{\ttfamily [Wall, Down,  Right, Right, Down,  Down,  Wall],}\\
-\quad \text{\ttfamily [Wall, Down,  Left,  Wall, Down,  Left,  Wall],}\\
-\quad \text{\ttfamily [Wall, Down,  Wall,  Wall, Down,  Wall,  Wall],}\\
-\quad \text{\ttfamily [Wall, Right, Right, Right,Right, Down,  Wall],}\\
-\quad \text{\ttfamily [Wall, Right, Up,    Wall,Right, Up,    Wall],}\\
-\quad \text{\ttfamily [Wall, Wall,  Wall,  Wall,Wall,  Wall,  Wall] ]}.
-\end{array}
-\]
+The \emph{value function} is larger (about 487--500 in some states), 
+and the policy is slightly modified in some early states.  
+We still see a path leading to state 19. 
+Overall, it remains optimal, just at a bigger scale of values.
 
-\subsection*{(iv) Anchored Value Iteration (Anc-VI).}
+\subsection*{(iv) Anchored Value Iteration (Anc-VI) with different initial points.}
 
 \noindent
-We add an anchor \(V_0\) to VI with
+We added an anchoring approach with:
 \[
-  V_{n+1}
-  \;=\;\beta_{n+1}\,V_0 \;+\;\bigl(1-\beta_{n+1}\bigr)\,\max_{a}\Bigl[\dots\Bigr].
+  V_{n+1} 
+   \;=\;\beta_{n+1}\,V_0 \;+\;(1-\beta_{n+1})\,\max_{a}\{\dots\}.
 \]
-We tested three anchors:
+Using three different anchors:
 \begin{enumerate}[label=(\alph*)]
-\item $V_0=0$,
-\item $V_0=\mathbf{1}$,
-\item $V_0$ randomly in $[\,0,\,1/(1-\gamma)\,]^{nS}$.
+\item $V_0=0$ \quad(\textbf{614 iterations to converge}),
+\item $V_0= \mathbf{1}$ \quad(\textbf{613 iterations to converge}),
+\item random $V_0$ in $[0,\,1/(1-\gamma)]^{nS}$ \quad(\textbf{606 iterations to converge}),
 \end{enumerate}
-Below are the iteration counts needed:
-\begin{itemize}
-  \item[(a)] \textbf{anchor=0:} 300 iterations
-  \item[(b)] \textbf{anchor=1:} 300 iterations
-  \item[(c)] \textbf{random anchor:} 284 iterations
-\end{itemize}
-The first two converge to a very similar optimal policy and value.  
-\emph{However}, when using the randomized anchor the Anc-VI tends to converge to a suboptimal policy,
-indicating that certain initializations can cause local numerical issues and not allow to change from
-a suboptimal policy if the initialization is not good end they are "anchored" to it.
+they all converged to an \emph{optimal policy} as well, matching the same final $V^*$ observed before.  
 
-Eventually we are expecting the anchor to have less and less influence as the iterations progress, but
-we probably can't converge to an optimal policies because we reach the convergence condition before that happens.
-
-\subsection*{(v) Compare the convergence speed of VI vs.\ Anc-VI for the same anchors.}
+\subsection*{(v) Compare the convergence speed of VI vs.\ Anc-VI (with the same anchor).}
 
 \noindent
-Finally, we compared standard VI ($\mathtt{anc}=\text{False}$) vs.\ anchored VI ($\mathtt{anc}=\text{True}$) 
-for each of the three anchors:
+Finally, we compared standard VI \ (\texttt{anc=False}) and the anchored variant 
+\ (\texttt{anc=True}) for each available initialization of the values of $V$ at time $0$:
 \[
   \begin{array}{lccc}
   \toprule
-  & \textbf{Anchor=0} & \textbf{Anchor=1} & \textbf{Anchor=Random} \\
+    & \textbf{$V_0$ = 0} & \textbf{$V_0$ = 1} & \textbf{$V_0$ = Random} \\
   \midrule
-  \textbf{Standard VI} & 592\,\text{iters} & 591\,\text{iters} & 543\,\text{iters} \\[5pt]
-  \textbf{Anchored VI} & 300\,\text{iters} & 300\,\text{iters} & 284\,\text{iters} \\
+  \textbf{Standard VI} & 592\,\text{iters} & 591\,\text{iters} & 583\,\text{iters}\\[5pt]
+  \textbf{Anchored VI} & 614\,\text{iters} & 613\,\text{iters} & 606\,\text{iters}\\
   \bottomrule
   \end{array}
 \]
-Hence anchored VI took fewer iterations overall in our runs, whereas standard VI needed more 
-(five to six hundred).  As noted, the random anchor can lead to suboptimal policies if used 
-with the anchored update step, illustrating that initialization can matter.
+In this experiment, the \emph{anchored} method needed slightly \emph{more} iterations 
+than the standard VI.  However, they still converged to optimal policies. 
+With different discount factors or parameters, anchored VI can sometimes speed up or slow down convergence.
