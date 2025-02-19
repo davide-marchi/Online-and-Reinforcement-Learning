@@ -1,5 +1,7 @@
 In this exercise, we study off-policy evaluation in a 6-state ``episode-based'' RiverSwim environment with discount factor $\gamma = 0.96$. Our target policy $\pi$ always chooses the ``right'' action (action~1). The behavior policy $\pi_b$ from which the data was collected chooses action~0 with probability 0.35 and action~1 with probability 0.65. We wish to estimate $V^\pi(1)$, the discounted value of this target policy starting from state~1. The dataset \texttt{dataset0.csv} contains 200 episodes, each beginning in state~0 and ending in state~5 (terminal).
 
+The code used to run the experiments is contained in \texttt{HA2\_PolicyEval.py}.
+
 \subsection*{(i) Estimating $V^\pi(s_{\text{init}})$ Using Four Methods}
 We employ four different estimators for $V^\pi(s_{\text{init}})$:
 \begin{itemize}
