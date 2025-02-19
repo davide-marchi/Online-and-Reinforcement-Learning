@@ -14,7 +14,7 @@ plus the 4-room environment and the visualizations) can be found in the file
 \subsection*{(i) Solve the grid-world task using PI (Policy Iteration).}
 
 \noindent
-We implemented \emph{Policy Iteration}, which alternates:
+I implemented \emph{Policy Iteration}, which alternates:
 \[
   \resizebox{\textwidth}{!}{
   $\text{Policy Iteration:}\quad
@@ -57,7 +57,7 @@ We can visualize \(\pi\) on the \(7\times7\) grid as:
 \subsection*{(ii) Implement VI and use it to solve the grid-world task.}
 
 \noindent
-We then implemented \emph{Value Iteration}, repeatedly applying
+I then implemented \emph{Value Iteration}, repeatedly applying
 \[
   V_{n+1}(s) 
    \;=\;\max_{a}\Bigl[r(s,a) + \gamma\sum_{s'}P(s'\mid s,a)\,V_{n}(s')\Bigr].
@@ -80,7 +80,7 @@ Regarding the increasing number of iterations required for convergence, this occ
 \subsection*{(iv) Anc-VI with different initial points.}
 
 \noindent
-We added an anchoring approach with:
+I added an anchoring approach with:
 \[
   V_{n+1} 
    \;=\;\beta_{n+1}\,V_0 \;+\;(1-\beta_{n+1})\,\max_{a}\{\dots\}.
@@ -96,7 +96,7 @@ they all converged to an \emph{optimal policy} as well, matching the same final 
 \subsection*{(v) Compare the convergence speed of VI vs.\ Anc-VI.}
 
 \noindent
-Finally, we compared standard VI \ (\texttt{anc=False}) and the anchored variant 
+Finally, we can compare standard VI \ (\texttt{anc=False}) and the anchored variant 
 \ (\texttt{anc=True}) for each available initialization of the values of $V$ at time $0$:
 \begin{table}[H]
   \centering

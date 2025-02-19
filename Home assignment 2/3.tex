@@ -1,4 +1,4 @@
-We provide here the results of the Monte Carlo simulation and exact computation of 
+Here are  provided the results of the Monte Carlo simulation and exact computation of 
 \(V^\pi\) for the RiverSwim MDP, where the policy \(\pi\) takes \emph{right} action 
 with probability \(0.65\) in states \(\{1,2,3\}\) and always takes \emph{right} 
 in states \(\{4,5\}\).
@@ -12,14 +12,14 @@ The code used to run the experiments is contained in
 \subsection*{(i) Monte Carlo Estimation of \(\boldsymbol{V^\pi}\)}
 
 \noindent
-We generated \(n=50\) trajectories of length \(T=300\) each, for each possible start state, 
+I generated \(n=50\) trajectories of length \(T=300\) each, for each possible start state, 
 accumulating returns
 \[
   G \;=\;\sum_{t=0}^{T-1}\gamma^{\,t}\,r_t,
 \]
 and then averaged over the simulated trajectories to obtain 
 an approximate value \(V^\pi(s)\). 
-We used the discount factor \(\gamma = 0.96\). 
+I used the discount factor \(\gamma = 0.96\). 
 Below are the resulting Monte Carlo estimates (in a few seconds of execution time):
 
 \begin{table}[H]
@@ -44,7 +44,7 @@ Below are the resulting Monte Carlo estimates (in a few seconds of execution tim
 \subsection*{(ii) Exact Computation using the Bellman Equation}
 
 \noindent
-We also computed the exact value function 
+I also computed the exact value function 
 \[
    V^\pi \;=\;\bigl(I - \gamma\,P^\pi\bigr)^{-1}\,r^\pi
 \]
