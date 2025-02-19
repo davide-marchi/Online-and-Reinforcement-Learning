@@ -41,11 +41,9 @@ class riverswim():
 
 def load_episodes_from_csv(csv_path, terminal_state=None):
     """
-    Reads dataset from csv_path, assumed to have lines like:
-       state,action,reward,next_state
-    and returns a list of episodes, where each episode is a list of (s,a,r,s') tuples.
-    We assume that 'next_state' might loop or eventually reach a terminal.
-    In a continuing task, you might artificially chunk by restarts if you wish.
+    Reads dataset from csv_path. Have lines like:
+       state,action,reward,next state
+    and returns a list of episodes, where each episode is a list of (s,a,r,s') tuples
     """
     episodes = []
     current_episode = []
@@ -72,20 +70,15 @@ def load_episodes_from_csv(csv_path, terminal_state=None):
     return episodes
 
 ###############################################################################
-# 2. Example definitions for behavior policy pi_b and target policy pi
+# 2. Definitions of behavior policy pi_b and target policy pi
 ###############################################################################
 
 def pi_b(s, a):
     """
     Behavior policy from which the dataset was generated:
-    Probability that the dataset's logging policy chooses action `a` in state `s`.
-    Must match how data was actually logged (if known).
-    For the coverage assumption pi(a|s) > 0 => pi_b(a|s) > 0, we need pi_b>0 whenever pi>0.
-    
-    Here we just put a placeholder. In a real scenario, you must provide
-    the correct probability from the logging policy.
+    Probability that the dataset's logging policy chooses action `a` in state `s`
     """
-    # Example: Suppose behavior was 65% 'action=1' if s=0, else uniform. TOTALLY ARBITRARY
+    # Behavior was 65% 'action=1' and 35% 'action=0'
     if a==0:
         return 0.35
     elif a==1:
@@ -95,11 +88,10 @@ def pi_b(s, a):
 
 def pi(s, a):
     """
-    Target policy's probability of choosing action `a` in state `s`.
-    For example, we can define a simple "go right" policy or anything relevant.
+    Target policy's probability of choosing action `a` in state `s`
+    We define a simple "go right" policy
     """
-    # Suppose the target policy always does action=1 (prob=1),
-    # i.e. deterministic at 'action=1'.
+    # Deterministic at 'action=1'.
     return 1.0 if (a==1) else 0.0
 
 ###############################################################################
@@ -115,9 +107,6 @@ def MB_OPE(episodes, gamma):
      3) Solve  (I - gamma P^pi) V = r^pi  =>  V = (I - gamma P^pi)^{-1} r^pi
     Returns: MB-based estimate of V^pi(s) for all states s as a vector.
     """
-    # First gather counts for transitions and sum of rewards
-    # Let's assume we know the state space S and action set A from the data
-    # We'll do a pass to figure out max states or so:
     
     # figure out how large state space can be
     max_s = 0
@@ -203,7 +192,7 @@ def V_pi_wIS(episodes, gamma):
     Weighted Importance Sampling:
       Vhat_wIS = [ sum_{i=1}^n rho_{1:Ti}^{(i)} * sum_{t=1}^{Ti} gamma^{t-1} r_t^{(i)} ]
                   / sum_{i=1}^n rho_{1:Ti}^{(i)}.
-    This is consistent, slightly biased, but can have lower variance.
+    This is consistent, slightly biased, with lower variance.
     """
     numerator = 0.0
     denominator = 0.0
@@ -301,7 +290,7 @@ if __name__=="__main__":
     print(f"PDIS estimate of V^pi(s_init): {v_pdis:.4f}")
 
     ###########################################################################
-    # ii) or each method, plot the error 
+    # ii) For each method, plot the error 
     ###########################################################################
 
     env = riverswim(6)
@@ -368,7 +357,7 @@ if __name__=="__main__":
         print(f"{m}: {np.array(estimates_dict[m]).round(4)}, Variance = {var_est:.4f}")
 
     ###########################################################################
-    # iv) Compare in terms of empirical error and variance.
+    # iv) Compare in terms of empirical error and variance
     ###########################################################################
 
     # Print the mean absolute error and its variance for each method
