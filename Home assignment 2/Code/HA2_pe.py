@@ -86,7 +86,6 @@ def pi_b(s, a):
     the correct probability from the logging policy.
     """
     # Example: Suppose behavior was 65% 'action=1' if s=0, else uniform. TOTALLY ARBITRARY
-    # Adjust as needed:
     if a==0:
         return 0.35
     elif a==1:
@@ -238,7 +237,8 @@ def V_pi_PDIS(episodes, gamma):
     return accum / n
 
 def plot_errors(episodes, gamma, V_true):
-    """ Computes the running OPE estimates as a function of the number of episodes,
+    """
+    Computes the running OPE estimates as a function of the number of episodes,
     compares them to the 'true' V^pi (computed via MB-OPE on the full dataset),
     and plots the absolute error |V^pi(s_init) - estimate| for each method.
     """
@@ -249,7 +249,7 @@ def plot_errors(episodes, gamma, V_true):
     errors_IS, errors_wIS, errors_PDIS, errors_MB = [], [], [], []
     episode_counts = []
 
-    # For each prefix of the dataset, compute the running estimates.
+    # For each prefix of the dataset, compute the running estimates
     for i in range(1, len(episodes)+1):
         current_eps = episodes[:i]
         v_is   = V_pi_IS(current_eps, gamma)
@@ -263,7 +263,7 @@ def plot_errors(episodes, gamma, V_true):
         errors_MB.append(abs(true_value - v_mb))
         episode_counts.append(i)
 
-    # Plot the error curves.
+    # Plot the error curves
     plt.figure(figsize=(10,6))
     plt.plot(episode_counts, errors_IS, label='IS Error', marker='o')
     plt.plot(episode_counts, errors_wIS, label='wIS Error', marker='s')
@@ -277,32 +277,32 @@ def plot_errors(episodes, gamma, V_true):
     plt.show()
 
 
-###############################################################################
-# Example usage
-###############################################################################
-
 if __name__=="__main__":
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     csv_file = "Datasets/dataset0.csv"
-    # 1) Load episodes from CSV
+    # Load episodes from CSV
     episodes = load_episodes_from_csv(csv_file, terminal_state=5)
     gamma = 0.96  # discount factor, example
     s_init = 0
     
-    # 2) Model-Based OPE
+    ###########################################################################
+    # i) Estimate V^pi(s_init) using: MB-OPE, IS, wIS, and PDIS
+    ###########################################################################
+
+    # Model-Based OPE
     mb_ope_est = MB_OPE(episodes, gamma)
     print(f"MB-OPE estimate of V^pi(s_init): {mb_ope_est[s_init]:.4f}")
-    
-    # If we only care about s_init=0 (assuming all eps start in 0):
-    # you can check mb_ope_est[0] for the MB-OPE of V^pi(0).
-    
-    # 3) IS, wIS, PDIS
+    # IS, wIS, PDIS
     v_is   = V_pi_IS(episodes, gamma)
     v_wis  = V_pi_wIS(episodes, gamma)
     v_pdis = V_pi_PDIS(episodes, gamma)
     print(f"IS estimate of V^pi(s_init): {v_is:.4f}")
     print(f"wIS estimate of V^pi(s_init): {v_wis:.4f}")
     print(f"PDIS estimate of V^pi(s_init): {v_pdis:.4f}")
+
+    ###########################################################################
+    # ii) or each method, plot the error 
+    ###########################################################################
 
     env = riverswim(6)
     # Need to solve (I - gamma*P^pi)v = r^pi
@@ -319,8 +319,7 @@ if __name__=="__main__":
             P_pi[s, s_next] = (pi(s,0)*env.P[s,0,s_next]
                             + pi(s,1)*env.P[s,1,s_next])
 
-    # Solve the system (I - gamma*P^pi)v = r^pi
-    # Using numpy's solver because it's more stable than matrix inversion
+    # Solve the system (I - gamma*P^pi)v = r^pi using numpy's solver because it's more stable
     I = np.eye(env.nS)
     A = I - gamma * P_pi
     b = r_pi
@@ -329,24 +328,24 @@ if __name__=="__main__":
 
     print(f"Exact solution of V^pi(s_init) using linear system: : {V_true[s_init]:.4f}")
 
-    # Plot error curves.
+    # Plot error curves
     plot_errors(episodes, gamma, V_true)
 
-    # -------------------------------------------------------------------
-    # (iii) and (iv): Compute and compare errors across 10 datasets
-    # -------------------------------------------------------------------
+    ###########################################################################
+    # iii) Consider 9 additional datasets and report empirical variance
+    ###########################################################################
 
     methods = ["MB-OPE", "IS", "wIS", "PDIS"]
-    # Dictionaries to store the absolute errors and estimates for each method.
+    # Dictionaries to store the absolute errors and estimates for each method
     abs_errors = {m: [] for m in methods}
     estimates_dict = {m: [] for m in methods}
 
-    # Loop over datasets dataset0.csv to dataset9.csv.
+    # Loop over datasets dataset0.csv to dataset9.csv
     for i in range(10):
         csv_file_i = f"Datasets/dataset{i}.csv"
         eps_i = load_episodes_from_csv(csv_file_i, terminal_state=5)
         
-        # Compute the estimates for state s_init using each method.
+        # Compute the estimates for state s_init using each method
         mb_est = MB_OPE(eps_i, gamma)[s_init]
         is_est = V_pi_IS(eps_i, gamma)
         wis_est = V_pi_wIS(eps_i, gamma)
@@ -363,13 +362,16 @@ if __name__=="__main__":
         abs_errors["wIS"].append(abs(wis_est - V_true[s_init]))
         abs_errors["PDIS"].append(abs(pdis_est - V_true[s_init]))
 
-    # You may also print the raw estimates if needed:
     print("\nEstimates for V^pi(s_init) across datasets:")
     for m in methods:
         var_est = np.var(estimates_dict[m])
         print(f"{m}: {np.array(estimates_dict[m]).round(4)}, Variance = {var_est:.4f}")
 
-    # Print the mean absolute error and its variance for each method.
+    ###########################################################################
+    # iv) Compare in terms of empirical error and variance.
+    ###########################################################################
+
+    # Print the mean absolute error and its variance for each method
     print("\nEmpirical comparison across 10 datasets:")
     for m in methods:
         mean_error = np.mean(abs_errors[m])
