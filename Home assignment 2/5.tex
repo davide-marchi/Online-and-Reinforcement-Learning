@@ -24,14 +24,21 @@ We employ four different estimators for $V^\pi(s_{\text{init}})$:
 \end{itemize}
 
 When we apply these four estimators to the data in \texttt{dataset0.csv}, we obtain the following estimates for $V^\pi(s_{\text{init}})$ (here, $s_{\text{init}}=0$):
-\[
-\begin{aligned}
-&\text{MB-OPE: } 1.3380, \quad 
-&&\text{IS: } 0.4040,\\
-&\text{wIS: } 1.0000, \quad
-&&\text{PDIS: } 1.0180.
-\end{aligned}
-\]
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{l|c}
+    \hline
+    \textbf{Method} & \textbf{Estimate} \\
+    \hline
+    MB-OPE & 1.3380 \\
+    IS     & 0.4040 \\
+    wIS    & 1.0000 \\
+    PDIS   & 1.0180 \\
+    \hline
+    \end{tabular}
+    \caption{Estimates of $V^\pi(s_{\text{init}})$ on \texttt{dataset0.csv}.}
+    \label{tab:estimates-dataset0}
+\end{table}
 In addition, we solve the linear system
 \[
     \bigl(I - \gamma P^\pi\bigr)\,V \;=\; r^\pi
@@ -52,27 +59,27 @@ To visualize how these estimators improve with more data, we compute each estima
 We next consider 9 additional datasets (\texttt{dataset1.csv} through \texttt{dataset9.csv}), all generated in the same manner. For each dataset and each OPE method, we compute an estimate of $V^\pi(s_{\text{init}})$. In \autoref{tab:var-across-datasets} we show the estimates for each method (left) and the resulting sample variance across the 10 datasets (right).  
 
 \begin{table}[h!]
-\centering
-\begin{tabular}{l|l|l}
-\hline
-\textbf{Method} & \textbf{Estimates across 10 Datasets} & \textbf{Variance} \\ 
-\hline
-MB-OPE & 
-\makebox[5.8cm][l]{\small [1.3380, 1.3306, 1.3544, 1.3080, 1.3625, 1.2955, 1.3351, 1.3210, 1.3079, 1.2866]} &
-0.0006 \\
-IS & 
-\makebox[5.8cm][l]{\small [0.4040, 0.9483, 0.0077, 7.9424, 0.0077, 0.0000, 0.4804, 0.0077, 0.2479, 0.3062]} &
-5.3813 \\
-wIS & 
-\makebox[5.8cm][l]{\small [1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 1.0000, 1.0000, 1.0000, 1.0000]} &
-0.0900 \\
-PDIS & 
-\makebox[5.8cm][l]{\small [1.0180, 1.0409, 0.9568, 0.9950, 1.0027, 0.9950, 0.9644, 0.9414, 1.0486, 0.9568]} &
-0.0012 \\
-\hline
-\end{tabular}
-\caption{Estimates of $V^\pi(s_{\text{init}})$ across 10 datasets (left) and sample variance (right).}
-\label{tab:var-across-datasets}
+    \centering
+    \begin{tabular}{l|p{6cm}|c}
+    \hline
+    \textbf{Method} & \textbf{Estimates across 10 Datasets} & \textbf{Variance} \\
+    \hline
+    MB-OPE & 
+    [1.3380, 1.3306, 1.3544, 1.3080, 1.3625, 1.2955, 1.3351, 1.3210, 1.3079, 1.2866] & 
+    0.0006 \\
+    IS & 
+    [0.4040, 0.9483, 0.0077, 7.9424, 0.0077, 0.0000, 0.4804, 0.0077, 0.2479, 0.3062] &
+    5.3813 \\
+    wIS &
+    [1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 1.0000, 1.0000, 1.0000, 1.0000] &
+    0.0900 \\
+    PDIS &
+    [1.0180, 1.0409, 0.9568, 0.9950, 1.0027, 0.9950, 0.9644, 0.9414, 1.0486, 0.9568] &
+    0.0012 \\
+    \hline
+    \end{tabular}
+    \caption{Estimates of $V^\pi(s_{\text{init}})$ across 10 datasets (left) and sample variance (right).}
+    \label{tab:var-across-datasets}
 \end{table}
 
 \subsection*{(iv) Comparison in Terms of Error and Variance}

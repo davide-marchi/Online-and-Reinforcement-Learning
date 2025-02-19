@@ -1,23 +1,23 @@
 # Fdb version 4
-["bibtex OReL HA2 Davide Marchi"] 0 "OReL HA2 Davide Marchi.aux" "OReL HA2 Davide Marchi.bbl" "OReL HA2 Davide Marchi" 1739926737.87451 0
+["bibtex OReL HA2 Davide Marchi"] 0 "OReL HA2 Davide Marchi.aux" "OReL HA2 Davide Marchi.bbl" "OReL HA2 Davide Marchi" 1739927006.2982 0
   "OReL HA2 Davide Marchi.aux" 0 -1 0 "pdflatex"
   "bibliography.bib" 0 -1 0 ""
   (generated)
   "OReL HA2 Davide Marchi.bbl"
   "OReL HA2 Davide Marchi.blg"
   (rewritten before read)
-["pdflatex"] 1739926735.82599 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home assignment 2/OReL HA2 Davide Marchi.tex" "OReL HA2 Davide Marchi.pdf" "OReL HA2 Davide Marchi" 1739926737.87531 0
+["pdflatex"] 1739927004.22114 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home assignment 2/OReL HA2 Davide Marchi.tex" "OReL HA2 Davide Marchi.pdf" "OReL HA2 Davide Marchi" 1739927006.29953 0
   "1.tex" 1739727334 2637 40ddf34a96a12f66bf64f881b0d187e1 ""
   "2.tex" 1739743326 4755 b38b3fd8c64da15fe78b9e3f726e56fd ""
   "3.tex" 1739926735 2072 f09508d09eaf9db5904936ea3b2f1e0b ""
   "4.tex" 1739877058 5384 4aa60e35ef221a442790138a5c829708 ""
-  "5.tex" 1739925838 6175 c02ccf37595700e259df3f14722fc615 ""
+  "5.tex" 1739927003 6386 e85228170d5d34ea6a3fbf389e6840c1 ""
   "Code/plots.png" 1739925007 77418 6651159a14227ffea390ad4c13089ff9 ""
-  "OReL HA2 Davide Marchi.aux" 1739926737 2125 dcf82f9b2664e59a54faab30a13bcac7 "pdflatex"
+  "OReL HA2 Davide Marchi.aux" 1739927005 2424 b31a39ba3da9f4948c9fe9f44dc0004e "pdflatex"
   "OReL HA2 Davide Marchi.bbl" 0 -1 0 "bibtex OReL HA2 Davide Marchi"
-  "OReL HA2 Davide Marchi.out" 1739926737 1131 115ec07177e84ca2ad4f4f43026cef46 "pdflatex"
+  "OReL HA2 Davide Marchi.out" 1739927005 1131 115ec07177e84ca2ad4f4f43026cef46 "pdflatex"
   "OReL HA2 Davide Marchi.tex" 1739925707 2003 627ff0f85d9554e5b36d03000e2f3905 ""
-  "OReL HA2 Davide Marchi.toc" 1739926737 453 ebf0aaac0768c6fb67d19e85d3311656 "pdflatex"
+  "OReL HA2 Davide Marchi.toc" 1739927005 453 ebf0aaac0768c6fb67d19e85d3311656 "pdflatex"
   "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home assignment 2/OReL HA2 Davide Marchi.tex" 1739925707 2003 627ff0f85d9554e5b36d03000e2f3905 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1739027330 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1739028126 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -45,7 +45,6 @@
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmmi6.tfm" 1739027322 1512 f21f83efb36853c0b70002322c1ab3ad ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmmi8.tfm" 1739027322 1520 eccf95517727cb11801f4f1aee3a21b4 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmmib10.tfm" 1739027322 1524 554068197b70979a55370e6c6495f441 ""
-  "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr10.tfm" 1739027322 1296 45809c5a464d5f32c8f98ba97c1bb47f ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr12.tfm" 1739027322 1288 655e228510b4c2a1abe905c368440826 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr17.tfm" 1739027322 1292 296a67155bdbfc32aa9c636f21e91433 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr6.tfm" 1739027322 1300 b62933e007d01cfd073f79b963c01526 ""
@@ -66,7 +65,6 @@
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb" 1739026672 37166 8ab3487cbe3ab49ebce74c29ea2418db ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1739026672 35469 dcf3a5f2fc1862f5952e3ee5eb1d98c4 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb" 1739026672 36912 b448ef9ad9d7228ec3c6e71005136d55 ""
-  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1739026672 35752 024fb6c41858982481f6968b5fc26508 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1739026672 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1739026672 32362 bc3f3eec7ab7d65fe700963d4017d32c ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1739026672 32734 69e00a6b65cedb993666e42eedb3d48f ""
