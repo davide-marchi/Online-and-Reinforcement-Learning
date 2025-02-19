@@ -1,7 +1,8 @@
-We provide here a short report on the Monte Carlo simulation and exact computation of 
+We provide here the results of the Monte Carlo simulation and exact computation of 
 \(V^\pi\) for the RiverSwim MDP, where the policy \(\pi\) takes \emph{right} action 
 with probability \(0.65\) in states \(\{1,2,3\}\) and always takes \emph{right} 
-in states \(\{4,5\}\). 
+in states \(\{4,5\}\).
+
 The code used to run the experiments is contained in 
 \texttt{HA2\_RiverSwim.py}.
 
@@ -21,7 +22,7 @@ an approximate value \(V^\pi(s)\).
 We used the discount factor \(\gamma = 0.96\). 
 Below are the resulting Monte Carlo estimates (in a few seconds of execution time):
 
-\begin{table}[h!]
+\begin{table}[H]
   \centering
   \begin{tabular}{l|c|c}
   \hline
@@ -55,8 +56,6 @@ The table above (right column) presents the resulting exact values of
 
 \medskip
 
-\noindent
-\textbf{Comment:} 
 Although the Monte Carlo estimates are not the finest approximation and slightly deviate 
 from the exact values (particularly in states 3 and 4) due to limited sample size, 
 they were obtained in just a few seconds of execution. Increasing the number of trajectories 

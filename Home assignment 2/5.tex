@@ -24,7 +24,7 @@ We employ four different estimators for $V^\pi(s_{\text{init}})$:
 \end{itemize}
 
 When we apply these four estimators to the data in \texttt{dataset0.csv}, we obtain the following estimates for $V^\pi(s_{\text{init}})$ (here, $s_{\text{init}}=0$):
-\begin{table}[h!]
+\begin{table}[H]
     \centering
     \begin{tabular}{l|c}
     \hline
@@ -48,7 +48,7 @@ directly from the known RiverSwim model, which yields the ``exact'' solution $V^
 \subsection*{(ii) Error Plots for Each Method}
 To visualize how these estimators improve with more data, we compute each estimator on the first $k$ episodes for $k=1,\dots,200$ and compare the result to the exact $V^\pi(s_{\text{init}})$. \autoref{fig:ope-errors} shows the absolute error as a function of $k$. As expected, the IS curve fluctuates heavily, whereas wIS and PDIS are more stable, and MB-OPE gradually converges to a value close to the true $V^\pi(s_{\text{init}})$.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \includegraphics[width=1\linewidth]{Code/plots.png}
 \caption{Absolute errors $\bigl|V^\pi(s_{\text{init}}) - \widehat{V}^\pi_k(s_{\text{init}})\bigr|$ versus the number of episodes $k$, for IS, wIS, PDIS, and MB-OPE.}
@@ -92,7 +92,7 @@ These results corroborate the theoretical expectations:
 
 \subsection*{(iv) Comparison in Terms of Error and Variance}
 Finally, \autoref{tab:error-comparison} compares the methods by their mean absolute error (relative to the exact $V^\pi(s_{\text{init}})$) and the variance of those errors across the 10 datasets.
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \begin{tabular}{l|cc}
 \hline

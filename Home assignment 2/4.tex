@@ -1,11 +1,3 @@
-\emph{All of the Python code used to run these experiments (i.e.\ PI, VI, and Anchored VI, 
-plus the 4-room environment and the visualizations) can be found in the file 
-\texttt{HA2\_gridworld.py}.}
-
-\bigskip
-
-\noindent
-\textbf{Environment Setup:}\\
 We have a \(7\times7\) grid with walls, yielding 20 accessible states labeled
 \(0\) to \(19\). State \(19\) (bottom-right corner) has reward \(1\) and 
 is effectively absorbing once reached. The agent chooses from 4 compass actions 
@@ -14,6 +6,10 @@ is effectively absorbing once reached. The agent chooses from 4 compass actions
 \emph{slippery}: probability \(0.7\) for the chosen direction, \(0.1\) each 
 for perpendicular directions, and \(0.1\) for staying in place. 
 We set \(\gamma=0.97\) by default, except in part (iii) where \(\gamma=0.998\).
+
+The Python code used to run these experiments (i.e.\ PI, VI, and Anchored VI, 
+plus the 4-room environment and the visualizations) can be found in the file 
+\texttt{HA2\_gridworld.py}.
 
 \subsection*{(i) Solve the grid-world task using PI (Policy Iteration).}
 
@@ -102,7 +98,7 @@ they all converged to an \emph{optimal policy} as well, matching the same final 
 \noindent
 Finally, we compared standard VI \ (\texttt{anc=False}) and the anchored variant 
 \ (\texttt{anc=True}) for each available initialization of the values of $V$ at time $0$:
-\begin{table}[h!]
+\begin{table}[H]
   \centering
   \begin{tabular}{l|c|c|c}
   \hline
@@ -114,7 +110,7 @@ Finally, we compared standard VI \ (\texttt{anc=False}) and the anchored variant
   \caption{Number of iterations required by Anchored VI with different initial value functions.}
   \label{tab:anchored-vi}
 \end{table}
-\begin{table}[h!]
+\begin{table}[H]
   \centering
   \begin{tabular}{l|c}
   \hline
@@ -126,6 +122,7 @@ Finally, we compared standard VI \ (\texttt{anc=False}) and the anchored variant
   \caption{Number of iterations required by standard VI to converge.}
   \label{tab:standard-vi}
 \end{table}
+
 In this experiment, the \emph{anchored} method needed \emph{more} iterations 
 than the standard VI.
 However, all methods still converged to optimal policies. Depending on the scenario,
