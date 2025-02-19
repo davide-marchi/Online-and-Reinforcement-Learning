@@ -43,6 +43,8 @@ INPUT c:/texlive/2024/texmf-dist/tex/latex/booktabs/booktabs.sty
 INPUT c:/texlive/2024/texmf-dist/tex/latex/booktabs/booktabs.sty
 INPUT c:/texlive/2024/texmf-dist/tex/latex/enumitem/enumitem.sty
 INPUT c:/texlive/2024/texmf-dist/tex/latex/enumitem/enumitem.sty
+INPUT c:/texlive/2024/texmf-dist/tex/latex/float/float.sty
+INPUT c:/texlive/2024/texmf-dist/tex/latex/float/float.sty
 INPUT c:/texlive/2024/texmf-dist/tex/latex/graphics/graphicx.sty
 INPUT c:/texlive/2024/texmf-dist/tex/latex/graphics/graphicx.sty
 INPUT c:/texlive/2024/texmf-dist/tex/latex/graphics/keyval.sty

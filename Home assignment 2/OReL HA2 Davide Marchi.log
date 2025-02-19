@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  19 FEB 2025 02:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  19 FEB 2025 18:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -142,11 +142,18 @@ Package: enumitem 2025/02/06 v3.11 Customized lists
 \enit@inbox=\box55
 \enit@count@id=\count290
 \enitdp@description=\count291
+) (c:/texlive/2024/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count292
+\float@exts=\toks25
+\float@box=\box56
+\@float@everytoks=\toks26
+\@floatcapt=\box57
 ) (c:/texlive/2024/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
  (c:/texlive/2024/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
-\KV@toks@=\toks25
+\KV@toks@=\toks27
 ) (c:/texlive/2024/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
  (c:/texlive/2024/texmf-dist/tex/latex/graphics/trig.sty
@@ -177,25 +184,25 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
 ) (c:/texlive/2024/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count292
-\lst@gtempboxa=\box56
-\lst@token=\toks26
-\lst@length=\count293
+\lst@mode=\count293
+\lst@gtempboxa=\box58
+\lst@token=\toks28
+\lst@length=\count294
 \lst@currlwidth=\dimen167
-\lst@column=\count294
-\lst@pos=\count295
+\lst@column=\count295
+\lst@pos=\count296
 \lst@lostspace=\dimen168
 \lst@width=\dimen169
-\lst@newlines=\count296
-\lst@lineno=\count297
+\lst@newlines=\count297
+\lst@lineno=\count298
 \lst@maxwidth=\dimen170
  (c:/texlive/2024/texmf-dist/tex/latex/listings/lstpatch.sty
 File: lstpatch.sty 2024/09/23 1.10c (Carsten Heinz)
 ) (c:/texlive/2024/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2024/09/23 1.10c (Carsten Heinz)
-\c@lstnumber=\count298
-\lst@skipnumbers=\count299
-\lst@framebox=\box57
+\c@lstnumber=\count299
+\lst@skipnumbers=\count300
+\lst@framebox=\box59
 ) (c:/texlive/2024/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2024/09/23 1.10c listings configuration
 ))
@@ -231,16 +238,16 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
  (c:/texlive/2024/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count300
+\c@section@level=\count301
 ) (c:/texlive/2024/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count301
+\etb@tempcnta=\count302
 ) (c:/texlive/2024/texmf-dist/tex/generic/stringenc/stringenc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
 \@linkdim=\dimen171
-\Hy@linkcounter=\count302
-\Hy@pagecounter=\count303
+\Hy@linkcounter=\count303
+\Hy@pagecounter=\count304
  (c:/texlive/2024/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2024-11-05 v7.01l Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
@@ -248,7 +255,7 @@ Now handling font encoding PD1 ...
 ) (c:/texlive/2024/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count304
+\Hy@SavedSpaceFactor=\count305
  (c:/texlive/2024/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2024-11-05 v7.01l Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
@@ -261,7 +268,7 @@ Package hyperref Info: Plain pages OFF on input line 4172.
 Package hyperref Info: Backreferencing OFF on input line 4177.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4424.
-\c@Hy@tempcnt=\count305
+\c@Hy@tempcnt=\count306
  (c:/texlive/2024/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip18
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
@@ -273,7 +280,7 @@ Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
  (c:/texlive/2024/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
-\Fld@menulength=\count306
+\Fld@menulength=\count307
 \Field@Width=\dimen173
 \Fld@charsize=\dimen174
 Package hyperref Info: Hyper figures OFF on input line 6042.
@@ -287,9 +294,9 @@ Package hyperref Info: PDF/A mode OFF on input line 6072.
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count307
-\c@Item=\count308
-\c@Hfootnote=\count309
+\Hy@abspage=\count308
+\c@Item=\count309
+\c@Hfootnote=\count310
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
  (c:/texlive/2024/texmf-dist/tex/latex/hyperref/hpdftex.def
@@ -298,8 +305,8 @@ File: hpdftex.def 2024-11-05 v7.01l Hyperref driver for pdfTeX
 Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
 with kernel methods
 )
-\Fld@listcount=\count310
-\c@bookmark@seq@number=\count311
+\Fld@listcount=\count311
+\c@bookmark@seq@number=\count312
  (c:/texlive/2024/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
  (c:/texlive/2024/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
@@ -313,54 +320,54 @@ File: lstlang1.sty 2024/09/23 1.10c listings language file
 ) (./OReL HA2 Davide Marchi.aux)
 \openout1 = `"OReL HA2 Davide Marchi.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
  (c:/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count312
+\scratchcounter=\count313
 \scratchdimen=\dimen175
-\scratchbox=\box58
-\nofMPsegments=\count313
-\nofMParguments=\count314
-\everyMPshowfont=\toks27
-\MPscratchCnt=\count315
+\scratchbox=\box60
+\nofMPsegments=\count314
+\nofMParguments=\count315
+\everyMPshowfont=\toks29
+\MPscratchCnt=\count316
 \MPscratchDim=\dimen176
-\MPnumerator=\count316
-\makeMPintoPDFobject=\count317
-\everyMPtoPDFconversion=\toks28
+\MPnumerator=\count317
+\makeMPintoPDFobject=\count318
+\everyMPtoPDFconversion=\toks30
 ) (c:/texlive/2024/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (c:/texlive/2024/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-\c@lstlisting=\count318
-Package hyperref Info: Link coloring OFF on input line 49.
+\c@lstlisting=\count319
+Package hyperref Info: Link coloring OFF on input line 50.
  (./OReL HA2 Davide Marchi.out) (./OReL HA2 Davide Marchi.out)
 \@outlinefile=\write3
 \openout3 = `"OReL HA2 Davide Marchi.out"'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 54.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 55.
  (c:/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 54.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 55.
  (c:/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (./OReL HA2 Davide Marchi.toc)
@@ -394,11 +401,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 File: Code/plots.png Graphic file (type png)
 <use Code/plots.png>
 Package pdftex.def Info: Code/plots.png  used on input line 53.
-(pdftex.def)             Requested size: 322.50345pt x 168.38196pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
+(pdftex.def)             Requested size: 460.72124pt x 240.55829pt.
 
 
 [9 <./Code/plots.png>])
@@ -414,15 +417,15 @@ Package rerunfilecheck Info: File `"OReL HA2 Davide Marchi".out' has not changed
 (rerunfilecheck)             Checksum: 115EC07177E84CA2AD4F4F43026CEF46;1131.
  ) 
 Here is how much of TeX's memory you used:
- 12555 strings out of 473201
- 193479 string characters out of 5720300
- 878685 words of memory out of 5000000
- 35575 multiletter control sequences out of 15000+600000
+ 12622 strings out of 473201
+ 194490 string characters out of 5720300
+ 880166 words of memory out of 5000000
+ 35638 multiletter control sequences out of 15000+600000
  573659 words of font info for 94 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  79i,13n,93p,789b,568s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on "OReL HA2 Davide Marchi.pdf" (10 pages, 307343 bytes).
+Output written on "OReL HA2 Davide Marchi.pdf" (10 pages, 307351 bytes).
 PDF statistics:
  212 PDF objects out of 1000 (max. 8388607)
  158 compressed objects within 2 object streams

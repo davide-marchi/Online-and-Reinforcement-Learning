@@ -50,7 +50,7 @@ To visualize how these estimators improve with more data, we compute each estima
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.7\linewidth]{Code/plots.png}
+\includegraphics[width=1\linewidth]{Code/plots.png}
 \caption{Absolute errors $\bigl|V^\pi(s_{\text{init}}) - \widehat{V}^\pi_k(s_{\text{init}})\bigr|$ versus the number of episodes $k$, for IS, wIS, PDIS, and MB-OPE.}
 \label{fig:ope-errors}
 \end{figure}
@@ -58,7 +58,9 @@ To visualize how these estimators improve with more data, we compute each estima
 \subsection*{(iii) Variance of Estimates Across 10 Datasets}
 We next consider 9 additional datasets (\texttt{dataset1.csv} through \texttt{dataset9.csv}), all generated in the same manner. For each dataset and each OPE method, we compute an estimate of $V^\pi(s_{\text{init}})$. In \autoref{tab:var-across-datasets} we show the estimates for each method (left) and the resulting sample variance across the 10 datasets (right).  
 
-\begin{table}[h!]
+% TODO: Make tables homogenous acress texs
+% TODO: Checks numbers in tables
+\begin{table}[H]
     \centering
     \begin{tabular}{l|p{6cm}|c}
     \hline
@@ -82,8 +84,7 @@ We next consider 9 additional datasets (\texttt{dataset1.csv} through \texttt{da
     \label{tab:var-across-datasets}
 \end{table}
 
-\subsection*{(iv) Comparison in Terms of Error and Variance}
-Finally, \autoref{tab:error-comparison} compares the methods by their mean absolute error (relative to the exact $V^\pi(s_{\text{init}})$) and the variance of those errors across the 10 datasets. These results corroborate the theoretical expectations:
+These results corroborate the theoretical expectations:
 \begin{itemize}
     \item Plain IS exhibits the highest variance by far, and occasionally gives extreme estimates.
     \item Weighted IS is more stable but can still be off by a moderate amount.
@@ -91,6 +92,8 @@ Finally, \autoref{tab:error-comparison} compares the methods by their mean absol
     \item MB-OPE, though it depends on estimating a model from data, remains close to the true value and shows small variance in this setup.
 \end{itemize}
 
+\subsection*{(iv) Comparison in Terms of Error and Variance}
+Finally, \autoref{tab:error-comparison} compares the methods by their mean absolute error (relative to the exact $V^\pi(s_{\text{init}})$) and the variance of those errors across the 10 datasets.
 \begin{table}[h!]
 \centering
 \begin{tabular}{l|cc}
