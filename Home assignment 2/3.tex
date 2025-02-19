@@ -21,19 +21,23 @@ an approximate value \(V^\pi(s)\).
 We used the discount factor \(\gamma = 0.96\). 
 Below are the resulting Monte Carlo estimates (in a few seconds of execution time):
 
-\begin{center}
-\begin{tabular}{lcc}
-\toprule
-State & MC Estimate & Exact Value \\ 
-\midrule
-1 & 4.01793 & 4.12090 \\
-2 & 4.61536 & 4.71119 \\
-3 & 5.96556 & 6.33460 \\
-4 & 9.47802 & 9.73803 \\
-5 & 11.21253 & 11.17784 \\
-\bottomrule
-\end{tabular}
-\end{center}
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{l|c|c}
+  \hline
+  \textbf{State} & \textbf{MC Estimate} & \textbf{Exact Value} \\
+  \hline
+  1 & 4.01793 & 4.12090 \\
+  2 & 4.61536 & 4.71119 \\
+  3 & 5.96556 & 6.33460 \\
+  4 & 9.47802 & 9.73803 \\
+  5 & 11.21253 & 11.17784 \\
+  \hline
+  \end{tabular}
+  \caption{Comparison of Monte Carlo estimates vs. exact values.}
+  \label{tab:mc-vs-exact}
+\end{table}
+  
 
 \noindent
 \subsection*{(ii) Exact Computation using the Bellman Equation}

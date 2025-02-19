@@ -102,24 +102,30 @@ they all converged to an \emph{optimal policy} as well, matching the same final 
 \noindent
 Finally, we compared standard VI \ (\texttt{anc=False}) and the anchored variant 
 \ (\texttt{anc=True}) for each available initialization of the values of $V$ at time $0$:
-\[
-  \begin{array}{lccc}
-  \toprule
-    & \textbf{$V_0$ = 0} & \textbf{$V_0$ = 1} & \textbf{$V_0$ = Random} \\
-  \midrule
-  \textbf{Anchored VI} & 614\,\text{iters} & 613\,\text{iters} & 606\,\text{iters}\\
-  \bottomrule
-  \end{array}
-\]
-\[
-  \begin{array}{lccc}
-  \toprule
-    & \textbf{Iterations to converge}\\
-  \midrule
-  \textbf{Standard VI} & 48\,\text{iters}\\
-  \bottomrule
-  \end{array}
-\]
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{l|c|c|c}
+  \hline
+   & \textbf{$V_0 = 0$} & \textbf{$V_0 = 1$} & \textbf{$V_0 = \mathrm{Random}$} \\
+  \hline
+  \textbf{Anchored VI} & 614\,iters & 613\,iters & 606\,iters \\
+  \hline
+  \end{tabular}
+  \caption{Number of iterations required by Anchored VI with different initial value functions.}
+  \label{tab:anchored-vi}
+\end{table}
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{l|c}
+  \hline
+   & \textbf{Iterations to converge} \\
+  \hline
+  \textbf{Standard VI} & 48\,iters \\
+  \hline
+  \end{tabular}
+  \caption{Number of iterations required by standard VI to converge.}
+  \label{tab:standard-vi}
+\end{table}
 In this experiment, the \emph{anchored} method needed \emph{more} iterations 
 than the standard VI.
 However, all methods still converged to optimal policies. Depending on the scenario,
