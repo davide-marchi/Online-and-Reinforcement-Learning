@@ -113,3 +113,67 @@ For each $i$, the outer product $x_i x_i^T$ is an $n\times n$ matrix of rank 1 (
     \operatorname{rank}(C)=n.
     \]
 \end{itemize}
+
+\subsection{Neuroevolution}
+
+In this exercise we consider solving the pole-balancing task using a direct policy search method with the CMA-ES. Our policy is encoded by a feed-forward neural network. In the notebook, two versions of the network were implemented: one that includes trainable bias parameters in the hidden and output layers, and one without bias. The following sections describe the network architecture (part 1) and summarize the experimental performance (part 2).
+
+\subsection*{(a) Neural Network Architecture}
+We used a network with a single hidden layer consisting of five neurons and a \texttt{tanh} activation. The output layer is a single neuron with a linear activation. The constructor of the network allows the user to select whether or not to include bias parameters. A code snippet implementing this in PyTorch is shown below.
+
+\begin{lstlisting}[language=Python, caption={Definition of the policy network.}, basicstyle=\ttfamily\small]
+import torch.nn as nn
+
+class PolicyNetwork(nn.Module):
+    def __init__(self, input_dim, hidden_dim=5, use_bias=True):
+        super().__init__()
+        # Hidden layer: a linear layer followed by tanh activation
+        self.hidden = nn.Linear(input_dim, hidden_dim, bias=use_bias)
+        # Output layer: a single neuron with linear activation
+        self.output = nn.Linear(hidden_dim, 1, bias=use_bias)
+        
+    def forward(self, x):
+        x = torch.tanh(self.hidden(x))
+        x = self.output(x)  # Linear output
+        return x
+
+# Instantiate the policy network.
+# Set 'use_bias' to True for an architecture with trainable biases,
+# or False to have no bias parameters.
+policy_net = PolicyNetwork(state_space_dimension, hidden_dim=5, use_bias=True)
+\end{lstlisting}
+
+In the code above, \texttt{hidden\_dim} can be changed, but is kept to 5 as a default value. The boolean parameter \texttt{use\_bias} allows for switching between the two architectures.
+
+\subsection*{(b) Performance Comparison}
+We compared the performance of the two architectures by running the learning procedure 10 times for each variant (with bias and without bias). Two metrics were recorded:
+\begin{itemize}
+    \item \textbf{Evaluations:} The number of evaluations (i.e., CMA-ES iterations) required to find a policy that balances the pole for 500 time steps.
+    \item \textbf{Balancing Steps:} When testing the learned policies from a random starting position, the number of steps the pole remained balanced.
+\end{itemize}
+
+The summary of the experimental results is given in Table~\ref{tab:results}.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcc}
+\toprule
+Architecture & Average Evaluations & Average Balancing Steps\\
+\midrule
+With bias    & 1422.0              & 330.9 \\
+Without bias & 15.8                & 428.7 \\
+\bottomrule
+\end{tabular}
+\caption{Performance comparison of policy networks with and without bias parameters.}
+\label{tab:results}
+\end{table}
+
+\medskip
+
+The results clearly indicate that the network without bias parameters converges much faster (only about 16 evaluations on average,
+compared to over 1400 when using bias) and yields policies that keep the pole balanced for a longer duration (average of approximately
+429 steps versus 331 steps).
+
+A possible explanation is that adding bias parameters increases the number of free parameters in the model,
+enlarging the search space. This makes the optimization using CMA-ES more challenging and slows down convergence.
+Additionally, the simpler architecture without bias not only accelerates the search but also generalizes better to unseen starting conditions. This suggests that the increased complexity of the model is unnecessary and even counterproductive.
