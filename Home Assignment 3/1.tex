@@ -4,7 +4,7 @@ In this exercise we use the notation
 \[
 N(m,C)
 \]
-to denote the multivariate normal distribution with mean $m\in\mathbb{R}^n$ and covariance matrix $C\in\mathbb{R}^{n\times n}$. In particular, $N(0,I)$ denotes the standard normal distribution in $\mathbb{R}^n$. The notation here is consistent with that used in the Monte Carlo methods presentation (see \texttt{3.1 RL-MonteCarlo.pdf}).
+to denote the multivariate normal distribution with mean $m\in\mathbb{R}^n$ and covariance matrix $C\in\mathbb{R}^{n\times n}$. In particular, $N(0,I)$ denotes the standard normal distribution in $\mathbb{R}^n$.
 
 \subsubsection*{1.}
 Let $a\in\mathbb{R}^n$ be a nonzero vector and consider the matrix
@@ -63,3 +63,53 @@ Thus,
 a^2-\sigma^2=0\quad\Longrightarrow\quad \sigma^2=a^2.
 \]
 This shows that the likelihood of generating $a\in\mathbb{R}$ is maximized when $\sigma^2=a^2$.
+
+\subsection*{2.}
+
+Let $x_1, x_2, \dots, x_m \sim N(0,I)$ be independent random vectors in $\mathbb{R}^n$. In this part, we analyze the distribution of their (unweighted and weighted) sums and determine the rank of the matrix
+\[
+C = \sum_{i=1}^m x_i x_i^T.
+\]
+
+\subsection*{(a) Distribution of $z = \sum_{i=1}^m x_i$}
+Since the sum of independent Gaussian random vectors is Gaussian, we have
+\[
+z \sim N\Biggl(\sum_{i=1}^m \mathbb{E}[x_i],\, \sum_{i=1}^m \operatorname{Cov}(x_i)\Biggr)
+= N\Bigl(0,\, mI\Bigr).
+\]
+Thus, 
+\[
+\mathbb{E}[z] = 0 \quad \text{and} \quad \operatorname{Cov}(z) = mI.
+\]
+
+\subsection*{(b) Distribution of the Weighted Sum $z_w = \sum_{i=1}^m w_i x_i$}
+Let $w_1, w_2, \dots, w_m \in \mathbb{R}_+$ be positive weights. Note that each scaled vector $w_i x_i$ is distributed as
+\[
+w_i x_i \sim N\Bigl(0,\, w_i^2 I\Bigr).
+\]
+Since the $x_i$ are independent, the weighted sum $z_w$ is Gaussian with mean
+\[
+\mathbb{E}[z_w] = \sum_{i=1}^m w_i \mathbb{E}[x_i] = 0,
+\]
+and covariance
+\[
+\operatorname{Cov}(z_w) = \sum_{i=1}^m w_i^2\, \operatorname{Cov}(x_i)
+= \Bigl(\sum_{i=1}^m w_i^2\Bigr) I.
+\]
+Thus, we obtain
+\[
+z_w \sim N\!\Bigl(0, \Bigl(\sum_{i=1}^m w_i^2\Bigr) I\Bigr).
+\]
+
+\subsection*{(c) Rank of $C = \sum_{i=1}^m x_i x_i^T$}
+For each $i$, the outer product $x_i x_i^T$ is an $n\times n$ matrix of rank 1 (as shown in part (1a)). Hence, $C$ is the sum of $m$ rank-1 matrices. Since the $x_i$ are sampled from the continuous distribution $N(0,I)$, they are almost surely in \emph{general position} (i.e., any set of up to $n$ such vectors is linearly independent). Therefore:
+\begin{itemize}
+    \item If $m < n$, then almost surely the $m$ vectors $\{x_1, \dots, x_m\}$ are linearly independent, so
+    \[
+    \operatorname{rank}(C)=m.
+    \]
+    \item If $m \ge n$, then the $x_i$ will almost surely span $\mathbb{R}^n$, and hence
+    \[
+    \operatorname{rank}(C)=n.
+    \]
+\end{itemize}
