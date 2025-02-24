@@ -1,0 +1,4 @@
+\contentsline {section}{\numberline {1}Direct Policy Search}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Multi-variate normal distribution}{2}{subsection.1.1}%
+\contentsline {section}{\numberline {2}Off-Policy Optimization in RiverSwim}{3}{section.2}%
+\contentsline {section}{\numberline {3}Reward Shaping}{3}{section.3}%
