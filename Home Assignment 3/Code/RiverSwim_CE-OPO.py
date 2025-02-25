@@ -151,7 +151,7 @@ true_R = env.R.copy()
 
 print("Running CE-OPO on the original RiverSwim MDP...")
 results_original = ce_opo(env, true_P, true_R, gamma=0.98, epsilon=0.15,
-                           alpha_smooth=0.1, horizon=int(1e6), eval_interval=10000)
+                           alpha_smooth=0.1, horizon=int(1e6), eval_interval=1000)
 
 # Plot the performance metrics.
 plt.figure(figsize=(12,4))
@@ -198,9 +198,9 @@ true_R_variant = env_variant.R.copy()
 # For evaluation, the expected reward at the rightmost state (nS-1) for action 1 is 1.
 true_R_variant[nS - 1, 1] = 1
 
-print("Running CE-OPO on the variant RiverSwim MDP (random reward at state 0, action right)...")
+print("Running CE-OPO on the variant RiverSwim MDP (random reward at state nS-1, action right)...")
 results_variant = ce_opo(env_variant, true_P, true_R_variant, gamma=0.98,
-                          epsilon=0.15, alpha_smooth=0.1, horizon=int(1e6), eval_interval=10000)
+                          epsilon=0.15, alpha_smooth=0.1, horizon=int(1e6), eval_interval=1000)
 
 # Plot the performance metrics for the variant.
 plt.figure(figsize=(12,4))
