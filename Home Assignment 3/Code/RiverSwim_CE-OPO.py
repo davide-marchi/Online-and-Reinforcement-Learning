@@ -2,12 +2,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 import types
 
-# --- The given RiverSwim environment ---
+# A simple riverswim implementation with chosen number of state 'nS' chosen in input.
+# We arbitrarily chose the action '0' = 'go to the left' thus '1' = 'go to the right'.
+# Finally the state '0' is the leftmost, 'nS - 1' is the rightmost.
 class riverswim():
+
     def __init__(self, nS):
         self.nS = nS
         self.nA = 2
-        # Build the transition matrix P and support lists.
+
+		# We build the transitions matrix P, and its associated support lists.
         self.P = np.zeros((nS, 2, nS))
         self.support = [[[] for _ in range(self.nA)] for _ in range(nS)]
         for s in range(nS):
@@ -30,16 +34,21 @@ class riverswim():
                 self.P[s, 1, s - 1] = 0.05
                 self.support[s][0].append(s - 1)
                 self.support[s][1] += [s - 1, s, s + 1]
+
         # Reward matrix: only state 0 (leftmost) and state nS-1 (rightmost) have nonzero rewards.
         self.R = np.zeros((nS, 2))
         self.R[0, 0] = 0.05   # when at leftmost state, action 'left'
         self.R[nS - 1, 1] = 1 # when at rightmost state, action 'right'
+
+        # We (arbitrarily) set the initial state in the leftmost position.
         self.s = 0
 
+	# To reset the environment in initial settings.
     def reset(self):
         self.s = 0
         return self.s
 
+	# Perform a step in the environment for a given action. Return a couple state, reward (s_t, r_t).
     def step(self, action):
         new_s = np.random.choice(np.arange(self.nS), p=self.P[self.s, action])
         reward = self.R[self.s, action]
@@ -71,19 +80,19 @@ def ce_opo(env, true_P, true_R, gamma=0.98, epsilon=0.15, alpha_smooth=0.1,
     nS = env.nS
     nA = env.nA
 
-    # Initialize counts and reward accumulators.
+    # Initialize counts and reward accumulators
     N_sa = np.zeros((nS, nA))
     N_sas = np.zeros((nS, nA, nS))
     R_sum = np.zeros((nS, nA))
 
-    # Initialize Q-estimate arbitrarily.
+    # Initialize Q-estimate arbitrarily
     Q_est = np.zeros((nS, nA))
 
-    # Precompute true Q-values using the known true model.
+    # Precompute true Q-values using the known true model
     _, Q_true = value_iteration(true_P, true_R, gamma)
     pi_true = np.argmax(Q_true, axis=1)  # True optimal policy
 
-    # Lists to record performance metrics.
+    # Lists to record performance metrics
     steps = []
     Q_diff_list = []
     policy_diff_list = []
@@ -91,20 +100,20 @@ def ce_opo(env, true_P, true_R, gamma=0.98, epsilon=0.15, alpha_smooth=0.1,
 
     s = env.reset()
     for t in range(1, horizon + 1):
-        # ε-greedy action selection using current Q_est.
+        # epsilon-greedy action selection using current Q_est
         if np.random.rand() < epsilon:
             a = np.random.randint(nA)
         else:
             a = np.argmax(Q_est[s])
-        # Take action and observe transition.
+        # Take action and observe transition
         s_next, r = env.step(a)
-        # Update counts.
+        # Update counts
         N_sa[s, a] += 1
         N_sas[s, a, s_next] += 1
         R_sum[s, a] += r
         s = s_next
 
-        # Update model and evaluate metrics every 'eval_interval' steps.
+        # Update model and evaluate metrics every 'eval_interval' steps
         if t % eval_interval == 0:
             P_est = np.zeros((nS, nA, nS))
             R_est = np.zeros((nS, nA))
@@ -117,12 +126,12 @@ def ce_opo(env, true_P, true_R, gamma=0.98, epsilon=0.15, alpha_smooth=0.1,
                     else:
                         P_est[s_i, a_i] = (N_sas[s_i, a_i] + alpha_smooth) / denom
                         R_est[s_i, a_i] = (R_sum[s_i, a_i] + alpha_smooth) / (N_sa[s_i, a_i] + alpha_smooth)
-            # Solve the estimated MDP.
+            # Solve the estimated MDP
             _, Q_est = value_iteration(P_est, R_est, gamma)
             pi_est = np.argmax(Q_est, axis=1)
             Q_diff = np.max(np.abs(Q_true - Q_est))
             policy_diff = np.sum(pi_est != pi_true)
-            # We define the return loss at the left bank (state 0) for action 'right' (action index 1).
+            # We define the return loss at the left bank (state 0) for action 'right' (action index 1)
             return_loss = Q_true[0, 1] - Q_est[0, 1]
             steps.append(t)
             Q_diff_list.append(Q_diff)
@@ -150,10 +159,9 @@ true_P = env.P
 true_R = env.R.copy()
 
 print("Running CE-OPO on the original RiverSwim MDP...")
-results_original = ce_opo(env, true_P, true_R, gamma=0.98, epsilon=0.15,
-                           alpha_smooth=0.1, horizon=int(1e6), eval_interval=1000)
+results_original = ce_opo(env, true_P, true_R, gamma=0.98, epsilon=0.15, alpha_smooth=0.1, horizon=int(1e6), eval_interval=1000)
 
-# Plot the performance metrics.
+# Plot the performance metrics
 plt.figure(figsize=(12,4))
 plt.subplot(1,3,1)
 plt.plot(results_original["steps"], results_original["Q_diff"])
@@ -178,10 +186,10 @@ plt.savefig('Home Assignment 3/Code/RiverSwim_CE-OPO.png')
 plt.show()
 
 # --- Experiment for the Variant with Random Reward in State 0 (right) ---
-# Create a new environment instance.
+# Create a new environment instance
 env_variant = riverswim(nS)
 # Modify the step function so that when the agent is in state 0 and takes action 'right' (a==1),
-# the reward is drawn uniformly from [0,2].
+# the reward is drawn uniformly from [0,2]
 def variant_step(self, action):
     # If in the rightmost state (nS-1) and taking action 'right' (1):
     if self.s == self.nS - 1 and action == 1:
@@ -195,14 +203,13 @@ def variant_step(self, action):
 env_variant.step = types.MethodType(variant_step, env_variant)
 env_variant.reset()
 true_R_variant = env_variant.R.copy()
-# For evaluation, the expected reward at the rightmost state (nS-1) for action 1 is 1.
+# For evaluation, the expected reward at the rightmost state (nS-1) for action 1 is 1
 true_R_variant[nS - 1, 1] = 1
 
 print("Running CE-OPO on the variant RiverSwim MDP (random reward at state nS-1, action right)...")
-results_variant = ce_opo(env_variant, true_P, true_R_variant, gamma=0.98,
-                          epsilon=0.15, alpha_smooth=0.1, horizon=int(1e6), eval_interval=1000)
+results_variant = ce_opo(env_variant, true_P, true_R_variant, gamma=0.98, epsilon=0.15, alpha_smooth=0.1, horizon=int(1e6), eval_interval=1000)
 
-# Plot the performance metrics for the variant.
+# Plot the performance metrics for the variant
 plt.figure(figsize=(12,4))
 plt.subplot(1,3,1)
 plt.plot(results_variant["steps"], results_variant["Q_diff"])
