@@ -182,7 +182,8 @@ env_variant = riverswim(nS)
 # Modify the step function so that when the agent is in state 0 and takes action 'right' (a==1),
 # the reward is drawn uniformly from [0,2].
 def variant_step(self, action):
-    if self.s == 0 and action == 1:
+    # If in the rightmost state (nS-1) and taking action 'right' (1):
+    if self.s == self.nS - 1 and action == 1:
         reward = np.random.uniform(0, 2)
     else:
         reward = self.R[self.s, action]
@@ -192,9 +193,9 @@ def variant_step(self, action):
 
 env_variant.step = types.MethodType(variant_step, env_variant)
 env_variant.reset()
-# For evaluation we set the true reward for (state 0, action right) to its expected value, 1.
 true_R_variant = env_variant.R.copy()
-true_R_variant[0, 1] = 1
+# For evaluation, the expected reward at the rightmost state (nS-1) for action 1 is 1.
+true_R_variant[nS - 1, 1] = 1
 
 print("Running CE-OPO on the variant RiverSwim MDP (random reward at state 0, action right)...")
 results_variant = ce_opo(env_variant, true_P, true_R_variant, gamma=0.98,
