@@ -174,6 +174,7 @@ plt.ylabel('Return Loss')
 plt.title('Return Loss at state 0 (action right)')
 
 plt.tight_layout()
+plt.savefig('Home Assignment 3/Code/RiverSwim_CE-OPO.png')
 plt.show()
 
 # --- Experiment for the Variant with Random Reward in State 0 (right) ---
@@ -222,4 +223,5 @@ plt.ylabel('Return Loss')
 plt.title('Return Loss at state 0 (action right, Variant)')
 
 plt.tight_layout()
+plt.savefig('Home Assignment 3/Code/RiverSwim_CE-OPO_Variant.png')
 plt.show()
