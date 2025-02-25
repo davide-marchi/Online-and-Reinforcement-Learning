@@ -210,6 +210,19 @@ INPUT c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmtt12.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
+INPUT ./2.tex
+INPUT ./2.tex
+INPUT 2.tex
+INPUT ./Code/RiverSwim_CE-OPO.png
+INPUT ./Code/RiverSwim_CE-OPO.png
+INPUT ./Code/RiverSwim_CE-OPO.png
+INPUT ./Code/RiverSwim_CE-OPO.png
+INPUT ./Code/RiverSwim_CE-OPO.png
+INPUT ./Code/RiverSwim_CE-OPO_Variant.png
+INPUT ./Code/RiverSwim_CE-OPO_Variant.png
+INPUT ./Code/RiverSwim_CE-OPO_Variant.png
+INPUT ./Code/RiverSwim_CE-OPO_Variant.png
+INPUT ./Code/RiverSwim_CE-OPO_Variant.png
 INPUT OReL HA3 Davide Marchi.aux
 INPUT ./OReL HA3 Davide Marchi.out
 INPUT ./OReL HA3 Davide Marchi.out
