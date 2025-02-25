@@ -53,8 +53,6 @@ Similarly, the policy mismatch count (i.e., the number of states in which the gr
 the true optimal policy) quickly goes to zero and remains there, indicating that the estimated policy converges to 
 the true one. 
 
-In the variant setting, the randomness in the reward causes a slightly different transient behavior in the return 
-loss at the rightmost state. However, because I used the expected reward (equal to 1) in the ``true'' model, the 
-algorithm eventually converges to the correct $Q$-function and optimal policy. The overall performance is still 
-quite robust, which shows that the certainty-equivalence principle works well in practice for off-policy learning 
-in RiverSwim, even under mild stochastic reward modifications.
+In the variant setting, the randomness in the reward causes a slightly shakier behavior in the Q-value error.
+However, the overall performance remains robust, demonstrating that the certainty-equivalence principle effectively
+supports off-policy learning in RiverSwim, even under mild stochastic reward modifications.
