@@ -107,14 +107,29 @@ I now consider the 6-state RiverSwim MDP with \(\gamma=0.98\) and choose the pot
 \[
 R'(s,a)=R(s,a)+\sum_{s'\in S}P(s'|s,a)\Bigl[\gamma\,\Phi(s')-\Phi(s)\Bigr].
 \]
-Since \(\Phi(s)=\frac{s}{2}\), I can write this as
-\[
-R'(s,a)= R(s,a)+ \frac{1}{2}\Bigl(\gamma\,\mathbb{E}[s'|s,a]- s\Bigr).
-\]
-This is the modified reward function in the reward-shaped MDP. So we can report the final form as
 
+Since I have chosen the potential function
 \[
-\boxed{
-R'(s,a)= R(s,a)+ \frac{1}{2}\Bigl(\gamma\,\mathbb{E}[s'|s,a]- s\Bigr), \quad \forall s\in \{0,1,2,3,4,5\},\; a\in A.
-}
+\Phi(s)=\frac{s}{2},
+\]
+the shaping term in the modified reward is given by
+\[
+\sum_{s'\in S}P(s'|s,a)\Bigl[\gamma\,\Phi(s')-\Phi(s)\Bigr].
+\]
+Substituting \(\Phi(s')=\frac{s'}{2}\) and \(\Phi(s)=\frac{s}{2}\), I obtain
+\[
+\sum_{s'\in S}P(s'|s,a)\left[\gamma\,\frac{s'}{2}-\frac{s}{2}\right]
+=\frac{1}{2}\sum_{s'\in S}P(s'|s,a)\left[\gamma\,s'-s\right].
+\]
+Note that \(s\) is constant with respect to the summation (i.e., it does not depend on \(s'\)); hence, I can factor it out:
+\[
+\frac{1}{2}\left[\gamma\sum_{s'\in S}s'P(s'|s,a)-s\sum_{s'\in S}P(s'|s,a)\right].
+\]
+Since \(\sum_{s'\in S}P(s'|s,a)=1\) and \(\sum_{s'\in S}s'P(s'|s,a)=\mathbb{E}[s'|s,a]\), it follows that
+\[
+\frac{1}{2}\left[\gamma\,\mathbb{E}[s'|s,a]-s\right].
+\]
+Thus, the reward-shaped function becomes
+\[
+R'(s,a)=R(s,a)+\frac{1}{2}\Bigl(\gamma\,\mathbb{E}[s'|s,a]-s\Bigr), \quad \forall s\in \{0,1,2,3,4,5\},\; a\in A.
 \]
