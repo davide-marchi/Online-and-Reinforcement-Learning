@@ -188,7 +188,7 @@ plt.show()
 # --- Experiment for the Variant with Random Reward in State 0 (right) ---
 # Create a new environment instance
 env_variant = riverswim(nS)
-# Modify the step function so that when the agent is in state 0 and takes action 'right' (a==1),
+# Modify the step function so that when the agent is in state (nS-1) and takes action 'right' (a==1),
 # the reward is drawn uniformly from [0,2]
 def variant_step(self, action):
     # If in the rightmost state (nS-1) and taking action 'right' (1):
