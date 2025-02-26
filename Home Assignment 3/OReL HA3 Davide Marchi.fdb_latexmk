@@ -1,22 +1,23 @@
 # Fdb version 4
-["bibtex OReL HA3 Davide Marchi"] 0 "OReL HA3 Davide Marchi.aux" "OReL HA3 Davide Marchi.bbl" "OReL HA3 Davide Marchi" 1740505021.88883 0
+["bibtex OReL HA3 Davide Marchi"] 0 "OReL HA3 Davide Marchi.aux" "OReL HA3 Davide Marchi.bbl" "OReL HA3 Davide Marchi" 1740572194.78754 0
   "OReL HA3 Davide Marchi.aux" 0 -1 0 "pdflatex"
   "bibliography.bib" 0 -1 0 ""
   (generated)
   "OReL HA3 Davide Marchi.bbl"
   "OReL HA3 Davide Marchi.blg"
   (rewritten before read)
-["pdflatex"] 1740505019.85211 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 3/OReL HA3 Davide Marchi.tex" "OReL HA3 Davide Marchi.pdf" "OReL HA3 Davide Marchi" 1740505021.88944 0
+["pdflatex"] 1740572192.73379 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 3/OReL HA3 Davide Marchi.tex" "OReL HA3 Davide Marchi.pdf" "OReL HA3 Davide Marchi" 1740572194.78817 0
   "1.tex" 1740504157 7995 5a133e4fd6c3af73b99b50f766b3c42d ""
-  "2.tex" 1740505019 3467 5fec6d05579d9c044c90d0715b36d6b7 ""
-  "Code/RiverSwim_CE-OPO.png" 1740502514 37162 40d9901f144775388c99c1802e5e1b36 ""
-  "Code/RiverSwim_CE-OPO_Variant.png" 1740502586 43333 071d472600ac0c7555f2a6a57227109b ""
-  "OReL HA3 Davide Marchi.aux" 1740505021 2349 f32fac951ec20598a4dd31a83534aedf "pdflatex"
+  "2.tex" 1740505136 3467 5fec6d05579d9c044c90d0715b36d6b7 ""
+  "3.tex" 1740572192 3971 43eaa8e20b310b0a339e034f3df0ec8d ""
+  "Code/RiverSwim_CE-OPO.png" 1740567741 37162 40d9901f144775388c99c1802e5e1b36 ""
+  "Code/RiverSwim_CE-OPO_Variant.png" 1740567741 43333 071d472600ac0c7555f2a6a57227109b ""
+  "OReL HA3 Davide Marchi.aux" 1740572194 2350 677f678fb61e1eb86f2490f4bfdb708a "pdflatex"
   "OReL HA3 Davide Marchi.bbl" 0 -1 0 "bibtex OReL HA3 Davide Marchi"
-  "OReL HA3 Davide Marchi.out" 1740505021 852 e60f1b5f227bf78da819cf082863f44f "pdflatex"
-  "OReL HA3 Davide Marchi.tex" 1740503503 1868 6e798580deab2ccd8bb6872ad38567fa ""
-  "OReL HA3 Davide Marchi.toc" 1740505021 417 97fc2a188d5511259fcabceb5af8adb8 "pdflatex"
-  "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 3/OReL HA3 Davide Marchi.tex" 1740503503 1868 6e798580deab2ccd8bb6872ad38567fa ""
+  "OReL HA3 Davide Marchi.out" 1740572194 852 e60f1b5f227bf78da819cf082863f44f "pdflatex"
+  "OReL HA3 Davide Marchi.tex" 1740569652 1867 f371c4a545159de8c3ec80a54d005778 ""
+  "OReL HA3 Davide Marchi.toc" 1740572194 417 97fc2a188d5511259fcabceb5af8adb8 "pdflatex"
+  "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 3/OReL HA3 Davide Marchi.tex" 1740569652 1867 f371c4a545159de8c3ec80a54d005778 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1739027330 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1739028126 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1739027782 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -51,6 +52,7 @@
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1739026672 32362 bc3f3eec7ab7d65fe700963d4017d32c ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1739026672 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1739026672 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1739026672 32587 65067f817f408bc71a7312f3d9828a9b ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1739026672 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb" 1739026672 36118 fad905eba93cff5bce1e185fe980a177 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb" 1739026672 31099 342ef5a582aacbd3346f3cf4579679fa ""

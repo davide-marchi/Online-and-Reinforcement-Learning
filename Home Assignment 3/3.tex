@@ -1,0 +1,120 @@
+In this exercise, I analyze a discounted MDP 
+\[
+M=(S,A,R,P,\gamma)
+\]
+and its corresponding reward-shaped MDP 
+\[
+M'=(S,A,R',P,\gamma),
+\]
+where 
+\[
+R'(s,a)=R(s,a)+\sum_{s'\in S}P(s'|s,a)F(s,a,s')
+\]
+with the shaping function chosen in a potential-based form,
+\[
+F(s,a,s')=\gamma\,\Phi(s')-\Phi(s),
+\]
+for some potential function \(\Phi:S\to \mathbb{R}\). I show that this transformation leaves the set of optimal policies unchanged, derive the relation between the optimal value functions, and finally derive the modified reward for a particular choice of \(\Phi\) in the 6-state RiverSwim MDP.
+
+\subsection*{(i) Invariance of Optimal Policies}
+
+I begin by recalling that in the original MDP, the Bellman optimality equation for the optimal $Q$--function is:
+\[
+Q^*_M(s,a)=R(s,a)+\gamma\sum_{s'\in S}P(s'|s,a)\max_{a'}Q^*_M(s',a').
+\]
+In the reward-shaped MDP, the reward is modified as
+\[
+R'(s,a)=R(s,a)+\sum_{s'\in S}P(s'|s,a)[\gamma\,\Phi(s')-\Phi(s)].
+\]
+Thus, its Bellman equation becomes
+\[
+Q^*_{M'}(s,a)=R'(s,a)+\gamma\sum_{s'\in S}P(s'|s,a)\max_{a'}Q^*_{M'}(s',a').
+\]
+
+Now, I define
+\[
+\tilde{Q}(s,a)=Q^*_M(s,a)-\Phi(s).
+\]
+Then,
+\[
+\tilde{Q}(s,a)=R(s,a)+\gamma\sum_{s'\in S}P(s'|s,a)\max_{a'}Q^*_M(s',a')-\Phi(s).
+\]
+Since for any \(s'\) I can write 
+\[
+Q^*_M(s',a')=\tilde{Q}(s',a')+\Phi(s'),
+\]
+it follows that
+\[
+\tilde{Q}(s,a)=R(s,a)-\Phi(s)+\gamma\sum_{s'\in S}P(s'|s,a)\max_{a'}\Bigl[\tilde{Q}(s',a')+\Phi(s')\Bigr].
+\]
+But note that
+\[
+R(s,a)-\Phi(s)+\gamma\sum_{s'\in S}P(s'|s,a)\Phi(s') = R'(s,a)
+\]
+by the definition of \(R'\). Hence,
+\[
+\tilde{Q}(s,a)=R'(s,a)+\gamma\sum_{s'\in S}P(s'|s,a)\max_{a'}\tilde{Q}(s',a').
+\]
+This is exactly the Bellman optimality equation for \(M'\). By the uniqueness of the solution of the Bellman optimality equation, I conclude that
+\[
+Q^*_{M'}(s,a)=\tilde{Q}(s,a)= Q^*_M(s,a)-\Phi(s).
+\]
+Since the greedy policy is given by 
+\[
+\pi^*(s) \in \arg\max_{a} Q(s,a),
+\]
+the term \(-\Phi(s)\) is independent of \(a\) so that
+\[
+\arg\max_{a}Q^*_M(s,a)=\arg\max_{a}\Bigl(Q^*_M(s,a)-\Phi(s)\Bigr)=\arg\max_{a} Q^*_{M'}(s,a).
+\]
+Thus, the set of optimal policies is invariant:
+\[
+\pi^*_{M'}=\pi^*_M.
+\]
+
+\subsection*{(ii) Relation Between Optimal Value Functions}
+
+Since the state-value functions are defined by
+\[
+V^*_M(s)=\max_{a} Q^*_M(s,a)
+\quad \text{and} \quad 
+V^*_{M'}(s)=\max_{a} Q^*_{M'}(s,a),
+\]
+and since
+\[
+Q^*_{M'}(s,a)=Q^*_M(s,a)-\Phi(s),
+\]
+it immediately follows that
+\[
+V^*_{M'}(s)=\max_{a}\Bigl(Q^*_M(s,a)-\Phi(s)\Bigr)
+= \Bigl(\max_{a} Q^*_M(s,a)\Bigr)-\Phi(s)
+= V^*_M(s)-\Phi(s),\quad \forall s\in S.
+\]
+
+A good choice in hindsight for the potential function is \(\Phi(s)=V^*_M(s)\). With this choice,
+\[
+V^*_{M'}(s)=V^*_M(s)-V^*_M(s)=0,
+\]
+so that every state has a zero optimal value under the shaped rewards. Although this “trivializes” the value 
+function, it means that the shaping does not alter the optimal policy. In practice, one cannot choose \(\Phi(s)\)
+in this ideal way because \(V^*_M\) is unknown. However, the observation shows that a potential function resembling 
+the optimal value function can be beneficial for guiding the learning process.
+
+\subsection*{(iii) Reward Shaping for the 6-State RiverSwim MDP}
+
+I now consider the 6-state RiverSwim MDP with \(\gamma=0.98\) and choose the potential function 
+\(\Phi(s)=\frac{s}{2}\) (with the state space \(S=\{0,1,2,3,4,5\}\)). The shaped reward function is then given by:
+\[
+R'(s,a)=R(s,a)+\sum_{s'\in S}P(s'|s,a)\Bigl[\gamma\,\Phi(s')-\Phi(s)\Bigr].
+\]
+Since \(\Phi(s)=\frac{s}{2}\), I can write this as
+\[
+R'(s,a)= R(s,a)+ \frac{1}{2}\Bigl(\gamma\,\mathbb{E}[s'|s,a]- s\Bigr).
+\]
+This is the modified reward function in the reward-shaped MDP. So we can report the final form as
+
+\[
+\boxed{
+R'(s,a)= R(s,a)+ \frac{1}{2}\Bigl(\gamma\,\mathbb{E}[s'|s,a]- s\Bigr), \quad \forall s\in \{0,1,2,3,4,5\},\; a\in A.
+}
+\]
