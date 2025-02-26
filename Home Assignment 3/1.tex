@@ -119,7 +119,7 @@ For each $i$, the outer product $x_i x_i^T$ is an $n\times n$ matrix of rank 1 (
 In this exercise we consider solving the pole-balancing task using a direct policy search method with the CMA-ES. Our policy is encoded by a feed-forward neural network. In the notebook, two versions of the network were implemented: one that includes trainable bias parameters in the hidden and output layers, and one without bias. The following sections describe the network architecture (part 1) and summarize the experimental performance (part 2).
 
 \subsection*{(a) Neural Network Architecture}
-We used a network with a single hidden layer consisting of five neurons and a \texttt{tanh} activation. The output layer is a single neuron with a linear activation. The constructor of the network allows the user to select whether or not to include bias parameters. A code snippet implementing this in PyTorch is shown below.
+We use a network with a single hidden layer consisting of five neurons and a \texttt{tanh} activation. The output layer is a single neuron with a linear activation. The constructor of the network allows the user to select whether or not to include bias parameters. A code snippet implementing this in PyTorch is shown below.
 
 \begin{lstlisting}[language=Python, caption={Definition of the policy network.}, basicstyle=\ttfamily\small]
 import torch.nn as nn
@@ -127,8 +127,10 @@ import torch.nn as nn
 class PolicyNetwork(nn.Module):
     def __init__(self, input_dim, hidden_dim=5, use_bias=True):
         super().__init__()
+
         # Hidden layer: a linear layer followed by tanh activation
         self.hidden = nn.Linear(input_dim, hidden_dim, bias=use_bias)
+
         # Output layer: a single neuron with linear activation
         self.output = nn.Linear(hidden_dim, 1, bias=use_bias)
         
@@ -137,8 +139,8 @@ class PolicyNetwork(nn.Module):
         x = self.output(x)  # Linear output
         return x
 
-# Instantiate the policy network.
-# Set 'use_bias' to True for an architecture with trainable biases,
+# Instantiate the policy network
+# Set use_bias to True for an architecture with trainable biases,
 # or False to have no bias parameters.
 policy_net = PolicyNetwork(state_space_dimension, hidden_dim=5, use_bias=True)
 \end{lstlisting}
@@ -146,7 +148,7 @@ policy_net = PolicyNetwork(state_space_dimension, hidden_dim=5, use_bias=True)
 In the code above, \texttt{hidden\_dim} can be changed, but is kept to 5 as a default value. The boolean parameter \texttt{use\_bias} allows for switching between the two architectures.
 
 \subsection*{(b) Performance Comparison}
-We compared the performance of the two architectures by running the learning procedure 10 times for each variant (with bias and without bias). Two metrics were recorded:
+I compared the performance of the two architectures by running the learning procedure 10 times for each variant (with bias and without bias). Two metrics were recorded:
 \begin{itemize}
     \item \textbf{Evaluations:} The number of evaluations (i.e., CMA-ES iterations) required to find a policy that balances the pole for 500 time steps.
     \item \textbf{Balancing Steps:} When testing the learned policies from a random starting position, the number of steps the pole remained balanced.
