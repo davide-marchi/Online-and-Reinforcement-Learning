@@ -22,7 +22,7 @@ I also tested a variant of RiverSwim in which taking the action ``right'' in the
 (index \texttt{nS-1}) yields a reward drawn uniformly at random from $[0,2]$. Below is the snippet of my modified 
 \texttt{step} function for this variant:
 
-\begin{lstlisting}[language=Python, caption={Definition of the policy network.}, basicstyle=\ttfamily\small]
+\begin{lstlisting}[language=Python, caption={Definition of the variant\_step function.}, basicstyle=\ttfamily\small]
     def variant_step(self, action):
         # If in the rightmost state (nS-1) and taking action 'right' (1):
         if self.s == self.nS - 1 and action == 1:
