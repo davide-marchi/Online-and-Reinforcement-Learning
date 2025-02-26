@@ -1,7 +1,7 @@
 \subsection*{(i) Original RiverSwim MDP}
 I implemented a certainty-equivalence off-policy optimization (CE-OPO) approach in the RiverSwim environment. 
 I used an $\epsilon$-greedy behavior policy (with $\epsilon=0.15$) to gather samples and periodically updated 
-my estimates of the transition probabilities and rewards. I then ran Value Iteration (VI) on the estimated MDP 
+my estimates of the transition probabilities and rewards, and then ran Value Iteration (VI) on the estimated MDP 
 to obtain an approximate $Q$-function. 
 
 Because running VI at every single step (up to $10^6$) was computationally expensive on my machine, I chose to 
