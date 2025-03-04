@@ -6,4 +6,9 @@
 \contentsline {paragraph}{Combined Expression}{4}{section*.6}%
 \contentsline {section}{\numberline {2}Improved Parametrization of UCB1}{5}{section.2}%
 \contentsline {section}{\numberline {3}Introduction of New Products}{6}{section.3}%
-\contentsline {section}{\numberline {4}Empirical comparison of FTL and Hedge}{6}{section.4}%
+\contentsline {paragraph}{1) Initial $n$ Exploratory Steps on New Product.}{6}{section*.10}%
+\contentsline {paragraph}{2) Bandit-style Indices (for $t>n$).}{6}{section*.11}%
+\contentsline {paragraph}{Case 1: $\mu > 0.5$ (new product is better).}{7}{section*.13}%
+\contentsline {paragraph}{Case 2: $\mu < 0.5$ (new product is worse).}{7}{section*.14}%
+\contentsline {paragraph}{Conclusion.}{7}{section*.15}%
+\contentsline {section}{\numberline {4}Empirical comparison of FTL and Hedge}{7}{section.4}%
