@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  4 MAR 2025 16:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  4 MAR 2025 17:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -386,11 +386,19 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 126.
 
 
-[4])
+[4]
+<Code/accumulated_reward.png, id=76, 421.3341pt x 312.2064pt>
+File: Code/accumulated_reward.png Graphic file (type png)
+<use Code/accumulated_reward.png>
+Package pdftex.def Info: Code/accumulated_reward.png  used on input line 147.
+(pdftex.def)             Requested size: 368.57838pt x 273.12753pt.
+)
 No file "OReL HA4 Davide Marchi".bbl.
 
 
-[5] (./OReL HA4 Davide Marchi.aux)
+[5 <./Code/accumulated_reward.png>]
+
+[6] (./OReL HA4 Davide Marchi.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -399,18 +407,18 @@ Package rerunfilecheck Info: File `"OReL HA4 Davide Marchi".out' has not changed
 (rerunfilecheck)             Checksum: 9539846F17237CECD3B8FECD4AB075F9;990.
  ) 
 Here is how much of TeX's memory you used:
- 12944 strings out of 473201
- 196868 string characters out of 5720300
+ 12959 strings out of 473201
+ 197235 string characters out of 5720300
  952166 words of memory out of 5000000
- 35996 multiletter control sequences out of 15000+600000
+ 36009 multiletter control sequences out of 15000+600000
  568274 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  79i,11n,93p,690b,1368s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on "OReL HA4 Davide Marchi.pdf" (5 pages, 147782 bytes).
+Output written on "OReL HA4 Davide Marchi.pdf" (6 pages, 176403 bytes).
 PDF statistics:
- 149 PDF objects out of 1000 (max. 8388607)
- 114 compressed objects within 2 object streams
- 29 named destinations out of 1000 (max. 500000)
- 49 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 158 PDF objects out of 1000 (max. 8388607)
+ 120 compressed objects within 2 object streams
+ 31 named destinations out of 1000 (max. 500000)
+ 54 words of extra memory for PDF output out of 10000 (max. 10000000)
 

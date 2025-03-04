@@ -209,6 +209,11 @@ INPUT c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmtt12.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
+INPUT ./Code/accumulated_reward.png
+INPUT ./Code/accumulated_reward.png
+INPUT ./Code/accumulated_reward.png
+INPUT ./Code/accumulated_reward.png
+INPUT ./Code/accumulated_reward.png
 INPUT OReL HA4 Davide Marchi.aux
 INPUT ./OReL HA4 Davide Marchi.out
 INPUT ./OReL HA4 Davide Marchi.out

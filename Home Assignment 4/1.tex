@@ -139,3 +139,12 @@ This code implements exactly the formula derived above.
 \subsubsection*{3. Verification of the Gradient Implementation}
 
 To verify my implementation, I used the numerical approximation of the gradient in the function \texttt{gradient\_log\_pi\_test}. I run the notebook cell to compare my analytical gradient with the numerical gradient for a range of random perturbations on the policy parameters. In all cases the analytical and numerical gradients agreed within the requested tolerance. This confirms that the derivation and implementation of \texttt{gradient\_log\_pi} are correct.
+
+Also, here we present the graph showing the accumulated reward increasing over the number of episodes, which indicates that the policy is actually improving over time.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Code/accumulated_reward.png}
+    \caption{Accumulated reward over episodes.}
+    \label{fig:accumulated_reward}
+\end{figure}

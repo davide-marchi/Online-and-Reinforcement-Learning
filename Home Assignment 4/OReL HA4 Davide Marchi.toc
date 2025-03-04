@@ -5,5 +5,5 @@
 \contentsline {paragraph}{Case 2: $i\neq a$}{4}{section*.5}%
 \contentsline {paragraph}{Combined Expression}{4}{section*.6}%
 \contentsline {section}{\numberline {2}Improved Parametrization of UCB1}{5}{section.2}%
-\contentsline {section}{\numberline {3}Introduction of New Products}{5}{section.3}%
-\contentsline {section}{\numberline {4}Empirical comparison of FTL and Hedge}{5}{section.4}%
+\contentsline {section}{\numberline {3}Introduction of New Products}{6}{section.3}%
+\contentsline {section}{\numberline {4}Empirical comparison of FTL and Hedge}{6}{section.4}%
