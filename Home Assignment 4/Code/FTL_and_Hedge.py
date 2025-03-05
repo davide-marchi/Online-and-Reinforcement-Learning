@@ -12,7 +12,7 @@ def simulate_adversarial_sequence(T):
     Generate a length-T adversarial (non-i.i.d.) sequence that alternates 0 and 1.
     This simple alternating sequence forces FTL to change frequently.
     """
-    return np.array([t % 2 for t in range(T)])
+    return np.array([t % 2 for t in range(1, T+1)])
 
 def best_expert_loss(X):
     """
