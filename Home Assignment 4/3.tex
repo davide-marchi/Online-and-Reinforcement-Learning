@@ -1,7 +1,6 @@
-\subsection*{Brief Introduction}
 In this exercise, we compare two expert algorithms, \textbf{Follow the Leader (FTL)} and \textbf{Hedge}, for predicting a binary sequence. We measure performance by the (pseudo)regret or regret against the best constant expert in hindsight. The code is contained in the file \texttt{FTL\_and\_Hedge.py}, and it tests both an i.i.d.\ Bernoulli setting (varying \(\mu\)) and an adversarial setting designed to challenge FTL.
 
-\subsection{(1) Implementation, Code Snippets, and i.i.d.\ Results}
+\subsection*{1) Implementation, Code Snippets, and i.i.d.\ Results}
 
 \paragraph{Key Code Snippets.}
 Below are the core parts of the implementation.  First, the \textbf{FTL} algorithm:
@@ -148,15 +147,15 @@ Figures~\ref{fig:plot_mu025}, \ref{fig:plot_mu0375}, and \ref{fig:plot_mu04375} 
 \label{fig:plot_mu04375}
 \end{figure}
 
-\subsection{(2) Influence of \texorpdfstring{$\mu$}{mu} and Performance Over Time}
+\subsection*{2) Influence of \texorpdfstring{$\mu$}{mu} and Performance Over Time}
 
 \textbf{Which values of \(\mu\) lead to higher regret?}  
-Observing the final numbers, larger \(\mu\) (closer to \(0.5\)) can lead to somewhat higher pseudo-regret for FTL, though the effect is moderate.  For Hedge, the performance depends strongly on the learning rate: some fixed rates can do worse if \(\mu\) differs significantly from \(0.5\), whereas the anytime version adapts better.  
+The results indicate that when \(\mu\) is closer to 0.5, the pseudo-regret tends to be higher. This is because when the distribution is more balanced, the difference between the mistakes of the constant experts (always predicting 0 or 1) becomes smaller, making it harder for the algorithms to quickly identify a clear majority, which in turn delays convergence and results in higher cumulative pseudo-regret.
 
 \textbf{Does the relative performance evolve with time?}  
-Yes.  Over time, Hedge’s anytime versions typically reduce their regret growth rate.  For certain fixed \(\eta\), if \(\mu\neq0.5\), Hedge may initially accumulate more mistakes but can still catch up later, depending on the step size.  FTL often performs well for smaller \(\mu\) but can be overtaken by Hedge for certain regimes.
+Yes. Over time, all algorithms tend to slow down the growth of their pseudo-regret as they collect more samples and better estimate the underlying distribution. In particular, once a sufficient number of observations have been collected, the algorithms' pseudo-regret curves start to plateau. Moreover, for smaller \(\mu\) (i.e., when the distribution is more skewed), this plateau is reached earlier since the dominant class becomes apparent sooner. Conversely, when \(\mu\) is closer to 0.5, it takes longer for the algorithms to settle, resulting in a slower reduction of the pseudo-regret growth rate.
 
-\subsection{(3) Adversarial Case and Its Effect on FTL}
+\subsection*{3) Adversarial Case and Its Effect on FTL}
 
 We now consider an adversarial sequence.  We define:
 
