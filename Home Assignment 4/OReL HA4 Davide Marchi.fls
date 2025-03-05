@@ -221,16 +221,26 @@ INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
 INPUT ./3.tex
 INPUT ./3.tex
 INPUT 3.tex
-INPUT ./Code/Figure_1.png
-INPUT ./Code/Figure_1.png
-INPUT ./Code/Figure_1.png
-INPUT ./Code/Figure_1.png
-INPUT ./Code/Figure_1.png
-INPUT ./Code/Figure_4_adversarial.png
-INPUT ./Code/Figure_4_adversarial.png
-INPUT ./Code/Figure_4_adversarial.png
-INPUT ./Code/Figure_4_adversarial.png
-INPUT ./Code/Figure_4_adversarial.png
+INPUT ./Code/plot_iid_025.png
+INPUT ./Code/plot_iid_025.png
+INPUT ./Code/plot_iid_025.png
+INPUT ./Code/plot_iid_025.png
+INPUT ./Code/plot_iid_025.png
+INPUT ./Code/plot_iid_0375.png
+INPUT ./Code/plot_iid_0375.png
+INPUT ./Code/plot_iid_0375.png
+INPUT ./Code/plot_iid_0375.png
+INPUT ./Code/plot_iid_0375.png
+INPUT ./Code/plot_iid_04375.png
+INPUT ./Code/plot_iid_04375.png
+INPUT ./Code/plot_iid_04375.png
+INPUT ./Code/plot_iid_04375.png
+INPUT ./Code/plot_iid_04375.png
+INPUT ./Code/plot_adversarial_example.png
+INPUT ./Code/plot_adversarial_example.png
+INPUT ./Code/plot_adversarial_example.png
+INPUT ./Code/plot_adversarial_example.png
+INPUT ./Code/plot_adversarial_example.png
 INPUT OReL HA4 Davide Marchi.aux
 INPUT ./OReL HA4 Davide Marchi.out
 INPUT ./OReL HA4 Davide Marchi.out

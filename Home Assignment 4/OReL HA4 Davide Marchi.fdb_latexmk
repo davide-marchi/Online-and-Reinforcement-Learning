@@ -1,23 +1,25 @@
 # Fdb version 4
-["bibtex OReL HA4 Davide Marchi"] 0 "OReL HA4 Davide Marchi.aux" "OReL HA4 Davide Marchi.bbl" "OReL HA4 Davide Marchi" 0 0
+["bibtex OReL HA4 Davide Marchi"] 0 "OReL HA4 Davide Marchi.aux" "OReL HA4 Davide Marchi.bbl" "OReL HA4 Davide Marchi" 1741199952.12789 0
   "OReL HA4 Davide Marchi.aux" 0 -1 0 "pdflatex"
   "bibliography.bib" 0 -1 0 ""
   (generated)
   "OReL HA4 Davide Marchi.bbl"
   "OReL HA4 Davide Marchi.blg"
   (rewritten before read)
-["pdflatex"] 1741197396.63123 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 4/OReL HA4 Davide Marchi.tex" "OReL HA4 Davide Marchi.pdf" "OReL HA4 Davide Marchi" 1741197398.70184 0
+["pdflatex"] 1741199949.76975 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 4/OReL HA4 Davide Marchi.tex" "OReL HA4 Davide Marchi.pdf" "OReL HA4 Davide Marchi" 1741199952.12851 0
   "1.tex" 1741105687 6210 3324c239ec42d5b4e1beb1549b2b1e10 ""
   "2.tex" 1741112091 4028 2127bb3dfb9168b9e8cab8ce2bf60cbd ""
-  "3.tex" 1741197395 4754 79a0d48883c0d595705eef077a52aa87 ""
-  "Code/Figure_1.png" 1741196332 51153 e0f7bc32022f2f401bb29c844de14f6b ""
-  "Code/Figure_4_adversarial.png" 1741196373 60909 4ffbc71e7a621caba068fa1735b7f1c9 ""
+  "3.tex" 1741199949 8013 d03e29d52dd8a49e2f20ecc2d3ff293f ""
   "Code/accumulated_reward.png" 1741105570 31633 1b8834df71291998cc6b56771ac717fe ""
-  "OReL HA4 Davide Marchi.aux" 1741197398 3589 7ff14f59dee881c8158c0c5f37992138 "pdflatex"
+  "Code/plot_adversarial_example.png" 1741196373 60909 4ffbc71e7a621caba068fa1735b7f1c9 ""
+  "Code/plot_iid_025.png" 1741196332 51153 e0f7bc32022f2f401bb29c844de14f6b ""
+  "Code/plot_iid_0375.png" 1741196343 65125 f6b7e6aab06127c17e97fa9c129e9833 ""
+  "Code/plot_iid_04375.png" 1741196354 87902 08df7b28f9bd2ab3851aaaea617751ad ""
+  "OReL HA4 Davide Marchi.aux" 1741199951 4694 01ce07db30b9c0a87679a5c15be70b48 "pdflatex"
   "OReL HA4 Davide Marchi.bbl" 0 -1 0 "bibtex OReL HA4 Davide Marchi"
-  "OReL HA4 Davide Marchi.out" 1741197398 1865 354e83651d57d9398fd0a8b279e9e19c "pdflatex"
+  "OReL HA4 Davide Marchi.out" 1741199951 1939 7f846e7993fd27a6b6ce80487f034bb3 "pdflatex"
   "OReL HA4 Davide Marchi.tex" 1741197009 1940 a792ea9064a173023a1ebac5b434f315 ""
-  "OReL HA4 Davide Marchi.toc" 1741197398 1406 9e85dca84afe18658e28c4b2467a3cf9 "pdflatex"
+  "OReL HA4 Davide Marchi.toc" 1741199951 1646 3de572b6151da3c9bef8fa5cb3fd7c1a "pdflatex"
   "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 4/OReL HA4 Davide Marchi.tex" 1741197009 1940 a792ea9064a173023a1ebac5b434f315 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1739027330 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1739028126 3524 cb3e574dea2d1052e39280babc910dc8 ""

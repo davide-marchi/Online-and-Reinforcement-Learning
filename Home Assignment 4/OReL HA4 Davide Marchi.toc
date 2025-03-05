@@ -12,6 +12,9 @@
 \contentsline {paragraph}{Case 2: $\mu < 0.5$ (new product is worse).}{7}{section*.14}%
 \contentsline {paragraph}{Conclusion.}{7}{section*.15}%
 \contentsline {section}{\numberline {4}Empirical comparison of FTL and Hedge}{7}{section.4}%
-\contentsline {subsection}{\numberline {4.1}(1) Influence of Different $\mu $ Values on the Regret}{7}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}(2) Adversarial Sequence Design and Results}{8}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}(3) Code Snippets and Observations}{9}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.1}(1) Implementation, Code Snippets, and i.i.d.\ Results}{7}{subsection.4.1}%
+\contentsline {paragraph}{Key Code Snippets.}{7}{section*.17}%
+\contentsline {paragraph}{Numeric Values of Hedge Parameters.}{9}{section*.18}%
+\contentsline {paragraph}{Outputs and Plots (i.i.d.\ Setting).}{9}{section*.19}%
+\contentsline {subsection}{\numberline {4.2}(2) Influence of $\mu $ and Performance Over Time}{12}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}(3) Adversarial Case and Its Effect on FTL}{12}{subsection.4.3}%
