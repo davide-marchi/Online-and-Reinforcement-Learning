@@ -6,12 +6,7 @@
 \contentsline {paragraph}{Combined Expression}{4}{section*.6}%
 \contentsline {section}{\numberline {2}Improved Parametrization of UCB1}{5}{section.2}%
 \contentsline {section}{\numberline {3}Introduction of New Products}{6}{section.3}%
-\contentsline {paragraph}{1) Initial $n$ Exploratory Steps on New Product.}{6}{section*.10}%
-\contentsline {paragraph}{2) Bandit-style Indices (for $t>n$).}{6}{section*.11}%
-\contentsline {paragraph}{Case 1: $\mu > 0.5$ (new product is better).}{7}{section*.13}%
-\contentsline {paragraph}{Case 2: $\mu < 0.5$ (new product is worse).}{7}{section*.14}%
-\contentsline {paragraph}{Conclusion.}{7}{section*.15}%
-\contentsline {section}{\numberline {4}Empirical comparison of FTL and Hedge}{7}{section.4}%
-\contentsline {paragraph}{Key Code Snippets.}{7}{section*.17}%
-\contentsline {paragraph}{Numeric Values of Hedge Parameters.}{9}{section*.18}%
-\contentsline {paragraph}{Outputs and Plots (i.i.d.\ Setting).}{9}{section*.19}%
+\contentsline {section}{\numberline {4}Empirical comparison of FTL and Hedge}{8}{section.4}%
+\contentsline {paragraph}{Key Code Snippets.}{8}{section*.15}%
+\contentsline {paragraph}{Numeric Values of Hedge Parameters.}{9}{section*.16}%
+\contentsline {paragraph}{Outputs and Plots (i.i.d.\ Setting).}{10}{section*.17}%

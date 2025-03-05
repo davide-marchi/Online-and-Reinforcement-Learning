@@ -1,59 +1,98 @@
-I focus on a scenario with:
+We consider a scenario with two products:
 \begin{itemize}
-  \item \emph{Old product:} known success probability $0.5$.
-  \item \emph{New product:} unknown success probability $\mu$.
+  \item \textbf{Old product:} Known success probability \(p_{\text{old}} = 0.5\).
+  \item \textbf{New product:} Unknown success probability \(\mu\).
 \end{itemize}
-At each time step $t=1,\ldots,T$, I must pick exactly one product to offer, aiming to maximize the total number of successful sales. Let $\Delta = 0.5 - \mu$:
-\[
-\Delta > 0 \quad \Longleftrightarrow \quad \mu < 0.5 \quad (\text{new product is worse}),
-\]
-\[
-\Delta < 0 \quad \Longleftrightarrow \quad \mu > 0.5 \quad (\text{new product is better}).
-\]
-I propose the following procedure:
+Define \(\Delta = 0.5 - \mu\). Our goal is to maximize the number of successes over \(T\) rounds by choosing, at each time \(t\), one product to offer.
 
-\subsection*{Proposed Strategy}
+\subsection*{Algorithm Description}
 
-\paragraph{1) Initial $n$ Exploratory Steps on New Product.}
-Choose a small fixed integer $n$ (for instance, $n=10$). In the first $n$ rounds, always offer the new product. Let $S_n$ be the total number of successes during these $n$ tries, so
-\[
-\hat{\mu}_n \;=\; \frac{S_n}{n}
-\]
-is an initial empirical estimate of the new product's success probability.
-
-\paragraph{2) Bandit-style Indices (for $t>n$).}
-From round $t=n+1$ onward, treat the problem like a 2-armed bandit:
-\begin{itemize}
-    \item \textbf{Arm 1 (Old Product)} has a known ``reward'' of $0.5$, so its index is simply $\text{Index}_{\text{old}} = 0.5$.
-    \item \textbf{Arm 2 (New Product)} is updated with an empirical mean and a confidence bonus. Specifically, if by round $t-1$ I have tried the new product $N_{t-1}$ times in total, with $X_{t-1}$ successes, then
+We adopt a two-phase strategy:
+\begin{enumerate}
+    \item \textbf{Exploration:} In the first \(n\) rounds (with \(n\) a small constant), choose the new product to obtain an empirical estimate
     \[
-    \hat{\mu}_{t-1} \;=\; \frac{X_{t-1}}{N_{t-1}}, 
-    \qquad
-    \text{Index}_{\text{new}}(t) 
-    \;=\;
-    \hat{\mu}_{t-1}
-    \;+\;
-    \sqrt{\frac{2 \ln (t)}{2\,N_{t-1}}}.
+    \hat{\mu}_n = \frac{S_n}{n},
     \]
-\end{itemize}
-At each step $t>n$, compare $\text{Index}_{\text{old}} = 0.5$ with $\text{Index}_{\text{new}}(t)$, and choose whichever is larger. Ties can be broken arbitrarily.
+    where \(S_n\) is the number of successes in these \(n\) trials.
+    
+    \item \textbf{Exploitation:} For \(t > n\), choose between the old and new products based on a UCB-type index. Define:
+    \[
+    I_{\text{old}} = 0.5, \quad
+    I_{\text{new}}(t) = \hat{\mu}_{t-1} + \sqrt{\frac{2\ln t}{N_{\text{new}}(t-1)}},
+    \]
+    where \(N_{\text{new}}(t-1)\) is the number of times the new product has been chosen up to time \(t-1\). At time \(t\), select the product with the higher index.
+\end{enumerate}
 
-\subsection*{Pseudo-Regret Analysis}
-Denote by $R_T$ the pseudo-regret up to time $T$, i.e.\ the difference between the expected number of successes of an optimal single choice (if $\mu$ were known) and that of my algorithm.
+\subsection*{Regret Definition}
 
-\paragraph{Case 1: $\mu > 0.5$ (new product is better).}
-The best single choice is always picking the new product, with expected success $\mu$ each round. My algorithm invests $n$ steps initially in the new product; that part is no problem if the new product is better, because I am effectively collecting reward near $\mu$. After the first $n$ rounds, the bandit step begins, but the new product’s index is likely to exceed $0.5$ fairly soon. Indeed, once the empirical mean $\hat{\mu}_{t-1}$ stabilizes around $\mu>0.5$, the confidence bonus only makes the index bigger, ensuring that I select the new product almost every time. By standard bandit arguments, the number of times I might \emph{fail} to choose the new product (e.g.\ if it momentarily loses to $0.5$) is bounded by a constant (depending on $\mu-0.5$). Hence the pseudo-regret $R_T$ is $O(1)$ for $\mu>0.5$.
-
-\paragraph{Case 2: $\mu < 0.5$ (new product is worse).}
-Now the best single choice is always the old product. Initially, I still do $n$ test rounds with the new product, causing a regret on the order of $n\,(\,0.5 - \mu)$ from those forced tries. Then, in the subsequent bandit step, the UCB-based rule for the new product means I keep exploring it occasionally until I gather enough data to be confident that $\hat{\mu}_{t-1} + \sqrt{\frac{2\ln(t)}{2\,N_{t-1}}} < 0.5$. The standard analysis from \emph{UCB} (or \emph{LCB}) bandits says that the new product is pulled at most $O(\ln T)$ times if $\Delta = 0.5 - \mu$ is a positive gap. Summing the extra regret from each suboptimal pull yields $R_T = O(n + \ln T)$, but since $n$ is a fixed constant, that is effectively $O(\ln T)$.
-
-\paragraph{Conclusion.}
-Hence:
+The pseudo-regret is defined as
 \[
-R_T 
-=\begin{cases}
-O(1), & \text{if } \mu > 0.5,\\
-O(\ln T), & \text{if } \mu < 0.5,
+R(T) = \mathbb{E}\left[T \max\{0.5, \mu\} - \sum_{t=1}^{T} r_t\right],
+\]
+where \(r_t\) is the reward at time \(t\). We analyze the two cases separately.
+
+\subsection*{Case 1: \(\mu < 0.5\) (New Product is Suboptimal)}
+
+In this case, the optimal product is the old one, and a regret of \(\Delta = 0.5-\mu\) is incurred each time the new product is selected. Let \(N_{\text{new}}(T)\) be the total number of times the new product is chosen up to time \(T\). Then,
+\[
+R(T) = \Delta\, \mathbb{E}\left[N_{\text{new}}(T)\right].
+\]
+
+With high probability, for all \(t > n\), the number of times the new product is selected satisfies
+\[
+\mathbb{E}\left[N_{\text{new}}(T)\right] \leq n + \frac{6 \ln T}{\Delta^2}.
+\]
+
+\textbf{Proof:}\\[1ex]
+Using Hoeffding's inequality, for any \(t > n\) we have:
+\[
+\Pr\left(\hat{\mu}_{t-1} \geq \mu + \epsilon\right) \leq \exp\left(-2N_{\text{new}}(t-1)\epsilon^2\right).
+\]
+By setting
+\[
+\epsilon = \sqrt{\frac{2\ln t}{N_{\text{new}}(t-1)}},
+\]
+we ensure that, with high probability,
+\[
+\hat{\mu}_{t-1} \leq \mu + \sqrt{\frac{2\ln t}{N_{\text{new}}(t-1)}}.
+\]
+Thus, the index for the new product satisfies
+\[
+I_{\text{new}}(t) \leq \mu + 2\sqrt{\frac{2\ln t}{N_{\text{new}}(t-1)}}.
+\]
+The new product is selected only if
+\[
+I_{\text{new}}(t) \geq 0.5,
+\]
+which is equivalent to
+\[
+\mu + 2\sqrt{\frac{2\ln t}{N_{\text{new}}(t-1)}} \geq 0.5.
+\]
+Rearranging and solving for \(N_{\text{new}}(t-1)\) (and applying a union bound over \(t\)) yields
+\[
+N_{\text{new}}(T) \leq n + \frac{6\ln T}{\Delta^2},
+\]
+in expectation.
+
+Thus, the pseudo-regret is bounded by
+\[
+R(T) \leq \Delta \left(n + \frac{6\ln T}{\Delta^2}\right) = n\Delta + \frac{6\ln T}{\Delta}.
+\]
+
+\subsection*{Case 2: \(\mu > 0.5\) (New Product is Optimal)}
+
+When \(\mu > 0.5\), the new product is optimal. Regret is incurred only when the algorithm mistakenly selects the old product. Since the exploration phase forces the new product for \(n\) rounds and, after sufficient samples, the UCB index of the new product will, with high probability, exceed \(0.5\), the number of suboptimal choices is bounded by a constant independent of \(T\). Therefore, the pseudo-regret is
+\[
+R(T) = O(1).
+\]
+
+\subsection*{Conclusion}
+
+Combining both cases, we conclude that the pseudo-regret satisfies
+\[
+R(T) =
+\begin{cases}
+O\left(\ln T\right), & \text{if } \mu < 0.5, \\
+O(1), & \text{if } \mu > 0.5.
 \end{cases}
 \]
-which satisfies the requirement that the pseudo-regret is constant in the better-than-old case, and logarithmic in the worse-than-old case.

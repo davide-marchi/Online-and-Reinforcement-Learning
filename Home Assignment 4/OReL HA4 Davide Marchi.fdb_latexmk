@@ -1,25 +1,25 @@
 # Fdb version 4
-["bibtex OReL HA4 Davide Marchi"] 0 "OReL HA4 Davide Marchi.aux" "OReL HA4 Davide Marchi.bbl" "OReL HA4 Davide Marchi" 1741201034.99629 0
+["bibtex OReL HA4 Davide Marchi"] 0 "OReL HA4 Davide Marchi.aux" "OReL HA4 Davide Marchi.bbl" "OReL HA4 Davide Marchi" 1741203055.63962 0
   "OReL HA4 Davide Marchi.aux" 0 -1 0 "pdflatex"
   "bibliography.bib" 0 -1 0 ""
   (generated)
   "OReL HA4 Davide Marchi.bbl"
   "OReL HA4 Davide Marchi.blg"
   (rewritten before read)
-["pdflatex"] 1741201032.77787 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 4/OReL HA4 Davide Marchi.tex" "OReL HA4 Davide Marchi.pdf" "OReL HA4 Davide Marchi" 1741201034.99695 0
+["pdflatex"] 1741203053.30435 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 4/OReL HA4 Davide Marchi.tex" "OReL HA4 Davide Marchi.pdf" "OReL HA4 Davide Marchi" 1741203055.64042 0
   "1.tex" 1741105687 6210 3324c239ec42d5b4e1beb1549b2b1e10 ""
-  "2.tex" 1741112091 4028 2127bb3dfb9168b9e8cab8ce2bf60cbd ""
-  "3.tex" 1741201029 8326 7b92e1261c3af7f3ab709fb44e6a1546 ""
+  "2.tex" 1741203052 3718 a6d87fe36181134cdf20fc616e71b731 ""
+  "3.tex" 1741201183 8326 7b92e1261c3af7f3ab709fb44e6a1546 ""
   "Code/accumulated_reward.png" 1741105570 31633 1b8834df71291998cc6b56771ac717fe ""
   "Code/plot_adversarial_example.png" 1741196373 60909 4ffbc71e7a621caba068fa1735b7f1c9 ""
   "Code/plot_iid_025.png" 1741196332 51153 e0f7bc32022f2f401bb29c844de14f6b ""
   "Code/plot_iid_0375.png" 1741196343 65125 f6b7e6aab06127c17e97fa9c129e9833 ""
   "Code/plot_iid_04375.png" 1741196354 87902 08df7b28f9bd2ab3851aaaea617751ad ""
-  "OReL HA4 Davide Marchi.aux" 1741201034 4226 33ed930a5be5f6184c80ecd245bcecbb "pdflatex"
+  "OReL HA4 Davide Marchi.aux" 1741203054 3617 7b7784bf44ff0ab866fe0aa68a1d714d "pdflatex"
   "OReL HA4 Davide Marchi.bbl" 0 -1 0 "bibtex OReL HA4 Davide Marchi"
-  "OReL HA4 Davide Marchi.out" 1741201034 990 9539846f17237cecd3b8fecd4ab075f9 "pdflatex"
+  "OReL HA4 Davide Marchi.out" 1741203054 990 9539846f17237cecd3b8fecd4ab075f9 "pdflatex"
   "OReL HA4 Davide Marchi.tex" 1741197009 1940 a792ea9064a173023a1ebac5b434f315 ""
-  "OReL HA4 Davide Marchi.toc" 1741201034 1301 ee2d8dee7a28e740588124546d5439ee "pdflatex"
+  "OReL HA4 Davide Marchi.toc" 1741203054 895 e1d10a5b1514e2ee9b21a430509225d7 "pdflatex"
   "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 4/OReL HA4 Davide Marchi.tex" 1741197009 1940 a792ea9064a173023a1ebac5b434f315 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1739027330 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1739028126 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -52,10 +52,8 @@
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1739026672 35469 dcf3a5f2fc1862f5952e3ee5eb1d98c4 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1739026672 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1739026672 32362 bc3f3eec7ab7d65fe700963d4017d32c ""
-  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1739026672 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1739026672 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1739026672 32569 5e5ddc8df908dea60932f3c484a54c0d ""
-  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1739026672 32587 65067f817f408bc71a7312f3d9828a9b ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1739026672 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb" 1739026672 36118 fad905eba93cff5bce1e185fe980a177 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb" 1739026672 31099 342ef5a582aacbd3346f3cf4579679fa ""
