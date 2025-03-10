@@ -219,6 +219,11 @@ INPUT ./Code/output.png
 INPUT ./Code/output.png
 INPUT ./Code/output.png
 INPUT c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
+INPUT ./Code/outputTargetQN.png
+INPUT ./Code/outputTargetQN.png
+INPUT ./Code/outputTargetQN.png
+INPUT ./Code/outputTargetQN.png
+INPUT ./Code/outputTargetQN.png
 INPUT OReL HA5 Davide Marchi.aux
 INPUT ./OReL HA5 Davide Marchi.out
 INPUT ./OReL HA5 Davide Marchi.out
@@ -227,6 +232,7 @@ INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb
+INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb

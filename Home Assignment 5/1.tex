@@ -48,3 +48,42 @@ The line
     Q_tensor = torch.gather(output_tensor, 1, actions_tensor.unsqueeze(-1)).squeeze()
 \end{lstlisting}
 selects the Q-value corresponding to the action actually taken in each state. Since \(\texttt{output\_tensor}\) contains Q-values for all possible actions, we use \(\texttt{gather}\) along the action dimension to pick out the one Q-value that corresponds to the \(\texttt{actions\_tensor}\). In other words, it is a convenient way to index a batch of Q-value vectors by their chosen actions.
+
+\subsection{Target network}
+
+\subsubsection*{Code modifications}
+Below is the code I introduced to maintain a target network and perform Polyak averaging. First, I created \texttt{targetQN} right after creating \texttt{mainQN} and copied the parameters:
+\begin{lstlisting}[language=Python]
+# Create the target network
+targetQN = QNetwork(hidden_size=hidden_size)
+
+# Copy parameters from mainQN to targetQN so they start identical
+targetQN.load_state_dict(mainQN.state_dict())
+\end{lstlisting}
+
+Then, at the end of each training step (i.e., right after \texttt{optimizer.step()}), I inserted the Polyak update:
+\begin{lstlisting}[language=Python]
+with torch.no_grad():
+    for target_param, main_param in zip(targetQN.parameters(), mainQN.parameters()):
+        target_param.data.copy_(tau * main_param.data + (1.0 - tau) * target_param.data)
+\end{lstlisting}
+
+This implements
+\[
+\theta_{\text{target}} \leftarrow \tau \,\theta_{\text{main}} \;+\; (1 - \tau)\,\theta_{\text{target}},
+\]
+where \(\tau \in (0,1)\) is the blend factor. 
+
+The changes corrctly introduce a delayed target Q-network. We copy the main network's parameters once at initialization, then repeatedly blend them after every gradient update. This ensures that the target network changes slowly, providing more stable target values in the Q-learning loss.
+
+\subsubsection*{Comparison with and without the target network}
+I kept the same hyperparameters as before and introduced the target network. The learning curve is shown below.
+
+\begin{figure}[H]
+  \centering
+  % The user can insert the final figure here:
+  \includegraphics[width=0.65\textwidth]{Code/outputTargetQN.png}
+  \caption{Accumulated reward per episode (in gray) and its smoothed average (blue) using a target network.}
+\end{figure}
+
+Empirically, we can see that the performance still reaches high returns, and in many cases the learning appears somewhat more stable. Although there can be noise and variability in individual runs, a target network typically reduces training instabilities and leads to more consistent convergence.

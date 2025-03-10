@@ -1,19 +1,20 @@
 # Fdb version 4
-["bibtex OReL HA5 Davide Marchi"] 0 "OReL HA5 Davide Marchi.aux" "OReL HA5 Davide Marchi.bbl" "OReL HA5 Davide Marchi" 1741629494.33624 0
+["bibtex OReL HA5 Davide Marchi"] 0 "OReL HA5 Davide Marchi.aux" "OReL HA5 Davide Marchi.bbl" "OReL HA5 Davide Marchi" 1741632934.71906 0
   "OReL HA5 Davide Marchi.aux" 0 -1 0 "pdflatex"
   "bibliography.bib" 0 -1 0 ""
   (generated)
   "OReL HA5 Davide Marchi.bbl"
   "OReL HA5 Davide Marchi.blg"
   (rewritten before read)
-["pdflatex"] 1741629492.41538 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 5/OReL HA5 Davide Marchi.tex" "OReL HA5 Davide Marchi.pdf" "OReL HA5 Davide Marchi" 1741629494.33692 0
-  "1.tex" 1741629491 3177 e21125d1ca547fa2575b0008398f1205 ""
+["pdflatex"] 1741632932.7067 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 5/OReL HA5 Davide Marchi.tex" "OReL HA5 Davide Marchi.pdf" "OReL HA5 Davide Marchi" 1741632934.71969 0
+  "1.tex" 1741632929 5284 d9d104242abd00d82c9f8699e20afbea ""
   "Code/output.png" 1741627385 53014 b1e1531c037e06a8c115c1fc51fe229f ""
-  "OReL HA5 Davide Marchi.aux" 1741629493 1668 f2c8a1f6c57d8fbd68eafc900df61b50 "pdflatex"
+  "Code/outputTargetQN.png" 1741632142 47933 ffc8738ec6f668b7d3126cd5269e0d8c ""
+  "OReL HA5 Davide Marchi.aux" 1741632934 1996 b0678e084141cff595707a8f8ae3829d "pdflatex"
   "OReL HA5 Davide Marchi.bbl" 0 -1 0 "bibtex OReL HA5 Davide Marchi"
-  "OReL HA5 Davide Marchi.out" 1741629493 1852 bdc055cbc9fb02f24883c7288a92d2f4 "pdflatex"
+  "OReL HA5 Davide Marchi.out" 1741632934 1983 311dbf815759915e1142260585c43ada "pdflatex"
   "OReL HA5 Davide Marchi.tex" 1741624118 1994 9c16cac1310b1bd7d562d0183ab0f73e ""
-  "OReL HA5 Davide Marchi.toc" 1741629493 889 ff7b485a4efc96c9202c825bbd3b1734 "pdflatex"
+  "OReL HA5 Davide Marchi.toc" 1741632934 969 b35f83c777040df3aadd6476a3fb74c4 "pdflatex"
   "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 5/OReL HA5 Davide Marchi.tex" 1741624118 1994 9c16cac1310b1bd7d562d0183ab0f73e ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1739027330 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1739028126 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -47,6 +48,7 @@
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1739026672 35469 dcf3a5f2fc1862f5952e3ee5eb1d98c4 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1739026672 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1739026672 32362 bc3f3eec7ab7d65fe700963d4017d32c ""
+  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1739026672 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1739026672 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1739026672 32587 65067f817f408bc71a7312f3d9828a9b ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1739026672 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
