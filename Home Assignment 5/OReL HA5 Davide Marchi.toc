@@ -7,5 +7,6 @@
 \contentsline {subsection}{\numberline {1.4}Gather}{3}{subsection.1.4}%
 \contentsline {subsection}{\numberline {1.5}Target network}{4}{subsection.1.5}%
 \contentsline {section}{\numberline {2}A tighter analysis of the Hedge algorithm}{5}{section.2}%
-\contentsline {section}{\numberline {3}Empirical evaluation of algorithms for adversarial environments}{5}{section.3}%
-\contentsline {section}{\numberline {4}Empirical comparison of UCB1 and EXP3 algorithms }{5}{section.4}%
+\contentsline {paragraph}{Application of Hoeffding's lemma.}{6}{section*.7}%
+\contentsline {section}{\numberline {3}Empirical evaluation of algorithms for adversarial environments}{9}{section.3}%
+\contentsline {section}{\numberline {4}Empirical comparison of UCB1 and EXP3 algorithms }{9}{section.4}%
