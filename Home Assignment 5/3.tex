@@ -1,27 +1,15 @@
-In adversarial settings, an algorithm's performance is judged under the assumption that an adversary can (and will) craft the most challenging possible scenarios. While we can \emph{attempt} to evaluate algorithms experimentally, there is no definitive way to exhaustively test every possible adversarial strategy. In particular:
+In adversarial settings, an algorithm’s performance is evaluated under the assumption that an adversary will create the most difficult possible scenarios. While we can try to test algorithms experimentally, it’s impossible to cover every possible adversarial strategy.
+
+One key issue is that showing an algorithm is not robust is relatively easy. If we can find or construct an input where the algorithm fails, that’s enough to prove it has weaknesses. However, proving that an algorithm is robust is much harder. This would require showing that the algorithm works against every possible attack, but the space of adversarial strategies is often too large to test exhaustively.
+
+A few challenges make a full evaluation difficult:
 
 \begin{itemize}
-    \item \textbf{Showing that an algorithm is not robust is easy:} 
-    A single experiment where the algorithm fails under a particular adversarial construction is enough to demonstrate a weakness. If we can find or generate inputs on which the algorithm performs poorly, that experiment shows the algorithm is not robust against that type of attack.
-
-    \item \textbf{Showing that an algorithm is robust is very hard:}
-    To conclusively prove robustness, one would have to show that the algorithm can handle \emph{all} adversarial strategies. However, the space of potential adversaries is typically enormous or even unbounded. Hence, no finite set of experiments can cover all possible attacks.
-
+    \item \textbf{Unlimited adversarial strategies:} Adversaries can design attacks based on how the algorithm works, and there’s no way to test for all possible attacks.
+    \item \textbf{Adversaries can adapt over time:} Especially in real-world scenarios attackers constantly change their strategies, meaning any static test will only capture a limited picture.
+    \item \textbf{Resource constraints:} Running large-scale experiments that simulate adversarial behavior is often too expensive and time-consuming to be practical.
 \end{itemize}
-
-\paragraph{Why a comprehensive evaluation is difficult:}
-\begin{enumerate}
-    \item \textbf{Unlimited adversarial strategies:} 
-    Adversaries can adapt based on the algorithm’s structure or observed behavior. Designing experiments to capture \emph{all} potential strategies would require an exhaustive search, which is usually infeasible.
-
-    \item \textbf{Dynamic nature of adversaries:}
-    In many real-world scenarios (e.g., security, spam filtering, or adversarial machine learning), adversaries change their strategies over time in response to the system's defenses. This adaptive component makes static experiments only partially informative.
-
-    \item \textbf{Experimental limitations:}
-    Even if we focus on a specific type of adversarial behavior, constructing large-scale experiments that simulate adversarial conditions can be extremely resource-intensive (time, data, and computation).
-\end{enumerate}
-
+    
 \subsection*{Conclusion}
 
-\noindent It is not possible to fully certify that an algorithm is robust against all adversarial scenarios through finite experiments. Due to the vast space of potential adversarial attacks and their adaptive nature, no experimental design can guarantee absolute robustness in every possible adversarial environment. Therefore, empirical evaluation can show an algorithm \emph{is not} robust but cannot conclusively prove \emph{that it is} robust under all adversarial conditions.
-
+Since the space of possible adversarial attacks is too large and adaptive, no set of experiments can fully prove an algorithm is robust. Empirical testing can reveal weaknesses, but it can never provide a guarantee that an algorithm will hold up against every possible adversarial scenario.
