@@ -1,31 +1,33 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+###############################################################################
+# 1) HELPER FUNCTIONS
+###############################################################################
+
 def bernoulli_sample(p):
-    # quick helper function for Bernoulli trials - returns 0 or 1
+    """Return 1 with probability p, else 0."""
     return 1 if (np.random.rand() < p) else 0
 
 def run_ucb(T, means, version='original', nonstationary=False):
     """
-    Running the bandit algorithm.
-    - version='original' uses the original bonus term; any other value uses a modified bonus.
-    - If nonstationary is True, then for arm 1, after t >= T/2 the reward probability is forced to 0.
-    
-    means = probabilities for each arm
-    returns the cumulative pseudo-regret over time.
+    Run the UCB1 algorithm (either 'original' or 'modified') on a bandit problem.
+    If nonstationary=True, then for arm 1 we force the reward probability to 0
+    once t >= T/2 (this 'breaks' UCB in the adversarial setting).
     """
     n_arms = len(means)
     best_arm = np.argmax(means)
+    # gap[a] = (best mean) - (mean of arm a), used to compute pseudo-regret
     gap = [means[best_arm] - means[a] for a in range(n_arms)]
     
-    counts = np.zeros(n_arms, dtype=int)  # pulls per arm
-    values = np.zeros(n_arms)              # running average rewards
+    counts = np.zeros(n_arms, dtype=int)   # number of pulls for each arm
+    values = np.zeros(n_arms)             # running average of rewards
     regrets = np.zeros(T)
     cumulative_regret = 0.0
     
-    # Pull each arm once
+    # Pull each arm once (to initialize)
     for a in range(n_arms):
-        # For nonstationary env, if arm==1 and t (a) >= T/2, use reward=bernoulli_sample(0)
+        # For the 'break' scenario:
         if nonstationary and a == 1 and a >= T/2:
             reward = bernoulli_sample(0.0)
         else:
@@ -37,25 +39,32 @@ def run_ucb(T, means, version='original', nonstationary=False):
     
     # Main loop
     for t in range(n_arms, T):
-        current_time = t + 1  # t starts at 0
-        
+        current_time = t + 1  # because t starts at 0
         ucb_values = np.zeros(n_arms)
+        
         for a in range(n_arms):
             avg_reward = values[a]
             if version == 'original':
+                # Typical UCB1: bonus ~ sqrt( (2 log t) / n_a )
+                # or you can keep your 1.5 factor, etc.
                 bonus = np.sqrt(1.5 * np.log(current_time) / counts[a])
             else:
+                # "Improved" or “modified” bonus, e.g. sqrt( (log t) / n_a )
                 bonus = np.sqrt(np.log(current_time) / counts[a])
             ucb_values[a] = avg_reward + bonus
         
         chosen_arm = np.argmax(ucb_values)
+        
+        # For the 'break' scenario:
         if nonstationary and chosen_arm == 1 and t >= T/2:
             reward = bernoulli_sample(0.0)
         else:
             reward = bernoulli_sample(means[chosen_arm])
         
         counts[chosen_arm] += 1
+        # Update running average
         values[chosen_arm] += (reward - values[chosen_arm]) / counts[chosen_arm]
+        
         cumulative_regret += gap[chosen_arm]
         regrets[t] = cumulative_regret
     
@@ -63,130 +72,197 @@ def run_ucb(T, means, version='original', nonstationary=False):
 
 def run_exp3(T, means, nonstationary=False):
     """
-    EXP3 algorithm using the subtract-min trick to avoid overflow.
-    We maintain a cumulative loss vector L for each arm.
-    
-    For rewards in [0,1] we define the loss as (1 - reward).
-    If nonstationary is True, then for arm 1 after t >= T/2,
-    the reward probability is forced to 0.
-    
-    :param T: time horizon
-    :param means: list of reward probabilities for each arm
-    :param nonstationary: if True, uses a nonstationary variant (breaks UCB)
-    :return: cumulative pseudo-regret vector over time
+    Run the EXP3 algorithm with time-varying learning rate
+      eta_t = sqrt( (ln K) / (t * K) ).
+    For rewards in [0,1], define loss = 1 - reward.
+    If nonstationary=True, then for arm 1 we force reward probability = 0
+    once t >= T/2.
+    Returns the pseudo-regret at each time.
     """
     n_arms = len(means)
-    best_mean = np.max(means)  # best arm's mean (for regret computation)
+    best_mean = np.max(means)
     regrets = np.zeros(T)
     cumulative_regret = 0.0
-    L = np.zeros(n_arms)  # cumulative losses for each arm
+    
+    # L[a] = cumulative loss for arm a
+    L = np.zeros(n_arms)
     
     for t in range(T):
-        # time-varying learning rate; adjust as needed
+        # time-varying learning rate
         eta_t = np.sqrt(np.log(n_arms) / ((t+1) * n_arms))
         
-        # Compute probabilities using the subtract-min trick:
+        # Subtract-min trick for numerical stability
         L_min = np.min(L)
         w = np.exp(-eta_t * (L - L_min))
         p = w / np.sum(w)
         
         chosen_arm = np.random.choice(n_arms, p=p)
         
-        # In a nonstationary environment, force arm 1 to yield reward 0 after T/2.
+        # Nonstationary "break" scenario:
         if nonstationary and chosen_arm == 1 and t >= T/2:
             reward = bernoulli_sample(0.0)
         else:
             reward = bernoulli_sample(means[chosen_arm])
         
+        # Update pseudo-regret
         cumulative_regret += (best_mean - reward)
         regrets[t] = cumulative_regret
         
-        # Estimated loss for the chosen arm: loss = (1 - reward) (since higher reward is better)
-        # Then we use importance weighting:
-        estimated_loss = (1 - reward) / p[chosen_arm] if p[chosen_arm] > 0 else 0
-        L[chosen_arm] += estimated_loss
-
+        # Update losses
+        # Observed loss = 1 - reward; use importance weighting
+        est_loss = (1 - reward) / max(p[chosen_arm], 1e-12)
+        L[chosen_arm] += est_loss
+    
     return regrets
 
-def run_experiment(T=100000, n_runs=20):
-    """
-    Existing experiment for different gaps (Delta) in an i.i.d. environment.
-    It runs the two versions of UCB.
-    """
-    deltas = [1/4, 1/8, 1/16]  # different gap values
-    fig, axes = plt.subplots(1, len(deltas), figsize=(18, 5))
-    versions = ['original', 'modified']
-    colors = ['red', 'blue']
-    
-    for idx, Delta in enumerate(deltas):
-        mu_arm0 = 0.5 + 0.5 * Delta
-        mu_arm1 = 0.5 - 0.5 * Delta
-        means = [mu_arm0, mu_arm1]
-        
-        all_regrets = np.zeros((2, n_runs, T))
-        for v, version in enumerate(versions):
-            for r in range(n_runs):
-                regrets = run_ucb(T, means, version=version, nonstationary=False)
-                all_regrets[v, r, :] = regrets
-        
-        mean_regrets = np.mean(all_regrets, axis=1)
-        std_regrets = np.std(all_regrets, axis=1)
-        ax = axes[idx]
-        x_vals = np.arange(1, T+1)
-        for v, version in enumerate(versions):
-            ax.plot(x_vals, mean_regrets[v], label=f"{version} UCB", color=colors[v])
-            ax.fill_between(x_vals, mean_regrets[v] - std_regrets[v],
-                            mean_regrets[v] + std_regrets[v],
-                            color=colors[v], alpha=0.2)
-        ax.set_title(f"Delta = {Delta}")
-        ax.set_xlabel("t")
-        ax.set_ylabel("Cumulative Pseudo-Regret")
-        ax.legend()
-    
-    plt.tight_layout()
-    plt.show()
+###############################################################################
+# 2) FULL IID EXPERIMENTS FOR K = 2,4,8,16 AND THREE GAP VALUES
+###############################################################################
 
-def run_experiment_break(T=100000, n_runs=20):
+def run_experiments_iid(T=10_000, n_runs=20):
     """
-    New experiment (5.11 part b): nonstationary (adversarial) environment
-    to "break" UCB1. Here, for two arms:
-      - Arm 0: constant mean 0.6.
-      - Arm 1: mean 0.9 for t < T/2, and 0.0 for t >= T/2.
-    Compare UCB1 (original version) versus EXP3.
+    Run *three* different i.i.d. experiments (with different gaps Delta)
+    for each K in {2,4,8,16}, comparing:
+       - UCB1 (original)
+       - UCB1 (modified/improved)
+       - EXP3
+    We assume one best arm with mean mu^* = 0.6, suboptimal arms = mu^* - Delta.
     """
-    means = [0.6, 0.9]  # initial means for arms
+    K_values = [2, 4, 8, 16]
+    deltas = [1/4, 1/8, 1/16]   # i.e. 0.25, 0.125, 0.0625
+    
+    # We'll create one figure per Delta, each figure containing 4 subplots (one for each K).
+    for Delta_idx, Delta in enumerate(deltas):
+        fig, axes = plt.subplots(1, len(K_values), figsize=(20,5), sharey=True)
+        fig.suptitle(f"IID Bandits: Delta = {Delta},  (mu* = 0.6,  suboptimal = 0.6 - {Delta})", fontsize=14)
+        
+        for i, K in enumerate(K_values):
+            mu_star = 0.6
+            mu_sub = mu_star - Delta
+            # Build the means array: 1 best arm, K-1 suboptimal arms
+            means = [mu_star] + [mu_sub]*(K-1)
+            
+            # We'll collect regrets for each algorithm:
+            all_reg_ucb_orig = np.zeros((n_runs, T))
+            all_reg_ucb_mod  = np.zeros((n_runs, T))
+            all_reg_exp3     = np.zeros((n_runs, T))
+            
+            for r in range(n_runs):
+                # UCB1 (original)
+                reg_ucb_o = run_ucb(T, means, version='original', nonstationary=False)
+                all_reg_ucb_orig[r,:] = reg_ucb_o
+                
+                # UCB1 (modified/improved)
+                reg_ucb_m = run_ucb(T, means, version='modified', nonstationary=False)
+                all_reg_ucb_mod[r,:] = reg_ucb_m
+                
+                # EXP3
+                reg_exp3 = run_exp3(T, means, nonstationary=False)
+                all_reg_exp3[r,:] = reg_exp3
+            
+            # Compute means + std
+            mean_ucb_o = np.mean(all_reg_ucb_orig, axis=0)
+            std_ucb_o  = np.std(all_reg_ucb_orig, axis=0)
+            
+            mean_ucb_m = np.mean(all_reg_ucb_mod, axis=0)
+            std_ucb_m  = np.std(all_reg_ucb_mod, axis=0)
+            
+            mean_exp3  = np.mean(all_reg_exp3, axis=0)
+            std_exp3   = np.std(all_reg_exp3, axis=0)
+            
+            ax = axes[i]
+            t_axis = np.arange(1, T+1)
+            
+            ax.plot(t_axis, mean_ucb_o, label="UCB1 (original)", color='blue')
+            ax.fill_between(t_axis,
+                            mean_ucb_o - std_ucb_o,
+                            mean_ucb_o + std_ucb_o,
+                            alpha=0.2, color='blue')
+            
+            ax.plot(t_axis, mean_ucb_m, label="UCB1 (modified)", color='green')
+            ax.fill_between(t_axis,
+                            mean_ucb_m - std_ucb_m,
+                            mean_ucb_m + std_ucb_m,
+                            alpha=0.2, color='green')
+            
+            ax.plot(t_axis, mean_exp3,  label="EXP3", color='red')
+            ax.fill_between(t_axis,
+                            mean_exp3 - std_exp3,
+                            mean_exp3 + std_exp3,
+                            alpha=0.2, color='red')
+            
+            ax.set_title(f"K = {K}")
+            ax.set_xlabel("t")
+            if i == 0:
+                ax.set_ylabel("Cumulative Pseudo-Regret")
+            ax.legend()
+        
+        plt.tight_layout()
+        plt.show()
+
+###############################################################################
+# 3) BREAK (ADVERSARIAL) EXPERIMENT
+###############################################################################
+
+def run_experiment_break(T=10_000, n_runs=20):
+    """
+    Adversarial design to break UCB1:
+      - 2 arms: arm 0 has mean 0.6 (constant),
+                arm 1 has mean 0.9 for t < T/2 and 0.0 for t >= T/2.
+    Compare UCB1 vs EXP3. Show average regrets +/- std over n_runs.
+    """
+    # We'll keep exactly 2 arms, with initial means [0.6, 0.9].
+    # The 'nonstationary=True' flag in run_ucb / run_exp3
+    # forces the second arm to become 0.0 after T/2.
+    
     all_regrets_ucb = np.zeros((n_runs, T))
     all_regrets_exp3 = np.zeros((n_runs, T))
     
+    means = [0.6, 0.9]
+    
     for r in range(n_runs):
-        regrets_ucb = run_ucb(T, means, version='original', nonstationary=True)
-        all_regrets_ucb[r, :] = regrets_ucb
-        regrets_exp3 = run_exp3(T, means, nonstationary=True)
-        all_regrets_exp3[r, :] = regrets_exp3
+        # UCB1
+        reg_ucb = run_ucb(T, means, version='original', nonstationary=True)
+        all_regrets_ucb[r,:] = reg_ucb
+        
+        # EXP3
+        reg_e3 = run_exp3(T, means, nonstationary=True)
+        all_regrets_exp3[r,:] = reg_e3
     
-    mean_regrets_ucb = np.mean(all_regrets_ucb, axis=0)
-    std_regrets_ucb = np.std(all_regrets_ucb, axis=0)
-    mean_regrets_exp3 = np.mean(all_regrets_exp3, axis=0)
-    std_regrets_exp3 = np.std(all_regrets_exp3, axis=0)
+    # Plot
+    mean_ucb = np.mean(all_regrets_ucb, axis=0)
+    std_ucb  = np.std(all_regrets_ucb, axis=0)
+    mean_e3  = np.mean(all_regrets_exp3, axis=0)
+    std_e3   = np.std(all_regrets_exp3, axis=0)
     
-    plt.figure(figsize=(6, 4))
     t_vals = np.arange(1, T+1)
-    plt.plot(t_vals, mean_regrets_ucb, label="UCB1", color='blue')
-    plt.fill_between(t_vals, mean_regrets_ucb - std_regrets_ucb,
-                     mean_regrets_ucb + std_regrets_ucb, color='blue', alpha=0.2)
-    plt.plot(t_vals, mean_regrets_exp3, label="EXP3", color='red')
-    plt.fill_between(t_vals, mean_regrets_exp3 - std_regrets_exp3,
-                     mean_regrets_exp3 + std_regrets_exp3, color='red', alpha=0.2)
+    plt.figure(figsize=(7,5))
+    plt.plot(t_vals, mean_ucb, label="UCB1", color='blue')
+    plt.fill_between(t_vals, mean_ucb - std_ucb, mean_ucb + std_ucb,
+                     alpha=0.2, color='blue')
+    
+    plt.plot(t_vals, mean_e3, label="EXP3", color='red')
+    plt.fill_between(t_vals, mean_e3 - std_e3, mean_e3 + std_e3,
+                     alpha=0.2, color='red')
+    
+    plt.title("Breaking UCB1 in a Nonstationary/Adversarial Setting")
     plt.xlabel("t")
     plt.ylabel("Cumulative Pseudo-Regret")
-    plt.title("Nonstationary Environment (Breaking UCB1)")
     plt.legend()
     plt.tight_layout()
     plt.show()
 
+###############################################################################
+# 4) MAIN: RUN EVERYTHING
+###############################################################################
 if __name__ == "__main__":
-    # Run the original experiment (i.i.d. case) for UCB only
-    run_experiment(T=10000, n_runs=20)
+    # You can set T=100_000 for the full experiment, but beware it may be slow.
+    # For demonstration, T=10_000 is faster. Adjust as needed.
+    T = 10_000
+    n_runs = 20
     
-    # Run the break experiment (nonstationary case) comparing UCB and EXP3
-    run_experiment_break(T=10000, n_runs=20)
+    # 1) IID experiments for K=2,4,8,16 and deltas = {1/4,1/8,1/16}
+    run_experiments_iid(T=T, n_runs=n_runs)
+    
+    # 2) Break experiment (adversarial)
+    run_experiment_break(T=T, n_runs=n_runs)
