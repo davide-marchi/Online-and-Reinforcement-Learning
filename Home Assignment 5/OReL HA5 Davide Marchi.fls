@@ -227,10 +227,34 @@ INPUT ./Code/outputTargetQN.png
 INPUT ./3.tex
 INPUT ./3.tex
 INPUT 3.tex
+INPUT ./4.tex
+INPUT ./4.tex
+INPUT 4.tex
+INPUT ./Code/iid_experiment_delta_0_25.png
+INPUT ./Code/iid_experiment_delta_0_25.png
+INPUT ./Code/iid_experiment_delta_0_25.png
+INPUT ./Code/iid_experiment_delta_0_25.png
+INPUT ./Code/iid_experiment_delta_0_25.png
+INPUT ./Code/iid_experiment_delta_0_125.png
+INPUT ./Code/iid_experiment_delta_0_125.png
+INPUT ./Code/iid_experiment_delta_0_125.png
+INPUT ./Code/iid_experiment_delta_0_125.png
+INPUT ./Code/iid_experiment_delta_0_125.png
+INPUT ./Code/iid_experiment_delta_0_0625.png
+INPUT ./Code/iid_experiment_delta_0_0625.png
+INPUT ./Code/iid_experiment_delta_0_0625.png
+INPUT ./Code/iid_experiment_delta_0_0625.png
+INPUT ./Code/iid_experiment_delta_0_0625.png
+INPUT ./Code/break_experiment_worst_case.png
+INPUT ./Code/break_experiment_worst_case.png
+INPUT ./Code/break_experiment_worst_case.png
+INPUT ./Code/break_experiment_worst_case.png
+INPUT ./Code/break_experiment_worst_case.png
 INPUT OReL HA5 Davide Marchi.aux
 INPUT ./OReL HA5 Davide Marchi.out
 INPUT ./OReL HA5 Davide Marchi.out
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
