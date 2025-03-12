@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib
-matplotlib.use('Agg')  # (optional) ensures we can save figures without showing
+matplotlib.use('Agg')  # Ensures we can save figures without displaying them
 import matplotlib.pyplot as plt
 
 ###############################################################################
@@ -11,9 +11,9 @@ def bernoulli_sample(p):
     """Return 1 with probability p, else 0."""
     return 1 if (np.random.rand() < p) else 0
 
-def run_ucb(T, means, version='original', nonstationary=False):
+def run_ucb(T, means, version='modified', nonstationary=False):
     """
-    Run the UCB1 algorithm (either 'original' or 'modified') on a bandit problem.
+    Run the UCB1 algorithm (using the 'modified' bonus term) on a bandit problem.
     If nonstationary=True, then for arm 1 we force the reward probability to 0
     once t >= T/2 (this 'breaks' UCB in the adversarial setting).
     """
@@ -45,13 +45,8 @@ def run_ucb(T, means, version='original', nonstationary=False):
         
         for a in range(n_arms):
             avg_reward = values[a]
-            if version == 'original':
-                # Typical UCB1: bonus ~ sqrt( (2 log t) / n_a )
-                # or you can keep your 1.5 factor, etc.
-                bonus = np.sqrt(1.5 * np.log(current_time) / counts[a])
-            else:
-                # "Improved" or “modified” bonus, e.g. sqrt( (log t) / n_a )
-                bonus = np.sqrt(np.log(current_time) / counts[a])
+            # "Modified" bonus: sqrt( (log t) / n_a )
+            bonus = np.sqrt(np.log(current_time) / counts[a])
             ucb_values[a] = avg_reward + bonus
         
         chosen_arm = np.argmax(ucb_values)
@@ -108,7 +103,7 @@ def run_exp3(T, means, nonstationary=False):
         cumulative_regret += (best_mean - reward)
         regrets[t] = cumulative_regret
         
-        # Update losses
+        # Update losses using importance weighting
         est_loss = (1 - reward) / max(p[chosen_arm], 1e-12)
         L[chosen_arm] += est_loss
     
@@ -120,20 +115,19 @@ def run_exp3(T, means, nonstationary=False):
 
 def run_experiments_iid(T=10_000, n_runs=20):
     """
-    Run *three* different i.i.d. experiments (with different gaps Delta)
+    Run three different i.i.d. experiments (with different gap values Delta)
     for each K in {2,4,8,16}, comparing:
-       - UCB1 (original)
-       - UCB1 (modified/improved)
+       - UCB1 (modified/improved parametrization)
        - EXP3
-    We assume one best arm with mean mu^* = 0.5, suboptimal arms = mu^* - Delta.
+    We assume one best arm with mean mu^* = 0.5, suboptimal arms with mean = 0.5 - Delta.
     """
     K_values = [2, 4, 8, 16]
     deltas = [1/4, 1/8, 1/16]   # i.e. 0.25, 0.125, 0.0625
     
-    # We'll create one figure per Delta, each figure containing 4 subplots (one for each K).
-    for Delta_idx, Delta in enumerate(deltas):
+    # Create one figure per Delta, each figure containing 4 subplots (one for each K).
+    for Delta in deltas:
         fig, axes = plt.subplots(1, len(K_values), figsize=(20,5), sharey=True)
-        fig.suptitle(f"IID Bandits: Delta = {Delta},  (mu* = 0.5,  suboptimal = 0.5 - {Delta})", fontsize=14)
+        fig.suptitle(f"IID Bandits: Delta = {Delta}, (mu* = 0.5, suboptimal = 0.5 - {Delta})", fontsize=14)
         
         for i, K in enumerate(K_values):
             mu_star = 0.5
@@ -141,50 +135,36 @@ def run_experiments_iid(T=10_000, n_runs=20):
             # Build the means array: 1 best arm, K-1 suboptimal arms
             means = [mu_star] + [mu_sub]*(K-1)
             
-            # We'll collect regrets for each algorithm:
-            all_reg_ucb_orig = np.zeros((n_runs, T))
-            all_reg_ucb_mod  = np.zeros((n_runs, T))
-            all_reg_exp3     = np.zeros((n_runs, T))
+            # Collect regrets for the algorithms:
+            all_reg_ucb = np.zeros((n_runs, T))
+            all_reg_exp3 = np.zeros((n_runs, T))
             
             for r in range(n_runs):
-                # UCB1 (original)
-                reg_ucb_o = run_ucb(T, means, version='original', nonstationary=False)
-                all_reg_ucb_orig[r,:] = reg_ucb_o
-                
-                # UCB1 (modified/improved)
-                reg_ucb_m = run_ucb(T, means, version='modified', nonstationary=False)
-                all_reg_ucb_mod[r,:] = reg_ucb_m
+                # UCB1 with improved parametrization
+                reg_ucb = run_ucb(T, means, version='modified', nonstationary=False)
+                all_reg_ucb[r, :] = reg_ucb
                 
                 # EXP3
                 reg_exp3 = run_exp3(T, means, nonstationary=False)
-                all_reg_exp3[r,:] = reg_exp3
+                all_reg_exp3[r, :] = reg_exp3
             
-            # Compute means + std
-            mean_ucb_o = np.mean(all_reg_ucb_orig, axis=0)
-            std_ucb_o  = np.std(all_reg_ucb_orig, axis=0)
+            # Compute means and standard deviations
+            mean_ucb = np.mean(all_reg_ucb, axis=0)
+            std_ucb  = np.std(all_reg_ucb, axis=0)
             
-            mean_ucb_m = np.mean(all_reg_ucb_mod, axis=0)
-            std_ucb_m  = np.std(all_reg_ucb_mod, axis=0)
-            
-            mean_exp3  = np.mean(all_reg_exp3, axis=0)
-            std_exp3   = np.std(all_reg_exp3, axis=0)
+            mean_exp3 = np.mean(all_reg_exp3, axis=0)
+            std_exp3  = np.std(all_reg_exp3, axis=0)
             
             ax = axes[i]
             t_axis = np.arange(1, T+1)
             
-            ax.plot(t_axis, mean_ucb_o, label="UCB1 (original)", color='blue')
+            ax.plot(t_axis, mean_ucb, label="UCB1 (modified)", color='green')
             ax.fill_between(t_axis,
-                            mean_ucb_o - std_ucb_o,
-                            mean_ucb_o + std_ucb_o,
-                            alpha=0.2, color='blue')
-            
-            ax.plot(t_axis, mean_ucb_m, label="UCB1 (modified)", color='green')
-            ax.fill_between(t_axis,
-                            mean_ucb_m - std_ucb_m,
-                            mean_ucb_m + std_ucb_m,
+                            mean_ucb - std_ucb,
+                            mean_ucb + std_ucb,
                             alpha=0.2, color='green')
             
-            ax.plot(t_axis, mean_exp3,  label="EXP3", color='red')
+            ax.plot(t_axis, mean_exp3, label="EXP3", color='red')
             ax.fill_between(t_axis,
                             mean_exp3 - std_exp3,
                             mean_exp3 + std_exp3,
@@ -196,12 +176,10 @@ def run_experiments_iid(T=10_000, n_runs=20):
                 ax.set_ylabel("Cumulative Pseudo-Regret")
             ax.legend()
         
-        # Save figure with a filename that includes Delta
         plt.tight_layout()
-        # Replace '.' with '_' in Delta for a safer filename
         delta_str = str(Delta).replace('.', '_')
-        plt.savefig(f"iid_experiment_delta_{delta_str}.png")
-        plt.close()  # Close the figure so it doesn't display
+        plt.savefig(f"Home Assignment 5/Code/iid_experiment_delta_{delta_str}.png")
+        plt.close()
 
 ###############################################################################
 # 3) BREAK (ADVERSARIAL) EXPERIMENT
@@ -212,60 +190,56 @@ def run_experiment_break(T=10_000, n_runs=20):
     Adversarial design to break UCB1:
       - 2 arms: arm 0 has mean 0.5 (constant),
                 arm 1 has mean 0.9 for t < T/2 and 0.0 for t >= T/2.
-    Compare UCB1 vs EXP3. Show average regrets +/- std over n_runs.
+    Compare UCB1 (modified) vs EXP3.
     """
-    # We keep exactly 2 arms, with initial means [0.5, 0.9].
-    # The 'nonstationary=True' flag in run_ucb / run_exp3
-    # forces the second arm to become 0.0 after T/2.
-    
+    n_runs = n_runs
     all_regrets_ucb = np.zeros((n_runs, T))
     all_regrets_exp3 = np.zeros((n_runs, T))
     
     means = [0.5, 0.9]
     
     for r in range(n_runs):
-        # UCB1
-        reg_ucb = run_ucb(T, means, version='original', nonstationary=True)
-        all_regrets_ucb[r,:] = reg_ucb
+        # UCB1 with improved parametrization
+        reg_ucb = run_ucb(T, means, version='modified', nonstationary=True)
+        all_regrets_ucb[r, :] = reg_ucb
         
         # EXP3
-        reg_e3 = run_exp3(T, means, nonstationary=True)
-        all_regrets_exp3[r,:] = reg_e3
+        reg_exp3 = run_exp3(T, means, nonstationary=True)
+        all_regrets_exp3[r, :] = reg_exp3
     
-    # Plot
+    # Plotting average regrets +/- std
     mean_ucb = np.mean(all_regrets_ucb, axis=0)
     std_ucb  = np.std(all_regrets_ucb, axis=0)
-    mean_e3  = np.mean(all_regrets_exp3, axis=0)
-    std_e3   = np.std(all_regrets_exp3, axis=0)
+    mean_exp3 = np.mean(all_regrets_exp3, axis=0)
+    std_exp3  = np.std(all_regrets_exp3, axis=0)
     
     t_vals = np.arange(1, T+1)
     plt.figure(figsize=(7,5))
-    plt.plot(t_vals, mean_ucb, label="UCB1", color='blue')
+    plt.plot(t_vals, mean_ucb, label="UCB1 (modified)", color='green')
     plt.fill_between(t_vals, mean_ucb - std_ucb, mean_ucb + std_ucb,
-                     alpha=0.2, color='blue')
+                     alpha=0.2, color='green')
     
-    plt.plot(t_vals, mean_e3, label="EXP3", color='red')
-    plt.fill_between(t_vals, mean_e3 - std_e3, mean_e3 + std_e3,
+    plt.plot(t_vals, mean_exp3, label="EXP3", color='red')
+    plt.fill_between(t_vals, mean_exp3 - std_exp3, mean_exp3 + std_exp3,
                      alpha=0.2, color='red')
     
-    plt.title("Breaking UCB1 in a Nonstationary/Adversarial Setting")
+    plt.title("Breaking UCB1 (Nonstationary/Adversarial Setting)")
     plt.xlabel("t")
     plt.ylabel("Cumulative Pseudo-Regret")
     plt.legend()
     plt.tight_layout()
-    plt.savefig("break_experiment.png")
-    plt.close()  # Close the figure
+    plt.savefig("Home Assignment 5/Code/break_experiment.png")
+    plt.close()
 
 ###############################################################################
 # 4) MAIN: RUN EVERYTHING
 ###############################################################################
 if __name__ == "__main__":
-    # You can set T=100_000 for the full experiment, but it may be slower.
-    # For demonstration, T=10_000 is typically fast enough. Adjust as needed.
+    # Set T=10,000 for demonstration; adjust T or n_runs as needed.
     T = 10_000
     n_runs = 20
     
-    # 1) IID experiments for K=2,4,8,16 and deltas = {1/4,1/8,1/16}
+    # 1) IID experiments for K=2,4,8,16 with deltas in {1/4, 1/8, 1/16}
     run_experiments_iid(T=T, n_runs=n_runs)
     
     # 2) Break experiment (adversarial)
