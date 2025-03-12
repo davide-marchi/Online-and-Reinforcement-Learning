@@ -107,7 +107,7 @@ def adversarial_reward(t, arm, T, epsilon=0.01):
 def run_experiment_break(T=10000, n_runs=20, epsilon=0.01):
     all_regrets_ucb = np.zeros((n_runs, T))
     all_regrets_exp3 = np.zeros((n_runs, T))
-    means = [0.5, 0.9]  # reference means; actual rewards come from adversarial_reward
+    means = [0.5, 0.9]  # reference means, but actual rewards come from adversarial_reward
     
     for r in range(n_runs):
         reg_ucb = run_ucb(T, means, version='modified', nonstationary=True,
@@ -136,4 +136,4 @@ In this adversarial setting:
     \item EXP3, however, adjusts its probabilities based on the observed losses and quickly shifts its preference to arm 0.
 \end{itemize}
 
-It is noteworthy that breaking UCB is considerably harder than breaking Follow-The-Leader (FTL). In previous assignments, a simple repeating sequence of 0's and 1's was enough to break FTL via deterministic tie-breaking. However, UCB's exploration bonus and reliance on empirical means make it more robust; thus, a specifically crafted adversarial sequence (as shown above) is necessary to force it into linear regret.
+It is noteworthy that breaking UCB is considerably harder than breaking Follow-The-Leader (FTL). In previous assignments, a simple repeating sequence of 0's and 1's was enough to break FTL via deterministic tie-breaking. However, UCB's exploration bonus and reliance on empirical means make it more robust, and for this reason a specifically crafted adversarial sequence (as shown above) is necessary to force it into linear regret.
