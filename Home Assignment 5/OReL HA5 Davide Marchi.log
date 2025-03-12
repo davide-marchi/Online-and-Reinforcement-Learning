@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  12 MAR 2025 18:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  12 MAR 2025 19:11
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -401,64 +401,73 @@ Package pdftex.def Info: Code/outputTargetQN.png  used on input line 85.
 (pdftex.def)             Requested size: 299.46599pt x 221.91106pt.
 
 
-[4]) (./3.tex
+[4]) (./2.tex
+Overfull \hbox (1.21065pt too wide) in paragraph at lines 13--14
+[]\OT1/cmr/m/n/12 We then ob-serve the losses $\OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 `[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 a\OT1/cmr/m/n/12 )\OMS/cmsy/m/n/12 g[]$ \OT1/cmr/m/n/12 (full in-for-ma-tion), and up-date $\OML/cmm/m/it/12 L[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 a\OT1/cmr/m/n/12 ) = \OML/cmm/m/it/12 L[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 a\OT1/cmr/m/n/12 ) +
+ []
 
-[5 <./Code/outputTargetQN.png>]) (./4.tex
 
-[6]
-<Code/iid_experiment_delta_0_25.png, id=133, 1445.4pt x 361.35pt>
+
+[5 <./Code/outputTargetQN.png>]
+
+[6]) (./3.tex
+
+[7]) (./4.tex
+
+[8]
+<Code/iid_experiment_delta_0_25.png, id=142, 1445.4pt x 361.35pt>
 File: Code/iid_experiment_delta_0_25.png Graphic file (type png)
 <use Code/iid_experiment_delta_0_25.png>
 Package pdftex.def Info: Code/iid_experiment_delta_0_25.png  used on input line 51.
 (pdftex.def)             Requested size: 460.72124pt x 115.17671pt.
-<Code/iid_experiment_delta_0_125.png, id=134, 1445.4pt x 361.35pt>
+<Code/iid_experiment_delta_0_125.png, id=143, 1445.4pt x 361.35pt>
 File: Code/iid_experiment_delta_0_125.png Graphic file (type png)
 <use Code/iid_experiment_delta_0_125.png>
 Package pdftex.def Info: Code/iid_experiment_delta_0_125.png  used on input line 57.
 (pdftex.def)             Requested size: 460.72124pt x 115.17671pt.
 
 
-[7 <./Code/iid_experiment_delta_0_25.png>]
-<Code/iid_experiment_delta_0_0625.png, id=172, 1445.4pt x 361.35pt>
+[9 <./Code/iid_experiment_delta_0_25.png>]
+<Code/iid_experiment_delta_0_0625.png, id=183, 1445.4pt x 361.35pt>
 File: Code/iid_experiment_delta_0_0625.png Graphic file (type png)
 <use Code/iid_experiment_delta_0_0625.png>
 Package pdftex.def Info: Code/iid_experiment_delta_0_0625.png  used on input line 63.
 (pdftex.def)             Requested size: 460.72124pt x 115.17671pt.
 
 
-[8 <./Code/iid_experiment_delta_0_125.png> <./Code/iid_experiment_delta_0_0625.png>]
-<Code/break_experiment_worst_case.png, id=182, 505.89pt x 361.35pt>
+[10 <./Code/iid_experiment_delta_0_125.png> <./Code/iid_experiment_delta_0_0625.png>]
+<Code/break_experiment_worst_case.png, id=193, 505.89pt x 361.35pt>
 File: Code/break_experiment_worst_case.png Graphic file (type png)
 <use Code/break_experiment_worst_case.png>
 Package pdftex.def Info: Code/break_experiment_worst_case.png  used on input line 126.
 (pdftex.def)             Requested size: 460.72124pt x 329.09367pt.
 
 
-[9])
+[11])
 No file "OReL HA5 Davide Marchi".bbl.
 
 
-[10 <./Code/break_experiment_worst_case.png>] (./OReL HA5 Davide Marchi.aux)
+[12 <./Code/break_experiment_worst_case.png>] (./OReL HA5 Davide Marchi.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `"OReL HA5 Davide Marchi".out' has not changed.
-(rerunfilecheck)             Checksum: C4B574CC77B0A049D00E9088C67485F4;2011.
+(rerunfilecheck)             Checksum: 311DBF815759915E1142260585C43ADA;1983.
  ) 
 Here is how much of TeX's memory you used:
- 13254 strings out of 473201
- 201746 string characters out of 5720300
- 1204166 words of memory out of 5000000
- 36214 multiletter control sequences out of 15000+600000
+ 13262 strings out of 473201
+ 201813 string characters out of 5720300
+ 1229166 words of memory out of 5000000
+ 36217 multiletter control sequences out of 15000+600000
  569578 words of font info for 78 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 79i,6n,93p,881b,1993s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on "OReL HA5 Davide Marchi.pdf" (10 pages, 601332 bytes).
+ 79i,6n,93p,885b,1993s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on "OReL HA5 Davide Marchi.pdf" (12 pages, 637196 bytes).
 PDF statistics:
- 305 PDF objects out of 1000 (max. 8388607)
- 250 compressed objects within 3 object streams
- 111 named destinations out of 1000 (max. 500000)
+ 328 PDF objects out of 1000 (max. 8388607)
+ 265 compressed objects within 3 object streams
+ 113 named destinations out of 1000 (max. 500000)
  119 words of extra memory for PDF output out of 10000 (max. 10000000)
 

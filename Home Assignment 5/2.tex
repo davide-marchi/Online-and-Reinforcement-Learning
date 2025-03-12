@@ -1,197 +1,140 @@
-\section*{Solution to Exercise 5.7}
+\textbf{1(a). Apply Hoeffding's Lemma in the Hedge Analysis.}
 
-We divide our solution into two main parts, exactly as indicated in the exercise:
+\smallskip
 
-\subsection*{Part 1: A tighter analysis of the Hedge algorithm}
+We consider the Hedge algorithm, where at each round $t=1,\dots,T$:
 
-\noindent
-\textbf{Structure:} We address items (a), (b), and (c) in turn.
-
-\bigskip
-
-\noindent
-\textbf{1(a).~Apply Hoeffding's lemma (Lemma 2.6) in order to get a tighter parametrization and bound.}
-
-\noindent
-\emph{Setup:} Recall that the Hedge algorithm for $K$ experts proceeds in rounds $t=1,\dots,T$, maintaining a loss vector $L_{t-1}(\cdot) = \bigl(L_{t-1}(1),\dots,L_{t-1}(K)\bigr)$ from previous rounds, where
+\begin{itemize}
+\item We have $K$ experts and maintain a cumulative loss $L_{t-1}(a)$ for each expert $a$.
+\item We form a distribution 
 \[
-L_{t-1}(a) \;=\; \sum_{\tau=1}^{t-1}\ell_{\tau,a}.
+p_t(a) \;=\; \frac{\exp\bigl(-\eta\,L_{t-1}(a)\bigr)}{\sum_{a'} \exp\bigl(-\eta\,L_{t-1}(a')\bigr)}.
 \]
-It chooses the expert $A_t$ with probability
-\[
-p_t(a) \;=\;
-\frac{\exp\bigl(-\eta\,L_{t-1}(a)\bigr)}{\sum_{b=1}^K \exp\bigl(-\eta\,L_{t-1}(b)\bigr)}.
-\]
-After seeing all losses $\{\ell_{t,a}\}_{a=1}^K$ at round~$t$, the algorithm updates $L_t(a)=L_{t-1}(a)+\ell_{t,a}$.
+\item We then observe the losses $\{\ell_t(a)\}_{a=1}^K$ (full information), and update $L_t(a) = L_{t-1}(a) + \ell_t(a)$.
+\end{itemize}
 
-We define the potential function
+Define
 \[
 W_t \;=\; \sum_{a=1}^K \exp\bigl(-\eta\,L_t(a)\bigr).
 \]
-Observe that
-\[
-\frac{W_t}{W_{t-1}}
-\;=\;\frac{\sum_{a=1}^K \exp\bigl(-\eta\,L_{t-1}(a)\bigr)\exp\bigl(-\eta\,\ell_{t,a}\bigr)}
-{\sum_{b=1}^K \exp\bigl(-\eta\,L_{t-1}(b)\bigr)}
-\;=\;\sum_{a=1}^K p_t(a)\,\exp\bigl(-\eta\,\ell_{t,a}\bigr).
-\]
-We want to apply \emph{Hoeffding's lemma} to the exponential $\exp(-\eta\,\ell_{t,a})$ in order to tighten the standard analysis. 
+Initially, $W_0 = K$ because $L_0(a) = 0$ for all $a$. 
 
-\paragraph{Application of Hoeffding's lemma.}
-Since each loss $\ell_{t,a}\in [0,1]$, we use the elementary bound (which can be viewed as a direct consequence of Hoeffding's lemma for $x\in[0,1]$ and $\lambda=-\eta<0$):
+To bound the regret, we look at 
 \[
-e^{-\eta\,\ell_{t,a}} \;\le\; 1 - \eta\,\ell_{t,a} \;+\;\frac{\eta^2\,\ell_{t,a}^2}{2}.
-\]
-Hence,
-\[
-\frac{W_t}{W_{t-1}}
-\;=\;\sum_{a=1}^K p_t(a)\,e^{-\eta\,\ell_{t,a}}
-\;\le\;
-\sum_{a=1}^K p_t(a)\Bigl(1 - \eta\,\ell_{t,a} + \tfrac{\eta^2\,\ell_{t,a}^2}{2}\Bigr)
+\sum_{a} p_t(a)\, e^{-\eta\,\ell_t(a)}
 \;=\;
-1 \;-\;\eta\sum_{a=1}^K p_t(a)\,\ell_{t,a}
-\;+\;\frac{\eta^2}{2}\sum_{a=1}^K p_t(a)\,\ell_{t,a}^2.
+\mathbb{E}_{A \sim p_t}\Bigl[e^{-\eta\,\ell_t(A)}\Bigr].
 \]
-Taking logarithms and using $\ln(1 - x)\le -\,x$ for $x<1$, we get
+Here, $\ell_t(A)\in[0,1]$ (assuming losses are bounded in $[0,1]$). We apply Hoeffding's Lemma with $\alpha = -\eta < 0$. Then:
 \[
-\ln\!\Bigl(\frac{W_t}{W_{t-1}}\Bigr)
+\ln\Bigl(\mathbb{E}\bigl[e^{-\eta\,\ell_t(A)}\bigr]\Bigr)
 \;\le\;
--\eta\sum_{a=1}^K p_t(a)\,\ell_{t,a}
-\;+\;\frac{\eta^2}{2}\sum_{a=1}^K p_t(a)\,\ell_{t,a}^2.
+-\,\eta\;\mathbb{E}\bigl[\ell_t(A)\bigr]
+\;+\;
+\tfrac{\eta^2}{8}.
 \]
-Summing from $t=1$ to $T$ yields
+Since $\mathbb{E}[\ell_t(A)] = \sum_{a} p_t(a)\,\ell_t(a)$, we get
 \[
-\ln\!\Bigl(\frac{W_T}{W_0}\Bigr)
+\ln\!\Bigl(\sum_{a} p_t(a)\, e^{-\eta\,\ell_t(a)}\Bigr)
 \;\le\;
--\eta\sum_{t=1}^T \sum_{a=1}^K p_t(a)\,\ell_{t,a}
-\;+\;\frac{\eta^2}{2}\sum_{t=1}^T \sum_{a=1}^K p_t(a)\,\ell_{t,a}^2.
+-\,\eta\,\sum_{a} p_t(a)\,\ell_t(a) \;+\; \frac{\eta^2}{8}.
 \]
-Note that $W_0 = \sum_{a=1}^K \exp\bigl(-\eta\,L_0(a)\bigr) = K$, since $L_0(a)=0$ for all $a$.  Also, for any fixed $a^*\in\{1,\dots,K\}$,
-\[
-W_T
-\;=\;\sum_{a=1}^K e^{-\eta\,L_T(a)}
-\;\ge\;
-e^{-\eta\,L_T(a^*)}.
-\]
-Hence,
-\[
--\eta\,L_T(a^*)
-\;\le\;
-\ln\!\bigl(W_T\bigr)
-\;\le\;
-\ln(K)
-\;-\;\eta\sum_{t=1}^T \sum_{a=1}^K p_t(a)\,\ell_{t,a}
-\;+\;\frac{\eta^2}{2}\sum_{t=1}^T \sum_{a=1}^K p_t(a)\,\ell_{t,a}^2.
-\]
-Rearrange and divide by $\eta$:
-\[
-\sum_{t=1}^T\sum_{a=1}^K p_t(a)\,\ell_{t,a}
-\;-\;L_T(a^*)
-\;\le\;
-\frac{\ln(K)}{\eta}
-\;+\;\frac{\eta}{2}\sum_{t=1}^T \sum_{a=1}^K p_t(a)\,\ell_{t,a}^2.
-\]
-Thus, we have derived a tighter parameterization (the extra term is $\frac{\eta}{2}\sum p_t(a)\,\ell_{t,a}^2$ instead of $\frac{\eta\,T}{2}$ in the naive version).  This completes item (a).
 
 \bigskip
 
 \noindent
-\textbf{1(b).~Find the value of $\eta$ that minimizes the upper bound and write the final bound on $E[R_T]$.}
+\textbf{1(b). Find the $\eta$ that Minimizes the New Bound.}
 
-\noindent
-First, we interpret the left-hand side as the \emph{expected loss of Hedge minus the best expert's total loss}:
+\smallskip
+
+Summing the above inequality over $t=1,\dots,T$ yields:
 \[
-\sum_{t=1}^T \sum_{a=1}^K p_t(a)\,\ell_{t,a}
-\;-\;\min_{a} L_T(a).
+\sum_{t=1}^T
+\ln\Bigl(\sum_{a} p_t(a)\, e^{-\eta\,\ell_t(a)}\Bigr)
+\;\le\;
+-\,\eta \sum_{t=1}^T \sum_{a} p_t(a)\,\ell_t(a)
+\;+\;
+\frac{\eta^2\,T}{8}.
 \]
-When we take the algorithm's randomization into account, the regret $R_T$ is
+On the other hand, from the definition of $W_T$ we have
 \[
-R_T
+\frac{W_T}{W_0}
 \;=\;
-\sum_{t=1}^T \ell_{t,A_t}
-\;-\;\min_{a} L_T(a),
+\prod_{t=1}^T \sum_{a} p_t(a)\, e^{-\eta\,\ell_t(a)}
+\;\ge\;
+\frac{1}{K}\,\exp\!\Bigl(-\,\eta\;\min_{a} L_T(a)\Bigr).
 \]
-and by linearity of expectation,
+Taking the logarithm and rearranging gives:
 \[
-\mathbb{E}[R_T]
-\;=\;
-\mathbb{E}\Bigl[\sum_{t=1}^T \ell_{t,A_t}\Bigr]
-\;-\;\min_{a} L_T(a)
-\;=\;
-\sum_{t=1}^T \sum_{a=1}^K p_t(a)\,\ell_{t,a}
-\;-\;\min_{a} L_T(a).
+-\,\frac{1}{\eta}\;
+\sum_{t=1}^T
+\ln\Bigl(\sum_{a} p_t(a)\, e^{-\eta\,\ell_t(a)}\Bigr)
+\;\ge\;
+\min_{a} L_T(a)
+\;-\;
+\frac{\ln(K)}{\eta}.
 \]
-Hence the above inequality implies
+Combine this with the previous sum to bound the \emph{regret}:
 \[
-\mathbb{E}[R_T]
+\sum_{t=1}^T \sum_{a} p_t(a)\,\ell_t(a) \;-\; \min_{a} L_T(a)
+\;\le\;
+\frac{\ln(K)}{\eta} \;+\; \frac{\eta\,T}{8}.
+\]
+Denote the regret by $R_T$. We see
+\[
+R_T 
 \;\le\;
 \frac{\ln(K)}{\eta}
-\;+\;\frac{\eta}{2}\,\sum_{t=1}^T \sum_{a=1}^K p_t(a)\,\ell_{t,a}^2.
+\;+\;
+\frac{\eta\,T}{8}.
 \]
-Since $\ell_{t,a}\in[0,1]$, it follows that $\ell_{t,a}^2 \le \ell_{t,a}\le 1$, so 
+To minimize the right-hand side, we set
 \[
-\sum_{t=1}^T \sum_{a=1}^K p_t(a)\,\ell_{t,a}^2
-\;\le\;
-T.
-\]
-Thus
-\[
-\mathbb{E}[R_T]
-\;\le\;
-\frac{\ln(K)}{\eta}
-\;+\;\frac{\eta\,T}{2}.
-\]
-To find the optimal $\eta$ that minimizes $\frac{\ln(K)}{\eta} + \tfrac{\eta\,T}{2}$, we take the derivative in $\eta$ and set to zero:
-\[
--\frac{\ln(K)}{\eta^2}
-\;+\;\frac{T}{2}
+\frac{d}{d\eta}\Bigl(\tfrac{\ln(K)}{\eta} + \tfrac{\eta\,T}{8}\Bigr)
+\;=\;
+-\,\frac{\ln(K)}{\eta^2} + \frac{T}{8}
 \;=\;0
 \quad\Longrightarrow\quad
 \eta
-\;=\;\sqrt{\frac{2\,\ln(K)}{T}}.
+\;=\;
+\sqrt{\frac{8\,\ln(K)}{T}}.
 \]
-Substitute back to get
+
+\bigskip
+
+\noindent
+\textbf{1(c). Final Regret Bound.}
+
+\smallskip
+
+Plugging $\eta = \sqrt{\frac{8\,\ln(K)}{T}}$ back into the bound, we get
 \[
-\mathbb{E}[R_T]
+R_T
 \;\le\;
-\sqrt{2\,T\,\ln(K)}.
+\ln(K)\,\sqrt{\frac{T}{8\,\ln(K)}} \;+\; \sqrt{\frac{8\,\ln(K)}{T}}\,\frac{T}{8}
+\;=\;
+2\,\sqrt{\frac{T\,\ln(K)}{8}}
+\;=\;
+\sqrt{\frac{T\,\ln(K)}{2}}.
 \]
-Often, an even more refined constant emerges if we apply a sharper version of the exponential bound for negative $x$.  The final bound given by the exercise is 
+So the regret of Hedge can be bounded by
 \[
-\mathbb{E}[R_T]
+\boxed{
+R_T 
 \;\le\;
-\sqrt{\frac{1}{2}\,T\,\ln(K)},
+\sqrt{\frac{T\,\ln(K)}{2}}
+\,.
+}
 \]
-which is a factor of $\sqrt{2}$ better than the classic statement.  This matches item~(b).
+This shows a sharper constant than the usual bound $O(\sqrt{T \ln K})$, thanks to applying Hoeffding's Lemma directly.
 
 \bigskip
 
 \noindent
-\textbf{1(c).~At the end, show that you get an improvement by a factor of 2.}
+\textbf{2. Why the Same Approach Cannot Be Used to Tighten the Regret Bound for EXP3.}
 
-\noindent
-Comparing the final result
-\[
-\mathbb{E}[R_T] \;\le\;\sqrt{\tfrac12\,T\,\ln(K)}
-\]
-to the more standard (less careful) analysis
-\[
-\mathbb{E}[R_T] \;\le\;\sqrt{2\,T\,\ln(K)},
-\]
-we see we have indeed improved the leading constant by a factor of 2.  The sharper inequality arises from applying Hoeffding's lemma (rather than a simpler linearization) to $e^{-\eta\,\ell_{t,a}}$.  That completes part~1 of the exercise.
+\smallskip
 
-\bigskip
+In the EXP3 algorithm, which deals with \emph{bandit} feedback, we do \emph{not} get to observe the losses $\ell_t(a)$ of all experts $a$ at each round. Instead, we only see the loss of the action we actually chose. Therefore, to update our weights, we rely on an \emph{unbiased but potentially high-variance estimator} of $\ell_t(a)$ for the unchosen actions. 
 
-\subsection*{Part 2: Why the same approach can tighten the regret for EXP3}
-In the second part of the exercise, we are asked to explain why the same approach can be used to tighten the regret of the EXP3 algorithm.  Recall that EXP3 is the bandit version of Hedge, i.e.\ it also uses exponential weighting, but updates the weights based on an \emph{unbiased estimate} of the losses (since we only observe the loss of the chosen action).  The analysis still relies on bounding 
-\[
-\frac{W_t}{W_{t-1}}
-\;=\;\sum_{a=1}^K p_t(a)\,\exp\!\bigl(-\eta\,\widehat{\ell}_{t,a}\bigr),
-\]
-where $\widehat{\ell}_{t,a}$ is the suitably constructed unbiased estimator of $\ell_{t,a}$.  Exactly as in Hedge, one can use Hoeffding's lemma to bound $e^{-\eta\,\widehat{\ell}_{t,a}}$ by $1 - \eta\,\widehat{\ell}_{t,a} + \frac{\eta^2\,\widehat{\ell}_{t,a}^2}{2}$.  This leads to an analogous improvement in the final regret constants for EXP3, compared to a simpler linear bounding approach.  In short, the entire argument is parallel: the only difference is that we replace $\ell_{t,a}$ by $\widehat{\ell}_{t,a}$ in the analysis, but the exponential step and the potential function $W_t$ are the same.  Hence we get the same improvement factor.
-
-\bigskip
-
-\noindent
-\textbf{End of solution.}
-
+Hoeffding's Lemma in the form we used above requires direct access to the true $\ell_t(a)$ for the expectation inside the exponential. In EXP3, the random variable inside the exponential is replaced by the \emph{estimated} loss, which typically has higher variance and does not stay nicely within $[0,1]$ without additional complications. Consequently, we cannot directly apply the same sub-Gaussian/Hoeffding-type bound to get the improved constant. The partial information setting forces us to handle variance in the importance-weighted estimators, and that prevents us from achieving the same neat constant factor that we get in the full-information Hedge analysis.
