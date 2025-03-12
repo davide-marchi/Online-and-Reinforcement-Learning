@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')  # (optional) ensures we can save figures without showing
 import matplotlib.pyplot as plt
 
 ###############################################################################
@@ -27,7 +29,6 @@ def run_ucb(T, means, version='original', nonstationary=False):
     
     # Pull each arm once (to initialize)
     for a in range(n_arms):
-        # For the 'break' scenario:
         if nonstationary and a == 1 and a >= T/2:
             reward = bernoulli_sample(0.0)
         else:
@@ -55,7 +56,6 @@ def run_ucb(T, means, version='original', nonstationary=False):
         
         chosen_arm = np.argmax(ucb_values)
         
-        # For the 'break' scenario:
         if nonstationary and chosen_arm == 1 and t >= T/2:
             reward = bernoulli_sample(0.0)
         else:
@@ -109,7 +109,6 @@ def run_exp3(T, means, nonstationary=False):
         regrets[t] = cumulative_regret
         
         # Update losses
-        # Observed loss = 1 - reward; use importance weighting
         est_loss = (1 - reward) / max(p[chosen_arm], 1e-12)
         L[chosen_arm] += est_loss
     
@@ -126,7 +125,7 @@ def run_experiments_iid(T=10_000, n_runs=20):
        - UCB1 (original)
        - UCB1 (modified/improved)
        - EXP3
-    We assume one best arm with mean mu^* = 0.6, suboptimal arms = mu^* - Delta.
+    We assume one best arm with mean mu^* = 0.5, suboptimal arms = mu^* - Delta.
     """
     K_values = [2, 4, 8, 16]
     deltas = [1/4, 1/8, 1/16]   # i.e. 0.25, 0.125, 0.0625
@@ -134,10 +133,10 @@ def run_experiments_iid(T=10_000, n_runs=20):
     # We'll create one figure per Delta, each figure containing 4 subplots (one for each K).
     for Delta_idx, Delta in enumerate(deltas):
         fig, axes = plt.subplots(1, len(K_values), figsize=(20,5), sharey=True)
-        fig.suptitle(f"IID Bandits: Delta = {Delta},  (mu* = 0.6,  suboptimal = 0.6 - {Delta})", fontsize=14)
+        fig.suptitle(f"IID Bandits: Delta = {Delta},  (mu* = 0.5,  suboptimal = 0.5 - {Delta})", fontsize=14)
         
         for i, K in enumerate(K_values):
-            mu_star = 0.6
+            mu_star = 0.5
             mu_sub = mu_star - Delta
             # Build the means array: 1 best arm, K-1 suboptimal arms
             means = [mu_star] + [mu_sub]*(K-1)
@@ -197,8 +196,12 @@ def run_experiments_iid(T=10_000, n_runs=20):
                 ax.set_ylabel("Cumulative Pseudo-Regret")
             ax.legend()
         
+        # Save figure with a filename that includes Delta
         plt.tight_layout()
-        plt.show()
+        # Replace '.' with '_' in Delta for a safer filename
+        delta_str = str(Delta).replace('.', '_')
+        plt.savefig(f"iid_experiment_delta_{delta_str}.png")
+        plt.close()  # Close the figure so it doesn't display
 
 ###############################################################################
 # 3) BREAK (ADVERSARIAL) EXPERIMENT
@@ -207,18 +210,18 @@ def run_experiments_iid(T=10_000, n_runs=20):
 def run_experiment_break(T=10_000, n_runs=20):
     """
     Adversarial design to break UCB1:
-      - 2 arms: arm 0 has mean 0.6 (constant),
+      - 2 arms: arm 0 has mean 0.5 (constant),
                 arm 1 has mean 0.9 for t < T/2 and 0.0 for t >= T/2.
     Compare UCB1 vs EXP3. Show average regrets +/- std over n_runs.
     """
-    # We'll keep exactly 2 arms, with initial means [0.6, 0.9].
+    # We keep exactly 2 arms, with initial means [0.5, 0.9].
     # The 'nonstationary=True' flag in run_ucb / run_exp3
     # forces the second arm to become 0.0 after T/2.
     
     all_regrets_ucb = np.zeros((n_runs, T))
     all_regrets_exp3 = np.zeros((n_runs, T))
     
-    means = [0.6, 0.9]
+    means = [0.5, 0.9]
     
     for r in range(n_runs):
         # UCB1
@@ -250,14 +253,15 @@ def run_experiment_break(T=10_000, n_runs=20):
     plt.ylabel("Cumulative Pseudo-Regret")
     plt.legend()
     plt.tight_layout()
-    plt.show()
+    plt.savefig("break_experiment.png")
+    plt.close()  # Close the figure
 
 ###############################################################################
 # 4) MAIN: RUN EVERYTHING
 ###############################################################################
 if __name__ == "__main__":
-    # You can set T=100_000 for the full experiment, but beware it may be slow.
-    # For demonstration, T=10_000 is faster. Adjust as needed.
+    # You can set T=100_000 for the full experiment, but it may be slower.
+    # For demonstration, T=10_000 is typically fast enough. Adjust as needed.
     T = 10_000
     n_runs = 20
     
