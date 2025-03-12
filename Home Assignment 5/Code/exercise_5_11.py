@@ -63,38 +63,49 @@ def run_ucb(T, means, version='original', nonstationary=False):
 
 def run_exp3(T, means, nonstationary=False):
     """
-    EXP3 algorithm for adversarial bandits.
-    A time-varying learning rate eta_t is used.
-    If nonstationary is True, then for arm 1 (index 1) after t >= T/2,
+    EXP3 algorithm using the subtract-min trick to avoid overflow.
+    We maintain a cumulative loss vector L for each arm.
+    
+    For rewards in [0,1] we define the loss as (1 - reward).
+    If nonstationary is True, then for arm 1 after t >= T/2,
     the reward probability is forced to 0.
+    
+    :param T: time horizon
+    :param means: list of reward probabilities for each arm
+    :param nonstationary: if True, uses a nonstationary variant (breaks UCB)
+    :return: cumulative pseudo-regret vector over time
     """
     n_arms = len(means)
-    best_mean = np.max(means)  # for computing regret
+    best_mean = np.max(means)  # best arm's mean (for regret computation)
     regrets = np.zeros(T)
     cumulative_regret = 0.0
-    weights = np.ones(n_arms)
+    L = np.zeros(n_arms)  # cumulative losses for each arm
     
     for t in range(T):
+        # time-varying learning rate; adjust as needed
         eta_t = np.sqrt(np.log(n_arms) / ((t+1) * n_arms))
-        total_weight = np.sum(weights)
-        probs = weights / total_weight if total_weight > 0 else np.ones(n_arms) / n_arms
-        chosen_arm = np.random.choice(n_arms, p=probs)
         
-        # For nonstationary env, force arm 1 to yield 0 after t >= T/2.
+        # Compute probabilities using the subtract-min trick:
+        L_min = np.min(L)
+        w = np.exp(-eta_t * (L - L_min))
+        p = w / np.sum(w)
+        
+        chosen_arm = np.random.choice(n_arms, p=p)
+        
+        # In a nonstationary environment, force arm 1 to yield reward 0 after T/2.
         if nonstationary and chosen_arm == 1 and t >= T/2:
-            p_arm = 0.0
+            reward = bernoulli_sample(0.0)
         else:
-            p_arm = means[chosen_arm]
-        reward = bernoulli_sample(p_arm)
+            reward = bernoulli_sample(means[chosen_arm])
         
         cumulative_regret += (best_mean - reward)
         regrets[t] = cumulative_regret
         
-        # Importance-weighted update; use clip to prevent overflow
-        x_hat = reward / probs[chosen_arm] if probs[chosen_arm] > 0 else 0
-        exp_arg = np.clip(eta_t * x_hat, -50, 50)
-        weights[chosen_arm] *= np.exp(exp_arg)
-    
+        # Estimated loss for the chosen arm: loss = (1 - reward) (since higher reward is better)
+        # Then we use importance weighting:
+        estimated_loss = (1 - reward) / p[chosen_arm] if p[chosen_arm] > 0 else 0
+        L[chosen_arm] += estimated_loss
+
     return regrets
 
 def run_experiment(T=100000, n_runs=20):
@@ -175,7 +186,7 @@ def run_experiment_break(T=100000, n_runs=20):
 
 if __name__ == "__main__":
     # Run the original experiment (i.i.d. case) for UCB only
-    run_experiment(T=100000, n_runs=20)
+    run_experiment(T=10000, n_runs=20)
     
     # Run the break experiment (nonstationary case) comparing UCB and EXP3
-    run_experiment_break(T=100000, n_runs=20)
+    run_experiment_break(T=10000, n_runs=20)
