@@ -65,3 +65,72 @@ To handle partial feedback when arms are chosen uniformly at random (probability
     up to constants that depend on $c$ and problem-specific parameters.
 \end{itemize}
 
+\noindent
+\subsubsection*{(b) Why the Modified UCB1 Cannot Exploit the Small Variance}
+
+In the modified UCB1, each observed loss is multiplied by $K$ (because of the importance-weighting factor $1/p_i(t)$ with $p_i(t) = 1/K$). 
+Even if the original loss distribution has small variance, the algorithm's effective variance is dominated by the extra factor of $K$. 
+UCB1 constructs confidence intervals by considering worst-case deviations of these estimates. 
+Hence, the potential benefit of a small underlying variance cannot be directly exploited; 
+the importance-weighted updates inflate the variance term in the confidence bounds, 
+making the algorithm behave more conservatively (as if the variance were larger).
+
+\bigskip
+\noindent
+\subsubsection*{(c) Modifying EXP3 for Importance-Weighted Losses (Uniform Sampling)}
+
+We consider a logging policy that selects arms uniformly at random, 
+with probability $1/K$ for each arm. 
+We modify the EXP3 algorithm so that, whenever the logging policy selects an arm $A_t$, 
+we form an unbiased estimate of its loss by scaling the observed loss by $K$. 
+The pseudo-code follows closely the standard EXP3 structure but includes an importance-weighted update:
+
+\bigskip
+\noindent
+\textbf{Pseudo-code for Modified EXP3:}
+
+\begin{enumerate}
+    \item \textbf{Initialization:} 
+    \[
+        \text{For each arm } i \in \{1,\dots,K\},\quad w_i(1) = 1.
+    \]
+    \item \textbf{For each round } $t = 1,2,\dots,T$:
+    \begin{enumerate}
+        \item \textbf{(Logging policy)} An arm $A_t$ is chosen \emph{uniformly at random} with probability $\frac{1}{K}$.
+        \item \textbf{(Observe loss)} Observe the loss $\ell_{A_t,t}$ of the chosen arm.
+        \item \textbf{(Form importance-weighted loss)} For each arm $i$, define
+        \[
+            \tilde{\ell}_{i,t} \;=\;
+            \begin{cases}
+            K \,\ell_{A_t,t} & \text{if } i = A_t, \\
+            0 & \text{otherwise}.
+            \end{cases}
+        \]
+        \item \textbf{(Update weights)} For each arm $i$,
+        \[
+            w_i(t+1) \;=\; w_i(t) \;\exp\bigl(-\eta\,\tilde{\ell}_{i,t}\bigr),
+        \]
+        where $\eta > 0$ is a learning rate to be chosen.
+    \end{enumerate}
+\end{enumerate}
+
+\bigskip
+\noindent
+\textbf{Expected Regret Bound (Sketch):} 
+
+Let $L_i$ be the true cumulative loss of arm $i$ over $T$ rounds, and let $L^* = \min_i L_i$ be the cumulative loss of the best arm in hindsight. 
+Using standard EXP3 analysis (with partial feedback), one can show that the expected regret, 
+\[
+    \mathbb{E}\bigl[\sum_{t=1}^T \ell_{A_t,t}\bigr] - L^*,
+\]
+is bounded by 
+\[
+    O\Bigl(\sqrt{K\,T \ln K}\Bigr),
+\]
+up to constant factors and the choice of $\eta$. 
+Since the logging policy is uniform, the factor $K$ appears in the importance-weighted updates, 
+but it is constant and known, which simplifies the analysis. 
+With a more refined argument that accounts for small-variance assumptions (e.g., exploiting tighter concentration bounds for low-variance losses), 
+it is possible to improve these guarantees further. 
+In essence, if the true variance of the losses is small, one can tighten the deviation bounds on $\tilde{\ell}_{i,t}$, 
+leading to smaller confidence terms and an improved regret rate.
