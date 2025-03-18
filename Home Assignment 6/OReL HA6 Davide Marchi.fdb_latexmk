@@ -1,18 +1,18 @@
 # Fdb version 4
-["bibtex OReL HA6 Davide Marchi"] 0 "OReL HA6 Davide Marchi.aux" "OReL HA6 Davide Marchi.bbl" "OReL HA6 Davide Marchi" 0 0
+["bibtex OReL HA6 Davide Marchi"] 0 "OReL HA6 Davide Marchi.aux" "OReL HA6 Davide Marchi.bbl" "OReL HA6 Davide Marchi" 1742312248.85998 0
   "OReL HA6 Davide Marchi.aux" 0 -1 0 "pdflatex"
   "bibliography.bib" 0 -1 0 ""
   (generated)
   "OReL HA6 Davide Marchi.bbl"
   "OReL HA6 Davide Marchi.blg"
   (rewritten before read)
-["pdflatex"] 1742309748.82367 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 6/OReL HA6 Davide Marchi.tex" "OReL HA6 Davide Marchi.pdf" "OReL HA6 Davide Marchi" 1742309750.55138 0
-  "1.tex" 1742309746 6955 6ca074970e8e9d5966e9eb962b057fd7 ""
-  "OReL HA6 Davide Marchi.aux" 1742309749 528 d1bc58ae14e4fe34d1f3811d1bca865e "pdflatex"
+["pdflatex"] 1742312247.02418 "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 6/OReL HA6 Davide Marchi.tex" "OReL HA6 Davide Marchi.pdf" "OReL HA6 Davide Marchi" 1742312248.86108 0
+  "1.tex" 1742312244 6852 d028950c00cb83c8c983aafdd579d837 ""
+  "OReL HA6 Davide Marchi.aux" 1742312248 907 13e08a319db34571bf62576cf4b294b9 "pdflatex"
   "OReL HA6 Davide Marchi.bbl" 0 -1 0 "bibtex OReL HA6 Davide Marchi"
-  "OReL HA6 Davide Marchi.out" 1742309749 308 60e9370f977a259cdf2706ae2a11087d "pdflatex"
+  "OReL HA6 Davide Marchi.out" 1742312248 874 946182edfdaec580bd06deb7e25a0616 "pdflatex"
   "OReL HA6 Davide Marchi.tex" 1742309697 1815 d7c5a96959db779e2fcafe0b049906d9 ""
-  "OReL HA6 Davide Marchi.toc" 1742309749 154 fa1823b052a431130862623f05d71c82 "pdflatex"
+  "OReL HA6 Davide Marchi.toc" 1742312248 425 5b41459b0033bc20c39daaae67c304bd "pdflatex"
   "c:/Users/david/Documents/University/Laurea Magistrale/Secondo anno/Online and Reinforcement Learning/Online-and-Reinforcement-Learning/Home Assignment 6/OReL HA6 Davide Marchi.tex" 1742309697 1815 d7c5a96959db779e2fcafe0b049906d9 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1739027330 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1739028126 3524 cb3e574dea2d1052e39280babc910dc8 ""

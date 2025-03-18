@@ -1,7 +1,4 @@
-
-\section*{Exercise 1: PPO (33 points) [Christian]}
-
-\subsection*{1.1 Return expressed as advantage over another policy (7 points)}
+\subsection{Return expressed as advantage over another policy}
 
 We wish to prove that the expected return of a policy $\pi$ can be written as
 \begin{equation}
@@ -46,7 +43,7 @@ Since by definition $J(\pi_{\text{ref}})=\mathbb{E}_{s_0\sim p_0}\left[V^{\pi_{\
 
 \vspace{2mm}
 
-\subsection*{1.2 Clipping (13 points)}
+\subsection{Clipping }
 
 In PPO the surrogate objective for a given state-action pair is defined as
 \[
@@ -109,7 +106,7 @@ Thus, when $\hat{A}^{\pi_{\text{ref}}}(s,a)$ has the sign that makes this deriva
 
 \vspace{2mm}
 
-\subsection*{1.3 $\pi'$ in PPO (13 points)}
+\subsection{Pi prime in PPO}
 
 In the \emph{Gather experience} phase, the policy that generates the data is $\pi$ with parameters $\theta'$ (denoted as the behavior policy), and the probability of taking action $a_t^e$ in state $s_t^e$ is stored as 
 \[
