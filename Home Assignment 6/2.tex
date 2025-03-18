@@ -134,3 +134,19 @@ With a more refined argument that accounts for small-variance assumptions (e.g.,
 it is possible to improve these guarantees further. 
 In essence, if the true variance of the losses is small, one can tighten the deviation bounds on $\tilde{\ell}_{i,t}$, 
 leading to smaller confidence terms and an improved regret rate.
+
+\noindent
+\subsubsection*{(d) Anytime Modification of EXP3}
+
+\smallskip
+For the anytime version of EXP3 (one that does not assume knowledge of a fixed horizon $T$), 
+we replace the constant learning rate with one that depends on the current round $t$. 
+A common choice is:
+\[
+    \eta_t \;=\; \sqrt{\frac{2\,\ln K}{K\,t}}.
+\]
+With this time-varying learning rate, the expected regret bound remains of the same order as the fixed-horizon version, namely
+\[
+    O\Bigl(\sqrt{K\,T\,\ln K}\Bigr),
+\]
+but with a slightly larger constant factor than if $T$ were known in advance.
