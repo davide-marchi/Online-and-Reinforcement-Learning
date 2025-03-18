@@ -9,3 +9,59 @@ While the most direct approach is to implement an algorithm and measure its perf
     \item \textbf{Difficulty of controlled experimentation.} Once data is collected based on a particular algorithm's actions, it is nearly impossible to ``replay'' the same conditions to test different algorithms under identical circumstances. This lack of controlled repetition makes fair comparisons difficult.
 \end{itemize}
 
+\subsection{Part 2}
+
+\noindent
+\subsubsection*{(a) Modification of UCB1 for Importance-Weighted Losses (Uniform Sampling).}
+
+\medskip
+To handle partial feedback when arms are chosen uniformly at random (probability $1/K$ for each arm), we replace the usual empirical loss estimates in UCB1 with importance-weighted estimates. Concretely, whenever an arm $i$ is chosen, its observed loss is scaled by the factor $\tfrac{1}{p_i(t)} = K$, ensuring an unbiased estimator. The main changes from standard UCB1 are thus:
+\begin{itemize}
+    \item \textbf{Empirical Loss Update:} Instead of adding the raw observed loss $\ell_{i,t}$, we add $K \cdot \ell_{i,t}$ to the running total for arm $i$. 
+    \item \textbf{Confidence Bounds:} The increased variance (due to multiplying by $K$) is accounted for in the confidence term, typically by a constant factor in front of the usual $\sqrt{\frac{\ln t}{N_i(t)}}$ bound. 
+\end{itemize}
+
+\medskip
+\textbf{Pseudo-Code of the Modified Algorithm:}
+
+\bigskip
+\noindent
+\textbf{Initialize:} For each arm $i \in \{1,\dots,K\}$,
+\[
+    \widehat{L}_i(0) = 0,\quad N_i(0) = 0.
+\]
+
+\medskip
+\noindent
+\textbf{For} $t = 1$ \textbf{to} $T$:
+\begin{enumerate}
+    \item Select arm 
+    \[
+        A_t \;=\; \arg\min_{i \in \{1,\dots,K\}} \Bigl(\widehat{L}_i(t-1) \;+\; c \,\sqrt{\tfrac{\ln(t-1)}{N_i(t-1)}}\Bigr),
+    \]
+    where $c$ is a positive constant (improved parameter choice).
+    \item Observe the loss $\ell_{A_t,t}$ for the chosen arm $A_t$.
+    \item Update counts:
+    \[
+        N_{A_t}(t) \;=\; N_{A_t}(t-1) + 1,\quad N_j(t) = N_j(t-1)\;\;\text{for } j \neq A_t.
+    \]
+    \item Update the empirical loss estimate of arm $A_t$ via importance weighting:
+    \[
+        \widehat{L}_{A_t}(t) \;=\; \frac{N_{A_t}(t-1)\,\widehat{L}_{A_t}(t-1)\;+\;K \,\ell_{A_t,t}}{N_{A_t}(t)},
+    \]
+    and keep $\widehat{L}_j(t) = \widehat{L}_j(t-1)$ for $j \neq A_t$.
+\end{enumerate}
+
+\bigskip
+\noindent
+\textbf{Key Changes and Regret Bound:} 
+\begin{itemize}
+    \item The use of $K \cdot \ell_{A_t,t}$ ensures an unbiased estimate of the true mean loss for arm $A_t$ under uniform sampling ($p_i(t) = 1/K$).
+    \item Accounting for the variance increase (due to multiplication by $K$) requires adjusting the confidence term by an appropriate constant factor $c$. 
+    \item The pseudo-regret analysis follows similarly to the standard UCB1 derivation, with an additional factor from the importance weighting. The resulting pseudo-regret remains on the order of 
+    \[
+        O\bigl(\sqrt{K\,T \ln T}\bigr),
+    \]
+    up to constants that depend on $c$ and problem-specific parameters.
+\end{itemize}
+
