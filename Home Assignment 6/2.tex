@@ -1,152 +1,259 @@
-\subsection{Part 1}
+\section{Part 1}
 
 Evaluating algorithms for online learning with limited feedback in real-life scenarios is challenging. 
 While the most direct approach is to implement an algorithm and measure its performance live, this is often not feasible due to:
-
 \begin{itemize}
     \item \textbf{Potential risks, costs, and time delays.} Deploying a potentially suboptimal algorithm can lead to high financial or reputational costs. Moreover, once the algorithm is running, it takes time to collect sufficient data for analysis, which delays insights and can be inefficient if the algorithm underperforms.
-
     \item \textbf{Difficulty of controlled experimentation.} Once data is collected based on a particular algorithm's actions, it is nearly impossible to ``replay'' the same conditions to test different algorithms under identical circumstances. This lack of controlled repetition makes fair comparisons difficult.
 \end{itemize}
 
-\subsection{Part 2}
+\section{Part 2}
 
-\noindent
-\subsubsection*{(a) Modification of UCB1 for Importance-Weighted Losses (Uniform Sampling).}
+\subsection*{(a) Modification of UCB1 for Importance-Weighted Losses (Uniform Sampling)}
 
-\medskip
-To handle partial feedback when arms are chosen uniformly at random (probability $1/K$ for each arm), we replace the usual empirical loss estimates in UCB1 with importance-weighted estimates. Concretely, whenever an arm $i$ is chosen, its observed loss is scaled by the factor $\tfrac{1}{p_i(t)} = K$, ensuring an unbiased estimator. The main changes from standard UCB1 are thus:
+To handle partial feedback when arms are chosen uniformly at random (with probability \(1/K\) for each arm), we replace the usual empirical loss estimates in UCB1 with importance-weighted estimates. Concretely, whenever an arm \(i\) is chosen, its observed loss is scaled by the factor \(\frac{1}{p_i(t)} = K\), ensuring an unbiased estimator. The main changes from standard UCB1 are thus:
 \begin{itemize}
-    \item \textbf{Empirical Loss Update:} Instead of adding the raw observed loss $\ell_{i,t}$, we add $K \cdot \ell_{i,t}$ to the running total for arm $i$. 
-    \item \textbf{Confidence Bounds:} The increased variance (due to multiplying by $K$) is accounted for in the confidence term, typically by a constant factor in front of the usual $\sqrt{\frac{\ln t}{N_i(t)}}$ bound. 
+    \item \textbf{Empirical Loss Update:} Instead of adding the raw observed loss \(\ell_{i,t}\), we add \(K\cdot \ell_{i,t}\) to the running total for arm \(i\). 
+    \item \textbf{Confidence Bounds:} The increased variance (due to multiplying by \(K\)) is accounted for in the confidence term, typically by a constant factor in front of the usual \(\sqrt{\frac{\ln t}{N_i(t)}}\) bound.
 \end{itemize}
 
 \medskip
+\noindent
 \textbf{Pseudo-Code of the Modified Algorithm:}
-
-\bigskip
-\noindent
-\textbf{Initialize:} For each arm $i \in \{1,\dots,K\}$,
-\[
-    \widehat{L}_i(0) = 0,\quad N_i(0) = 0.
-\]
-
 \medskip
+
+\noindent \textbf{Initialize:} For each arm \(i \in \{1,\dots,K\}\),
+\[
+    \widehat{L}_i(0) = 0,\quad N_i(0)=0.
+\]
 \noindent
-\textbf{For} $t = 1$ \textbf{to} $T$:
+\textbf{For} \(t=1\) \textbf{to} \(T\):
 \begin{enumerate}
     \item Select arm 
     \[
-        A_t \;=\; \arg\min_{i \in \{1,\dots,K\}} \Bigl(\widehat{L}_i(t-1) \;+\; c \,\sqrt{\tfrac{\ln(t-1)}{N_i(t-1)}}\Bigr),
+      A_t = \arg\min_{i\in\{1,\dots,K\}} \left(\widehat{L}_i(t-1) + c\,\sqrt{\frac{\ln(t-1)}{N_i(t-1)}}\right),
     \]
-    where $c$ is a positive constant (improved parameter choice).
-    \item Observe the loss $\ell_{A_t,t}$ for the chosen arm $A_t$.
+    where \(c>0\) is a constant.
+    \item Observe the loss \(\ell_{A_t,t}\) for the chosen arm.
     \item Update counts:
     \[
-        N_{A_t}(t) \;=\; N_{A_t}(t-1) + 1,\quad N_j(t) = N_j(t-1)\;\;\text{for } j \neq A_t.
+      N_{A_t}(t)=N_{A_t}(t-1)+1,\quad N_j(t)=N_j(t-1) \quad\text{for } j\neq A_t.
     \]
-    \item Update the empirical loss estimate of arm $A_t$ via importance weighting:
+    \item Update the empirical loss estimate for arm \(A_t\) via importance weighting:
     \[
-        \widehat{L}_{A_t}(t) \;=\; \frac{N_{A_t}(t-1)\,\widehat{L}_{A_t}(t-1)\;+\;K \,\ell_{A_t,t}}{N_{A_t}(t)},
+      \widehat{L}_{A_t}(t)=\frac{N_{A_t}(t-1)\,\widehat{L}_{A_t}(t-1)+K\,\ell_{A_t,t}}{N_{A_t}(t)},
     \]
-    and keep $\widehat{L}_j(t) = \widehat{L}_j(t-1)$ for $j \neq A_t$.
+    and set \(\widehat{L}_j(t)=\widehat{L}_j(t-1)\) for \(j\neq A_t\).
 \end{enumerate}
 
+\medskip
+\noindent
+\textbf{Detailed Regret Analysis.}
+
+\medskip
+\noindent
+\textbf{Setup:}  
+Assume \(K\) arms with losses \(\ell_{i,t}\in[0,1]\) and true mean \(\mu_i\) for arm \(i\).  
+Under uniform sampling, when an arm is chosen its loss is scaled by \(K\), so the empirical mean for arm \(i\) after \(n\) pulls is:
+\[
+  \widehat{\mu}_i(n)=\frac{1}{n}\sum_{s=1}^{n} K\,\ell_{i,t_s}.
+\]
+Let \(\mu^*=\min_i \mu_i\) and define the pseudo-regret as:
+\[
+  R_T=\sum_{t=1}^T \mathbb{E}[\ell_{A_t,t}] - T\,\mu^*.
+\]
+
+\medskip
+\noindent
+\textbf{Concentration Bound:}  
+Since each observed loss is in \([0,K]\), a concentration inequality (e.g., Hoeffding's) implies that with high probability,
+\[
+  |\widehat{\mu}_i(n)-\mu_i|\le \sqrt{\frac{\alpha K^2\ln T}{n}},
+\]
+for some constant \(\alpha>0\).
+
+\medskip
+\noindent
+\textbf{UCB1 Index:}  
+Define the index for arm \(i\) at round \(t\) as:
+\[
+  I_i(t)=\widehat{\mu}_i(N_i(t)) + c\,\sqrt{\frac{\ln t}{N_i(t)}},
+\]
+where \(c\) is chosen to cover the \(K\)-dependent variance.  
+Standard analysis shows that the number of suboptimal pulls for any arm \(i\) (with gap \(\Delta_i=\mu_i-\mu^*\)) is bounded by
+\[
+  N_i(T)\le \frac{C\,\ln T}{\Delta_i^2},
+\]
+with \(C\) including factors from the importance weighting.  
+Thus, the regret is bounded by
+\[
+  R_T \le \sum_{i\neq i^*}\Delta_i\,N_i(T) = O\!\Bigl(\sqrt{K\,T\,\ln T}\Bigr)
+\]
+in the adversarial or worst-case scenario.
+
+\medskip
+\noindent
+\textbf{Conclusion (a):}  
+The modified UCB1, with importance-weighted updates, yields a pseudo-regret of order 
+\[
+  O\!\Bigl(\sqrt{K\,T\,\ln T}\Bigr),
+\]
+up to constants depending on \(c\) and the loss distribution.
+
 \bigskip
-\noindent
-\textbf{Key Changes and Regret Bound:} 
-\begin{itemize}
-    \item The use of $K \cdot \ell_{A_t,t}$ ensures an unbiased estimate of the true mean loss for arm $A_t$ under uniform sampling ($p_i(t) = 1/K$).
-    \item Accounting for the variance increase (due to multiplication by $K$) requires adjusting the confidence term by an appropriate constant factor $c$. 
-    \item The pseudo-regret analysis follows similarly to the standard UCB1 derivation, with an additional factor from the importance weighting. The resulting pseudo-regret remains on the order of 
-    \[
-        O\bigl(\sqrt{K\,T \ln T}\bigr),
-    \]
-    up to constants that depend on $c$ and problem-specific parameters.
-\end{itemize}
+\subsection*{(b) Why the Modified UCB1 Cannot Exploit the Small Variance}
 
-\noindent
-\subsubsection*{(b) Why the Modified UCB1 Cannot Exploit the Small Variance}
-
-In the modified UCB1, each observed loss is multiplied by $K$ (because of the importance-weighting factor $1/p_i(t)$ with $p_i(t) = 1/K$). 
-Even if the original loss distribution has small variance, the algorithm's effective variance is dominated by the extra factor of $K$. 
-UCB1 constructs confidence intervals by considering worst-case deviations of these estimates. 
-Hence, the potential benefit of a small underlying variance cannot be directly exploited; 
-the importance-weighted updates inflate the variance term in the confidence bounds, 
-making the algorithm behave more conservatively (as if the variance were larger).
+In the modified UCB1, each observed loss is multiplied by \(K\) (since \(p_i(t)=1/K\)).  
+Even if the original loss distribution has small variance, the effective variance is inflated by the factor \(K\).  
+Since the algorithm builds confidence intervals based on worst-case deviations, the benefit of a small underlying variance is lost.  
+In other words, the importance-weighted update makes the algorithm behave conservatively—as if the variance were higher—thus preventing exploitation of any small-variance structure.
 
 \bigskip
+\subsection*{(c) Modifying EXP3 for Importance-Weighted Losses (Uniform Sampling)}
+
+We consider a logging policy that selects arms uniformly at random (with probability \(1/K\) each).  
+The EXP3 algorithm is modified so that when arm \(A_t\) is selected and its loss \(\ell_{A_t,t}\) is observed, an unbiased estimator for the loss of each arm is formed by
+\[
+   \tilde{\ell}_{i,t}=
+   \begin{cases}
+     K\,\ell_{A_t,t} & \text{if } i=A_t,\\[1mm]
+     0 & \text{otherwise.}
+   \end{cases}
+\]
+Then, the exponential weights update is applied:
+\[
+   w_i(t+1)=w_i(t)\,\exp\bigl(-\eta\,\tilde{\ell}_{i,t}\bigr),
+\]
+with initial weights \(w_i(1)=1\) for all \(i\).
+
+\medskip
 \noindent
-\subsubsection*{(c) Modifying EXP3 for Importance-Weighted Losses (Uniform Sampling)}
-
-We consider a logging policy that selects arms uniformly at random, 
-with probability $1/K$ for each arm. 
-We modify the EXP3 algorithm so that, whenever the logging policy selects an arm $A_t$, 
-we form an unbiased estimate of its loss by scaling the observed loss by $K$. 
-The pseudo-code follows closely the standard EXP3 structure but includes an importance-weighted update:
-
-\bigskip
-\noindent
-\textbf{Pseudo-code for Modified EXP3:}
-
+\textbf{Pseudo-Code for Modified EXP3:}
 \begin{enumerate}
-    \item \textbf{Initialization:} 
-    \[
-        \text{For each arm } i \in \{1,\dots,K\},\quad w_i(1) = 1.
-    \]
-    \item \textbf{For each round } $t = 1,2,\dots,T$:
+    \item \textbf{Initialization:} Set \(w_i(1)=1\) for each \(i\in\{1,\dots,K\}\).
+    \item \textbf{For each round} \(t=1,2,\dots,T\):
     \begin{enumerate}
-        \item \textbf{(Logging policy)} An arm $A_t$ is chosen \emph{uniformly at random} with probability $\frac{1}{K}$.
-        \item \textbf{(Observe loss)} Observe the loss $\ell_{A_t,t}$ of the chosen arm.
-        \item \textbf{(Form importance-weighted loss)} For each arm $i$, define
-        \[
-            \tilde{\ell}_{i,t} \;=\;
-            \begin{cases}
-            K \,\ell_{A_t,t} & \text{if } i = A_t, \\
-            0 & \text{otherwise}.
-            \end{cases}
-        \]
-        \item \textbf{(Update weights)} For each arm $i$,
-        \[
-            w_i(t+1) \;=\; w_i(t) \;\exp\bigl(-\eta\,\tilde{\ell}_{i,t}\bigr),
-        \]
-        where $\eta > 0$ is a learning rate to be chosen.
+       \item \textbf{(Logging policy)} An arm \(A_t\) is chosen uniformly at random (i.e., with probability \(1/K\)).
+       \item \textbf{(Observe loss)} Observe the loss \(\ell_{A_t,t}\) for the chosen arm.
+       \item \textbf{(Form importance-weighted loss)} For each arm \(i\), define
+       \[
+         \tilde{\ell}_{i,t}=
+         \begin{cases}
+           K\,\ell_{A_t,t} & \text{if } i=A_t,\\[1mm]
+           0 & \text{otherwise.}
+         \end{cases}
+       \]
+       \item \textbf{(Update weights)} Update
+       \[
+         w_i(t+1)=w_i(t)\,\exp\bigl(-\eta\,\tilde{\ell}_{i,t}\bigr),
+       \]
+       where \(\eta>0\) is the learning rate.
     \end{enumerate}
 \end{enumerate}
 
+\medskip
+\noindent
+\textbf{Detailed Regret Analysis.}
+
+\medskip
+\noindent
+\textbf{Setup:}  
+Let \(L_i=\sum_{t=1}^T \ell_{i,t}\) be the cumulative loss of arm \(i\) and \(L^*=\min_i L_i\) be the loss of the best arm.  
+The (pseudo-)regret is:
+\[
+   R_T=\sum_{t=1}^T \ell_{A_t,t} - L^*.
+\]
+We aim to show that \(\mathbb{E}[R_T]=O\!\Bigl(\sqrt{K\,T\,\ln K}\Bigr)\).
+
+\medskip
+\noindent
+\textbf{Step 1: Master Inequality.}  
+Define the potential \(\Phi_t=\ln W(t)\) where \(W(t)=\sum_{i=1}^K w_i(t)\).  
+By the exponential weights update and a standard inequality we have:
+\[
+   \Phi_{t+1}-\Phi_t\le -\eta\sum_{i=1}^K p_t(i)\,\tilde{\ell}_{i,t} + \frac{\eta^2}{2}\sum_{i=1}^K p_t(i)\,\tilde{\ell}_{i,t}^2,
+\]
+with \(p_t(i)=\frac{w_i(t)}{W(t)}\). Summing over \(t=1\) to \(T\),
+\[
+   \Phi_{T+1}-\Phi_1\le -\eta\sum_{t=1}^T\sum_{i=1}^K p_t(i)\,\tilde{\ell}_{i,t} + \frac{\eta^2}{2}\sum_{t=1}^T\sum_{i=1}^K p_t(i)\,\tilde{\ell}_{i,t}^2.
+\]
+Since \(W(1)=K\) (so \(\Phi_1=\ln K\)), we next lower-bound \(\Phi_{T+1}\).
+
+\medskip
+\noindent
+\textbf{Step 2: Lower Bound on \(\Phi_{T+1}\).}  
+For any fixed arm \(i\),
+\[
+   w_i(T+1)=\exp\Bigl(-\eta\sum_{t=1}^T\tilde{\ell}_{i,t}\Bigr).
+\]
+Thus,
+\[
+   W(T+1)\ge w_{i^*}(T+1)=\exp\Bigl(-\eta\sum_{t=1}^T\tilde{\ell}_{i^*,t}\Bigr),
+\]
+where \(i^*\) is the best arm. Taking logs,
+\[
+   \Phi_{T+1}\ge -\eta\sum_{t=1}^T\tilde{\ell}_{i^*,t}.
+\]
+
+\medskip
+\noindent
+\textbf{Step 3: Combine the Bounds.}  
+We have:
+\[
+  -\eta\sum_{t=1}^T\tilde{\ell}_{i^*,t} -\ln K \le -\eta\sum_{t=1}^T\sum_{i=1}^K p_t(i)\,\tilde{\ell}_{i,t} + \frac{\eta^2}{2}\sum_{t=1}^T\sum_{i=1}^K p_t(i)\,\tilde{\ell}_{i,t}^2.
+\]
+Rearrange to obtain:
+\[
+  \sum_{t=1}^T\sum_{i=1}^K p_t(i)\,\tilde{\ell}_{i,t} - \sum_{t=1}^T\tilde{\ell}_{i^*,t} \le \frac{\ln K}{\eta} + \frac{\eta}{2}\sum_{t=1}^T\sum_{i=1}^K p_t(i)\,\tilde{\ell}_{i,t}^2.
+\]
+
+\medskip
+\noindent
+\textbf{Step 4: Relate to Actual Losses.}  
+Since only the chosen arm contributes,
+\[
+   \sum_{i=1}^K p_t(i)\,\tilde{\ell}_{i,t} = p_t(A_t)\,(K\,\ell_{A_t,t}).
+\]
+Under uniform sampling, in expectation \(p_t(A_t)=\frac{1}{K}\); hence,
+\[
+   \mathbb{E}\Bigl[\sum_{i=1}^K p_t(i)\,\tilde{\ell}_{i,t}\Bigr] = \ell_{A_t,t}.
+\]
+Similarly, one shows that
+\[
+   \sum_{i=1}^K p_t(i)\,\tilde{\ell}_{i,t}^2 \le K\,\ell_{A_t,t},
+\]
+since \(\ell_{A_t,t}\in [0,1]\).
+
+Taking expectations and summing over \(t\),
+\[
+   \mathbb{E}\Bigl[\sum_{t=1}^T \ell_{A_t,t}\Bigr] - \sum_{t=1}^T \ell_{i^*,t} \le \frac{\ln K}{\eta} + \frac{\eta K}{2}\,\mathbb{E}\Bigl[\sum_{t=1}^T \ell_{A_t,t}\Bigr].
+\]
+Since \(\ell_{A_t,t}\le 1\) implies \(\mathbb{E}[\sum_{t=1}^T \ell_{A_t,t}]\le T\), we have
+\[
+   \mathbb{E}[R_T] \le \frac{\ln K}{\eta} + \frac{\eta K T}{2}.
+\]
+Choosing
+\[
+   \eta = \sqrt{\frac{2\ln K}{K\,T}},
+\]
+balances the two terms and gives
+\[
+   \mathbb{E}[R_T] \le 2\sqrt{2}\,\sqrt{K\,T\,\ln K}.
+\]
+Thus, the expected regret is
+\[
+   \mathbb{E}[R_T] = O\!\Bigl(\sqrt{K\,T\,\ln K}\Bigr).
+\]
+
 \bigskip
-\noindent
-\textbf{Expected Regret Bound (Sketch):} 
+\subsection*{(d) Anytime Modification of EXP3}
 
-Let $L_i$ be the true cumulative loss of arm $i$ over $T$ rounds, and let $L^* = \min_i L_i$ be the cumulative loss of the best arm in hindsight. 
-Using standard EXP3 analysis (with partial feedback), one can show that the expected regret, 
+For the anytime version of EXP3 (which does not assume knowledge of a fixed horizon \(T\)), we replace the constant learning rate with one that depends on the current round \(t\). A common choice is:
 \[
-    \mathbb{E}\bigl[\sum_{t=1}^T \ell_{A_t,t}\bigr] - L^*,
+    \eta_t = \sqrt{\frac{2\,\ln K}{K\,t}}.
 \]
-is bounded by 
+With this time-varying learning rate, the expected regret bound remains of the same order as the fixed-horizon version:
 \[
-    O\Bigl(\sqrt{K\,T \ln K}\Bigr),
+    O\!\Bigl(\sqrt{K\,T\,\ln K}\Bigr),
 \]
-up to constant factors and the choice of $\eta$. 
-Since the logging policy is uniform, the factor $K$ appears in the importance-weighted updates, 
-but it is constant and known, which simplifies the analysis. 
-With a more refined argument that accounts for small-variance assumptions (e.g., exploiting tighter concentration bounds for low-variance losses), 
-it is possible to improve these guarantees further. 
-In essence, if the true variance of the losses is small, one can tighten the deviation bounds on $\tilde{\ell}_{i,t}$, 
-leading to smaller confidence terms and an improved regret rate.
-
-\noindent
-\subsubsection*{(d) Anytime Modification of EXP3}
-
-\smallskip
-For the anytime version of EXP3 (one that does not assume knowledge of a fixed horizon $T$), 
-we replace the constant learning rate with one that depends on the current round $t$. 
-A common choice is:
-\[
-    \eta_t \;=\; \sqrt{\frac{2\,\ln K}{K\,t}}.
-\]
-With this time-varying learning rate, the expected regret bound remains of the same order as the fixed-horizon version, namely
-\[
-    O\Bigl(\sqrt{K\,T\,\ln K}\Bigr),
-\]
-but with a slightly larger constant factor than if $T$ were known in advance.
+though with a slightly larger constant factor than if \(T\) were known in advance.
