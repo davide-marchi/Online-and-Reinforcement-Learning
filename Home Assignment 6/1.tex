@@ -86,7 +86,7 @@ Now, consider the sign of $\hat{A}^{\pi_{\text{ref}}}(s,a)$:
   \[
     \nabla_\theta \Bigl[ r(\theta)\,\hat{A}^{\pi_{\text{ref}}}(s,a) \Bigr] = \hat{A}^{\pi_{\text{ref}}}(s,a) \nabla_\theta r(\theta).
   \]
-  Since $\hat{A}^{\pi_{\text{ref}}}(s,a) < 0$, the gradient will be \emph{negative} (assuming $\nabla_\theta r(\theta)>0$ for an increase in $r(\theta)$), which implies that the update will \emph{decrease} $r(\theta)$ --- that is, it pushes $r(\theta)$ \emph{toward} the boundary $1+\epsilon$ rather than away from it.
+  Since $\hat{A}^{\pi_{\text{ref}}}(s,a) < 0$, the gradient will be \emph{negative} (assuming $\nabla_\theta r(\theta)>0$ for an increase in $r(\theta)$), which implies that the update will \emph{decrease} $r(\theta)$, that is, it pushes $r(\theta)$ \emph{toward} the boundary $1+\epsilon$ rather than away from it.
 \end{itemize}
 
 \textbf{Case 2:} $r(\theta)<1-\epsilon$. By a similar argument, if $\hat{A}^{\pi_{\text{ref}}}(s,a)>0$, then the gradient of the unclipped term (which is active in this case) is positive and pushes $r(\theta)$ upward toward $1-\epsilon$.

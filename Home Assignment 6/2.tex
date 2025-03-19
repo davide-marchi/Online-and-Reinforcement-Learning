@@ -48,7 +48,7 @@ To handle partial feedback when arms are chosen uniformly at random (with probab
 
 \medskip
 \noindent
-\textbf{Detailed Regret Analysis.}
+\textbf{Regret Analysis.}
 
 \medskip
 \noindent
@@ -106,7 +106,7 @@ up to constants depending on \(c\) and the loss distribution.
 In the modified UCB1, each observed loss is multiplied by \(K\) (since \(p_i(t)=1/K\)).  
 Even if the original loss distribution has small variance, the effective variance is inflated by the factor \(K\).  
 Since the algorithm builds confidence intervals based on worst-case deviations, the benefit of a small underlying variance is lost.  
-In other words, the importance-weighted update makes the algorithm behave conservatively—as if the variance were higher—thus preventing exploitation of any small-variance structure.
+In other words, the importance-weighted update makes the algorithm behave conservatively, as if the variance were higher, thus preventing exploitation of any small-variance structure.
 
 \bigskip
 \subsubsection*{(c) Modifying EXP3 for Importance-Weighted Losses (Uniform Sampling)}
@@ -153,7 +153,7 @@ with initial weights \(w_i(1)=1\) for all \(i\).
 
 \medskip
 \noindent
-\textbf{Detailed Regret Analysis.}
+\textbf{Regret Analysis.}
 
 \medskip
 \noindent
