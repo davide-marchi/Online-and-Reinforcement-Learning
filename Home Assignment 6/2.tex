@@ -1,4 +1,4 @@
-\section{Part 1}
+\subsection{Part 1}
 
 Evaluating algorithms for online learning with limited feedback in real-life scenarios is challenging. 
 While the most direct approach is to implement an algorithm and measure its performance live, this is often not feasible due to:
@@ -7,9 +7,9 @@ While the most direct approach is to implement an algorithm and measure its perf
     \item \textbf{Difficulty of controlled experimentation.} Once data is collected based on a particular algorithm's actions, it is nearly impossible to ``replay'' the same conditions to test different algorithms under identical circumstances. This lack of controlled repetition makes fair comparisons difficult.
 \end{itemize}
 
-\section{Part 2}
+\subsection{Part 2}
 
-\subsection*{(a) Modification of UCB1 for Importance-Weighted Losses (Uniform Sampling)}
+\subsubsection*{(a) Modification of UCB1 for Importance-Weighted Losses (Uniform Sampling)}
 
 To handle partial feedback when arms are chosen uniformly at random (with probability \(1/K\) for each arm), we replace the usual empirical loss estimates in UCB1 with importance-weighted estimates. Concretely, whenever an arm \(i\) is chosen, its observed loss is scaled by the factor \(\frac{1}{p_i(t)} = K\), ensuring an unbiased estimator. The main changes from standard UCB1 are thus:
 \begin{itemize}
@@ -101,7 +101,7 @@ The modified UCB1, with importance-weighted updates, yields a pseudo-regret of o
 up to constants depending on \(c\) and the loss distribution.
 
 \bigskip
-\subsection*{(b) Why the Modified UCB1 Cannot Exploit the Small Variance}
+\subsubsection*{(b) Why the Modified UCB1 Cannot Exploit the Small Variance}
 
 In the modified UCB1, each observed loss is multiplied by \(K\) (since \(p_i(t)=1/K\)).  
 Even if the original loss distribution has small variance, the effective variance is inflated by the factor \(K\).  
@@ -109,7 +109,7 @@ Since the algorithm builds confidence intervals based on worst-case deviations, 
 In other words, the importance-weighted update makes the algorithm behave conservatively—as if the variance were higher—thus preventing exploitation of any small-variance structure.
 
 \bigskip
-\subsection*{(c) Modifying EXP3 for Importance-Weighted Losses (Uniform Sampling)}
+\subsubsection*{(c) Modifying EXP3 for Importance-Weighted Losses (Uniform Sampling)}
 
 We consider a logging policy that selects arms uniformly at random (with probability \(1/K\) each).  
 The EXP3 algorithm is modified so that when arm \(A_t\) is selected and its loss \(\ell_{A_t,t}\) is observed, an unbiased estimator for the loss of each arm is formed by
@@ -246,7 +246,7 @@ Thus, the expected regret is
 \]
 
 \bigskip
-\subsection*{(d) Anytime Modification of EXP3}
+\subsubsection*{(d) Anytime Modification of EXP3}
 
 For the anytime version of EXP3 (which does not assume knowledge of a fixed horizon \(T\)), we replace the constant learning rate with one that depends on the current round \(t\). A common choice is:
 \[
