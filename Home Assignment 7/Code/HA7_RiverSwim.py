@@ -57,32 +57,8 @@ class riverswim():
 		return new_s, reward
 
 
-"""
-Optimized UCB Q-Learning on 5-state RiverSwim for Home Assignment 7, Exercise 4:
-"An Empirical Evaluation of UCB Q-learning" (25 points)
-
-Parameters:
-  - gamma = 0.92
-  - epsilon_eval = 0.13 (to check ε-badness)
-  - delta = 0.05
-  - T = 2e6 steps per run
-  - H = ceil((1/(1-gamma))*log(1/epsilon_eval))
-  - Bonus: b(k) = sqrt((H/k) * log(S*A*log(k+1)/delta))
-
-We count ε-bad steps as:
-    n(t) = sum_{tau=1}^{t} I{ V^π_tau(s_tau) < V*(s_tau) - epsilon_eval }
-where V*(s) is computed via value iteration.
-
-This code uses a caching strategy so that the 5×5 system solve for policy evaluation is only performed once per unique policy.
-A tqdm progress bar is added for the outer loop over the 100 simulation runs.
-
-"""
-
-import numpy as np
 import matplotlib.pyplot as plt
-from tqdm import tqdm  # progress bar for the outer simulation loop
-from HA7_RiverSwim import riverswim  # Provided RiverSwim environment
-
+from tqdm import tqdm  
 # ---------------------------------------------------------------------
 # 1. Helper Functions
 # ---------------------------------------------------------------------
