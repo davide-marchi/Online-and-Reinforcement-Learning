@@ -76,8 +76,6 @@ where V*(s) is computed via value iteration.
 This code uses a caching strategy so that the 5×5 system solve for policy evaluation is only performed once per unique policy.
 A tqdm progress bar is added for the outer loop over the 100 simulation runs.
 
-Author: [Your Name]
-Date: [Date]
 """
 
 import numpy as np
