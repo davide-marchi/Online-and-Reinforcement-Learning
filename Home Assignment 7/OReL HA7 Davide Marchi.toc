@@ -1,2 +1,6 @@
-\contentsline {section}{\numberline {1}Offline Evaluation of Bandit Algorithms - the Practical Part}{2}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Part 1}{2}{subsection.1.1}%
+\contentsline {section}{\numberline {1}Short Questions}{2}{section.1}%
+\contentsline {section}{\numberline {2}Offline Evaluation of Bandit Algorithms - the Practical Part}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Alghorithms}{2}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Practical Part}{4}{subsubsection.2.1.1}%
+\contentsline {section}{\numberline {3}Grid-World: Continual and undiscounted}{6}{section.3}%
+\contentsline {section}{\numberline {4}An Empirical Evaluation of UCB Q-learning}{8}{section.4}%
