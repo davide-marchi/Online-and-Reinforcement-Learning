@@ -1,0 +1,8 @@
+\begin{enumerate}[label=\textbf{\arabic*.}] \item \textbf{True.} \emph{Justification:} In a finite average-reward MDP with a finite diameter the MDP is communicating (in fact, ergodic if every state is reachable from every other under some policy). This implies that the long-run average reward (gain) is independent of the starting state.
+
+    \item \textbf{False.} \emph{Justification:} Finite diameter guarantees that there exists a policy which can reach any state from any other in a finite expected number of steps. However, this does not mean that every arbitrary choice of actions will eventually reach every state.
+    
+    \item \textbf{False.} \emph{Justification:} In an ergodic MDP the optimal gain is unique (i.e., independent of the initial state), but the optimal bias function is determined only up to an additive constant. Hence, the bias is not uniquely defined in an absolute sense.
+    
+    \item \textbf{False.} \emph{Justification:} A PAC-MDP algorithm guarantees that the number of $\varepsilon$-bad (i.e., non-$\varepsilon$-optimal) steps is bounded with high probability. However, it does not imply that there exists a finite time after which every subsequent policy is $\varepsilon$-optimal; occasional exploration may still yield suboptimal actions.
+\end{enumerate}
