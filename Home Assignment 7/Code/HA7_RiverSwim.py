@@ -1,0 +1,291 @@
+# Written by Hippolyte Bourel
+# This code is proposed as a reference solution for various exercises of Home Assignements for the OReL course in 2024.
+# This solution is tailored for simplicity of understanding and is in no way optimal, nor the only way to implement the different elements!
+import numpy as np
+
+# A simple riverswim implementation with chosen number of state 'nS' chosen in input.
+# We arbitrarily chose the action '0' = 'go to the left' thus '1' = 'go to the right'.
+# Finally the state '0' is the leftmost, 'nS - 1' is the rightmost.
+class riverswim():
+
+	def __init__(self, nS):
+		self.nS = nS
+		self.nA = 2
+
+		# We build the transitions matrix P, and its associated support lists.
+		self.P = np.zeros((nS, 2, nS))
+		self.support = [[[] for _ in range(self.nA)] for _ in range(self.nS)]
+		for s in range(nS):
+			if s == 0:
+				self.P[s, 0, s] = 1
+				self.P[s, 1, s] = 0.6
+				self.P[s, 1, s + 1] = 0.4
+				self.support[s][0] += [0]
+				self.support[s][1] += [0, 1]
+			elif s == nS - 1:
+				self.P[s, 0, s - 1] = 1
+				self.P[s, 1, s] = 0.6
+				self.P[s, 1, s - 1] = 0.4
+				self.support[s][0] += [s - 1]
+				self.support[s][1] += [s - 1, s]
+			else:
+				self.P[s, 0, s - 1] = 1
+				self.P[s, 1, s] = 0.55
+				self.P[s, 1, s + 1] = 0.4
+				self.P[s, 1, s - 1] = 0.05
+				self.support[s][0] += [s - 1]
+				self.support[s][1] += [s - 1, s, s + 1]
+		
+		# We build the reward matrix R.
+		self.R = np.zeros((nS, 2))
+		self.R[0, 0] = 0.05
+		self.R[nS - 1, 1] = 1
+
+		# We (arbitrarily) set the initial state in the leftmost position.
+		self.s = 0
+
+	# To reset the environment in initial settings.
+	def reset(self):
+		self.s = 0
+		return self.s
+
+	# Perform a step in the environment for a given action. Return a couple state, reward (s_t, r_t).
+	def step(self, action):
+		new_s = np.random.choice(np.arange(self.nS), p=self.P[self.s, action])
+		reward = self.R[self.s, action]
+		self.s = new_s
+		return new_s, reward
+
+
+"""
+
+We implement UCB Q-learning with:
+  - gamma = 0.92
+  - epsilon = 0.13  (to check ε-badness)
+  - delta = 0.05
+  - time horizon T = 2e6
+  - H = (1/(1-gamma)) * log(1/epsilon), rounded up
+  - b(k) = sqrt( H / k * log( S*A*log(k+1) / delta ) )
+
+We define the cumulative number of ε-bad steps up to time t by:
+  n(t) = sum_{tau=1..t} I{ V^π_tau(s_tau) < V*(s_tau) - epsilon }
+
+(i) We plot a sample path of n(t).
+(ii) We plot n(t), averaged over 100 runs, with 95% confidence intervals.
+
+"""
+
+import matplotlib.pyplot as plt
+
+# ---------------------------------------------------------------------
+# 1. Helper Functions
+# ---------------------------------------------------------------------
+
+def compute_optimal_values(env, gamma, tol=1e-8):
+    """
+    Compute the optimal value function V* for the given MDP (env)
+    using standard value iteration. Rewards/dynamics from env are used.
+    """
+    S = env.nS
+    A = env.nA
+    V = np.zeros(S)
+    while True:
+        V_new = np.zeros_like(V)
+        for s in range(S):
+            Q_vals = []
+            for a in range(A):
+                # Q(s,a) = R(s,a) + gamma * sum_{s'} P(s,a,s') * V(s')
+                Q_vals.append(env.R[s, a] + gamma * np.dot(env.P[s, a, :], V))
+            V_new[s] = max(Q_vals)
+        if np.max(np.abs(V_new - V)) < tol:
+            break
+        V = V_new
+    return V
+
+def evaluate_policy(policy, env, gamma):
+    """
+    Given a deterministic policy (array of length S) and the known MDP
+    transitions from 'env', solve the linear system for V^policy:
+        V(s) = R(s, policy[s]) + gamma * sum_{s'} P(s, policy[s], s') * V(s')
+    """
+    S = env.nS
+    A = env.nA
+    P_pi = np.zeros((S, S))
+    r_pi = np.zeros(S)
+    for s in range(S):
+        a = policy[s]
+        P_pi[s, :] = env.P[s, a, :]
+        r_pi[s] = env.R[s, a]
+    I = np.eye(S)
+    # Solve (I - gamma*P_pi)*V = r_pi
+    V_policy = np.linalg.solve(I - gamma * P_pi, r_pi)
+    return V_policy
+
+# ---------------------------------------------------------------------
+# 2. Main UCB Q-Learning Routine
+# ---------------------------------------------------------------------
+
+def run_ucb_ql(
+    T, gamma, epsilon_eval, delta, H, V_star,
+    record_interval=1000, seed=None
+):
+    """
+    Runs UCB Q-learning for T steps on 5-state RiverSwim.
+
+    - The environment is created, then we set its internal state uniformly.
+    - Q and Q_hat are initialized to R_max/(1-gamma) = 1/(1-gamma).
+    - The update is:
+        Q[s,a] <- (1 - alpha_k)*Q[s,a] + alpha_k*(r + b(k) + gamma*max(Q_hat[s',:]))
+        Q_hat[s,a] <- min( Q_hat[s,a], Q[s,a] )
+      where k = N[s,a], alpha_k = (H+1)/(H+k),
+      b(k) = sqrt( H/k * log(S*A*log(k+1)/delta ) ).
+
+    We count ε-bad steps as:
+       I{ V^π(s) < V*(s) - epsilon_eval }
+    at each time step.
+
+    Returns:
+       times: array of time steps where we record n(t)
+       n_values: array of cumulative ε-bad counts at those times
+    """
+    if seed is not None:
+        np.random.seed(seed)
+
+    # Create the 5-state RiverSwim environment
+    env = riverswim(5)
+    # Uniformly sample the starting state
+    env.s = np.random.randint(0, env.nS)
+    s = env.s
+
+    S = env.nS
+    A = env.nA
+    R_max = 1.0  # known from RiverSwim
+
+    # Optimistic initialization
+    optimistic_init = R_max / (1.0 - gamma)
+    Q = np.full((S, A), optimistic_init)
+    Q_hat = np.copy(Q)
+    N = np.ones((S, A))  # visitation counts start at 1
+
+    n_bad = 0  # cumulative ε-bad steps
+    times = []
+    n_values = []
+
+    for t in range(1, T + 1):
+        # Choose action greedily w.r.t. Q_hat
+        a = np.argmax(Q_hat[s, :])
+
+        # Step in the environment
+        new_s, r = env.step(a)
+        k = N[s, a]
+        alpha_k = (H + 1) / (H + k)
+        # Bonus
+        bonus = np.sqrt( (H / k) * np.log( S * A * np.log(k + 1) / delta ) )
+
+        # Update Q
+        Q[s, a] = (1 - alpha_k) * Q[s, a] + alpha_k * (
+            r + bonus + gamma * np.max(Q_hat[new_s, :])
+        )
+        # Update Q_hat (take minimum to maintain optimism)
+        Q_hat[s, a] = min(Q_hat[s, a], Q[s, a])
+        N[s, a] += 1
+
+        # Check ε-badness at every step
+        #   1) Current greedy policy from Q_hat
+        #   2) Evaluate that policy
+        #   3) Compare V_policy(s) vs. V_star(s)
+        policy = np.argmax(Q_hat, axis=1)
+        V_policy = evaluate_policy(policy, env, gamma)
+        if V_policy[new_s] < V_star[new_s] - epsilon_eval:
+            n_bad += 1
+
+        s = new_s
+
+        # Record the cumulative n(t) at intervals
+        if t % record_interval == 0:
+            times.append(t)
+            n_values.append(n_bad)
+
+    return np.array(times), np.array(n_values)
+
+# ---------------------------------------------------------------------
+# 3. Putting It All Together
+# ---------------------------------------------------------------------
+
+def main():
+    # Experiment parameters
+    T = 2_000_000       # 2e6 steps
+    gamma = 0.92
+    epsilon_eval = 0.13
+    delta = 0.05
+
+    # We define H = (1/(1-gamma)) * log(1/epsilon_eval), per instructions
+    H = int(np.ceil( (1.0/(1.0 - gamma)) * np.log(1.0/epsilon_eval) ))
+
+    # We'll record data every 1000 steps
+    record_interval = 1000
+
+    # Compute V* via known MDP dynamics
+    env_for_opt = riverswim(5)
+    V_star = compute_optimal_values(env_for_opt, gamma)
+    print("Optimal value function V*:", V_star)
+
+    # (i) Single run: sample path of n(t)
+    times_sample, n_sample = run_ucb_ql(
+        T=T,
+        gamma=gamma,
+        epsilon_eval=epsilon_eval,
+        delta=delta,
+        H=H,
+        V_star=V_star,
+        record_interval=record_interval,
+        seed=42
+    )
+
+    plt.figure(figsize=(8,5))
+    plt.plot(times_sample, n_sample, label="Single run")
+    plt.xlabel("Time steps")
+    plt.ylabel("Cumulative ε-bad steps n(t)")
+    plt.title("Sample Path of n(t) for UCB-QL (Single Run)")
+    plt.grid(True)
+    plt.legend()
+    plt.savefig("sample_path_ucbql.png", bbox_inches="tight")
+    plt.show()
+
+    # (ii) Average over 100 runs + 95% CI
+    runs = 100
+    all_n = []
+    for i in range(runs):
+        _, n_arr = run_ucb_ql(
+            T=T,
+            gamma=gamma,
+            epsilon_eval=epsilon_eval,
+            delta=delta,
+            H=H,
+            V_star=V_star,
+            record_interval=record_interval,
+            seed=i
+        )
+        all_n.append(n_arr)
+        print(f"Run {i+1}/{runs}, final n(t) = {n_arr[-1]}")
+
+    all_n = np.array(all_n)  # shape: (runs, #record_points)
+    mean_n = np.mean(all_n, axis=0)
+    std_n = np.std(all_n, axis=0)
+    ci_upper = mean_n + 1.96 * std_n / np.sqrt(runs)
+    ci_lower = mean_n - 1.96 * std_n / np.sqrt(runs)
+
+    plt.figure(figsize=(8,5))
+    plt.plot(times_sample, mean_n, label="Average n(t) over 100 runs")
+    plt.fill_between(times_sample, ci_lower, ci_upper, color="gray", alpha=0.3, label="95% CI")
+    plt.xlabel("Time steps")
+    plt.ylabel("Cumulative ε-bad steps n(t)")
+    plt.title("UCB-QL: Average n(t) over 100 runs (with 95% CI)")
+    plt.grid(True)
+    plt.legend()
+    plt.savefig("average_n_t_ucbql.png", bbox_inches="tight")
+    plt.show()
+
+if __name__ == "__main__":
+    main()
+
