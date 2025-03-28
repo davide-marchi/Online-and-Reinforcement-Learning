@@ -186,3 +186,87 @@ def display_4room_policy(policy):
 	return np.array(res)
 
 	
+
+def average_reward_vi(mdp, epsilon=1e-6, max_iter=10000):
+    """
+    Value Iteration for Average-Reward MDPs.
+    
+    Parameters:
+        mdp      : The MDP instance with attributes:
+                   - nS: number of states
+                   - nA: number of actions
+                   - R : reward matrix (shape: [nS, nA])
+                   - P : transition probability matrix (shape: [nS, nA, nS])
+        epsilon  : Convergence threshold (using the span of the value differences)
+        max_iter : Maximum number of iterations
+    
+    Returns:
+        policy : Optimal policy as a numpy array (one action per state)
+        gain   : Estimated optimal gain (g*)
+        bias   : Estimated bias function (b*), normalized so that min(b*) = 0
+    """
+    # Initialize the value function arbitrarily (here, zeros)
+    V = np.zeros(mdp.nS)
+    
+    for iteration in range(max_iter):
+        V_next = np.zeros(mdp.nS)
+        # Update V_next for each state s using the Bellman operator:
+        # V_next(s) = max_a [ R(s, a) + sum_x P(x|s,a) * V(x) ]
+        for s in range(mdp.nS):
+            action_values = []
+            for a in range(mdp.nA):
+                q_sa = mdp.R[s, a] + np.dot(mdp.P[s, a], V)
+                action_values.append(q_sa)
+            V_next[s] = max(action_values)
+        
+        # Compute the difference (increment) vector
+        diff = V_next - V
+        # The span (max difference minus min difference) is our stopping criterion
+        span_diff = np.max(diff) - np.min(diff)
+        V = V_next.copy()
+        
+        if span_diff < epsilon:
+            print(f"Converged after {iteration+1} iterations with span {span_diff:.2e}.")
+            break
+    else:
+        print("Warning: Maximum iterations reached without full convergence.")
+    
+    # Estimate the optimal gain g* as the average of the maximum and minimum differences.
+    gain = 0.5 * (np.max(diff) + np.min(diff))
+    # The bias function is approximated by normalizing V (bias is defined up to an additive constant)
+    bias = V - np.min(V)
+    
+    # Derive the optimal policy: for each state, choose the action maximizing:
+    # Q(s, a) = R(s, a) + sum_x P(x|s,a) * V(x)
+    policy = np.zeros(mdp.nS, dtype=int)
+    for s in range(mdp.nS):
+        best_val = -np.inf
+        best_a = 0
+        for a in range(mdp.nA):
+            q_sa = mdp.R[s, a] + np.dot(mdp.P[s, a], V)
+            if q_sa > best_val:
+                best_val = q_sa
+                best_a = a
+        policy[s] = best_a
+    
+    return policy, gain, bias
+
+if __name__ == '__main__':
+    # Create an instance of the 4-room grid-world environment.
+    env = Four_Room_Teleportation()
+    
+    # Set the convergence threshold (epsilon) as suggested (1e-6)
+    epsilon = 1e-6
+    
+    # Run Value Iteration for the average-reward formulation.
+    policy, gain, bias = average_reward_vi(env, epsilon=epsilon)
+    
+    # Output the results.
+    print("Optimal Gain (g*):", gain)
+    span_bias = np.max(bias) - np.min(bias)
+    print("Span of the Optimal Bias (sp(b*)):", span_bias)
+    
+    # Visualize the optimal policy using the provided grid formatting function.
+    policy_grid = display_4room_policy(policy)
+    print("Optimal Policy Grid:")
+    print(policy_grid)

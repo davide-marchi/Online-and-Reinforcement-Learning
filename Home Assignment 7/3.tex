@@ -1,0 +1,89 @@
+In this question, we model the 4-room grid-world as an average-reward MDP and solve it using Value Iteration (VI).
+
+\subsection*{(i) Implementation of Value Iteration for Average-Reward MDPs}
+
+The following Python function implements VI for average-reward MDPs. The algorithm computes an approximation of the optimal gain $g^*$, the bias function $b^*$ (normalized such that $\min_s\,b^*(s)=0$), and the optimal policy.
+
+\begin{lstlisting}[language=Python, caption={Average-Reward Value Iteration Function}]
+def average_reward_vi(mdp, epsilon=1e-6, max_iter=10000):
+
+    # Initialize the value function arbitrarily (here, zeros)
+    V = np.zeros(mdp.nS)
+    
+    for iteration in range(max_iter):
+        V_next = np.zeros(mdp.nS)
+        # Update V_next for each state s using the Bellman operator:
+        # V_next(s) = max_a [ R(s, a) + sum_x P(x|s,a) * V(x) ]
+        for s in range(mdp.nS):
+            action_values = []
+            for a in range(mdp.nA):
+                q_sa = mdp.R[s, a] + np.dot(mdp.P[s, a], V)
+                action_values.append(q_sa)
+            V_next[s] = max(action_values)
+        
+        # Compute the difference (increment) vector
+        diff = V_next - V
+        # The span (max difference minus min difference) is our stopping criterion
+        span_diff = np.max(diff) - np.min(diff)
+        V = V_next.copy()
+        
+        if span_diff < epsilon:
+            print(f"Converged after {iteration+1} iterations with span {span_diff:.2e}.")
+            break
+    else:
+        print("Warning: Maximum iterations reached without full convergence.")
+    
+    # Estimate the optimal gain g* as the average of the maximum and minimum differences.
+    gain = 0.5 * (np.max(diff) + np.min(diff))
+    # The bias function is approximated by normalizing V (bias is defined up to an additive constant)
+    bias = V - np.min(V)
+    
+    # Derive the optimal policy: for each state, choose the action maximizing:
+    # Q(s, a) = R(s, a) + sum_x P(x|s,a) * V(x)
+    policy = np.zeros(mdp.nS, dtype=int)
+    for s in range(mdp.nS):
+        best_val = -np.inf
+        best_a = 0
+        for a in range(mdp.nA):
+            q_sa = mdp.R[s, a] + np.dot(mdp.P[s, a], V)
+            if q_sa > best_val:
+                best_val = q_sa
+                best_a = a
+        policy[s] = best_a
+    
+    return policy, gain, bias
+\end{lstlisting}
+
+\subsection*{(ii) Visualization of the Optimal Policy}
+
+Running the above function on the grid-world produced the following output:
+\begin{itemize}[noitemsep]
+    \item \textbf{Optimal Gain:} $g^* = 0.07563$
+    \item \textbf{Span of the Optimal Bias:} $\text{sp}(b^*) = 0.92437$
+\end{itemize}
+
+The optimal policy for the grid-world is represented by the following table. The arrows indicate the action chosen in each state (with walls marked as ``Wall''):
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+Wall & Wall & Wall & Wall & Wall & Wall & Wall \\ \hline
+Wall & $\rightarrow$ & $\rightarrow$ & $\rightarrow$ & $\downarrow$ & $\downarrow$ & Wall \\ \hline
+Wall & $\downarrow$ & $\uparrow$   & Wall      & $\downarrow$ & $\leftarrow$ & Wall \\ \hline
+Wall & $\downarrow$ & Wall      & Wall      & $\downarrow$ & Wall      & Wall \\ \hline
+Wall & $\rightarrow$ & $\rightarrow$ & $\rightarrow$ & $\rightarrow$ & $\downarrow$ & Wall \\ \hline
+Wall & $\rightarrow$ & $\uparrow$   & Wall      & $\rightarrow$ & $\uparrow$   & Wall \\ \hline
+Wall & Wall & Wall & Wall & Wall & Wall & Wall \\ \hline
+\end{tabular}
+\caption{Optimal Policy Grid: Arrows indicate the optimal actions.}
+\label{tab:policy}
+\end{table}
+
+\subsection*{(iii) Interpretation of $\boldsymbol{1/g^*}$}
+
+In this grid-world, the optimal gain $g^*$ represents the long-run average reward per time step. Hence, the quantity
+\[
+\frac{1}{g^*} \approx \frac{1}{0.07563} \approx 13.22
+\]
+can be interpreted as the average number of steps needed to collect one unit of reward under the optimal policy. In other words, the agent gathers one reward approximately every 13 time steps, reflecting the efficiency of the optimal strategy in this continual setting.
