@@ -9,5 +9,5 @@
 \contentsline {paragraph}{Communicating:}{4}{section*.12}%
 \contentsline {paragraph}{Weakly Communicating:}{4}{section*.13}%
 \contentsline {section}{\numberline {2}Infinitely Many Choices for Optimal Bias in Average-Reward MDPs}{4}{section.2}%
-\contentsline {section}{\numberline {3}Comparison between UCRL2 and UCRL2-L}{4}{section.3}%
-\contentsline {section}{\numberline {4}Leveraging Prior Knowledge on the Graph of MDP to Reduce Regret}{4}{section.4}%
+\contentsline {section}{\numberline {3}Comparison between UCRL2 and UCRL2-L}{6}{section.3}%
+\contentsline {section}{\numberline {4}Leveraging Prior Knowledge on the Graph of MDP to Reduce Regret}{6}{section.4}%

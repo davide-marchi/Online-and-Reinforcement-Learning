@@ -1,0 +1,69 @@
+Let $M=(\mathcal{S},\mathcal{A},P,r)$ be a finite weakly-communicating average-reward MDP and let 
+\[
+b^* : \mathcal{S} \to \mathbb{R}
+\]
+be an optimal bias function for $M$, i.e., it satisfies the optimality (Bellman) equation
+\[
+g^* + b^*(s) = \max_{a \in \mathcal{A}(s)} \Big\{ r(s,a) + \sum_{s'\in \mathcal{S}} P(s'|s,a) \, b^*(s') \Big\}, \quad \forall s\in\mathcal{S},
+\]
+where $g^*$ is the optimal gain. Now, for any constant $c \in \mathbb{R}$, consider the function 
+\[
+b'(s) = b^*(s) + c, \quad \forall s \in \mathcal{S}.
+\]
+We need to show that $b'$ is also an optimal bias function for $M$.
+
+\subsection*{Solution}
+
+Since $b^*$ is an optimal bias function, we have
+\begin{equation}\label{eq:bellman}
+g^* + b^*(s) = \max_{a \in \mathcal{A}(s)} \left\{ r(s,a) + \sum_{s'\in \mathcal{S}} P(s'|s,a) \, b^*(s') \right\} \quad \forall s \in \mathcal{S}.
+\end{equation}
+
+Define the function 
+\[
+b'(s) = b^*(s) + c.
+\]
+Then, for any state $s \in \mathcal{S}$, the left-hand side of the Bellman equation becomes:
+\[
+g^* + b'(s) = g^* + b^*(s) + c.
+\]
+
+Next, consider the right-hand side when replacing $b^*(s')$ with $b'(s')$:
+\[
+r(s,a) + \sum_{s'\in \mathcal{S}} P(s'|s,a) \, b'(s') 
+= r(s,a) + \sum_{s'\in \mathcal{S}} P(s'|s,a) \, \bigl(b^*(s') + c\bigr).
+\]
+Since $c$ is a constant, we can rewrite the sum as:
+\[
+r(s,a) + \sum_{s'\in \mathcal{S}} P(s'|s,a) \, b^*(s') + c \sum_{s'\in \mathcal{S}} P(s'|s,a).
+\]
+Because $P(\cdot|s,a)$ is a probability distribution (i.e., $\sum_{s'} P(s'|s,a) = 1$), this simplifies to:
+\[
+r(s,a) + \sum_{s'\in \mathcal{S}} P(s'|s,a) \, b^*(s') + c.
+\]
+
+Now, taking the maximum over all actions $a\in\mathcal{A}(s)$, we have:
+\[
+\max_{a \in \mathcal{A}(s)} \left\{ r(s,a) + \sum_{s'\in \mathcal{S}} P(s'|s,a) \, b'(s') \right\} 
+= \max_{a \in \mathcal{A}(s)} \left\{ r(s,a) + \sum_{s'\in \mathcal{S}} P(s'|s,a) \, b^*(s') + c \right\}.
+\]
+Since $c$ is independent of the choice of $a$, it factors out of the maximization:
+\[
+= \left( \max_{a \in \mathcal{A}(s)} \left\{ r(s,a) + \sum_{s'\in \mathcal{S}} P(s'|s,a) \, b^*(s') \right\} \right) + c.
+\]
+Using \eqref{eq:bellman} we substitute for the term in the parentheses:
+\[
+= g^* + b^*(s) + c.
+\]
+Thus, we obtain
+\[
+g^* + b'(s) = \max_{a \in \mathcal{A}(s)} \left\{ r(s,a) + \sum_{s'\in \mathcal{S}} P(s'|s,a) \, b'(s') \right\}, \quad \forall s \in \mathcal{S}.
+\]
+
+\subsection*{Conclusion}
+
+We have shown that if $b^*$ is an optimal bias function, then for any constant $c\in\mathbb{R}$, the function 
+\[
+b'(s) = b^*(s) + c
+\]
+also satisfies the Bellman optimality equation. Hence, $b'$ is an optimal bias function for $M$. This result confirms that the optimal bias function is determined only up to an additive constant.
