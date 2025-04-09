@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  9 APR 2025 19:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  9 APR 2025 23:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -378,7 +378,11 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 [1
 
-{c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+{c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./1.tex
+
+[2{c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+
+[3])
 Overfull \hbox (10.63457pt too wide) in paragraph at lines 65--65
 []\OT1/cmr/bx/n/17.28 Infinitely Many Choices for Op-ti-mal Bias in Average-
  []
@@ -386,7 +390,7 @@ Overfull \hbox (10.63457pt too wide) in paragraph at lines 65--65
 No file "OReL HA8 Davide Marchi".bbl.
 
 
-[2] (./OReL HA8 Davide Marchi.aux)
+[4] (./OReL HA8 Davide Marchi.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -395,18 +399,18 @@ Package rerunfilecheck Info: File `"OReL HA8 Davide Marchi".out' has not changed
 (rerunfilecheck)             Checksum: C9444409FA8805DC985CDEA78FD10A11;1106.
  ) 
 Here is how much of TeX's memory you used:
- 12457 strings out of 473201
- 192416 string characters out of 5720300
- 869166 words of memory out of 5000000
- 35544 multiletter control sequences out of 15000+600000
- 562946 words of font info for 52 fonts, out of 8000000 for 9000
+ 12523 strings out of 473201
+ 193238 string characters out of 5720300
+ 873166 words of memory out of 5000000
+ 35580 multiletter control sequences out of 15000+600000
+ 568453 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 79i,6n,93p,600b,440s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on "OReL HA8 Davide Marchi.pdf" (2 pages, 41294 bytes).
+ 79i,8n,93p,751b,550s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on "OReL HA8 Davide Marchi.pdf" (4 pages, 115129 bytes).
 PDF statistics:
- 56 PDF objects out of 1000 (max. 8388607)
- 45 compressed objects within 1 object stream
- 8 named destinations out of 1000 (max. 500000)
+ 116 PDF objects out of 1000 (max. 8388607)
+ 89 compressed objects within 1 object stream
+ 24 named destinations out of 1000 (max. 500000)
  33 words of extra memory for PDF output out of 10000 (max. 10000000)
 

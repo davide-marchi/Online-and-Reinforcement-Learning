@@ -1,4 +1,13 @@
 \contentsline {section}{\numberline {1}MDP Classes}{2}{section.1}%
-\contentsline {section}{\numberline {2}Infinitely Many Choices for Optimal Bias in Average-Reward MDPs}{2}{section.2}%
-\contentsline {section}{\numberline {3}Comparison between UCRL2 and UCRL2-L}{2}{section.3}%
-\contentsline {section}{\numberline {4}Leveraging Prior Knowledge on the Graph of MDP to Reduce Regret}{2}{section.4}%
+\contentsline {paragraph}{Ergodicity:}{2}{section*.3}%
+\contentsline {paragraph}{Communicating:}{2}{section*.4}%
+\contentsline {paragraph}{Weakly Communicating:}{2}{section*.5}%
+\contentsline {paragraph}{Ergodicity:}{3}{section*.7}%
+\contentsline {paragraph}{Communicating:}{3}{section*.8}%
+\contentsline {paragraph}{Weakly Communicating:}{3}{section*.9}%
+\contentsline {paragraph}{Ergodicity:}{4}{section*.11}%
+\contentsline {paragraph}{Communicating:}{4}{section*.12}%
+\contentsline {paragraph}{Weakly Communicating:}{4}{section*.13}%
+\contentsline {section}{\numberline {2}Infinitely Many Choices for Optimal Bias in Average-Reward MDPs}{4}{section.2}%
+\contentsline {section}{\numberline {3}Comparison between UCRL2 and UCRL2-L}{4}{section.3}%
+\contentsline {section}{\numberline {4}Leveraging Prior Knowledge on the Graph of MDP to Reduce Regret}{4}{section.4}%
