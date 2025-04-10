@@ -212,6 +212,20 @@ INPUT c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 INPUT ./2.tex
 INPUT ./2.tex
 INPUT 2.tex
+INPUT ./3.tex
+INPUT ./3.tex
+INPUT 3.tex
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
+INPUT ./Code/3/Figure_UCRL2_UCRL2_L_cumulative_regret_comparison.png
+INPUT ./Code/3/Figure_UCRL2_UCRL2_L_cumulative_regret_comparison.png
+INPUT ./Code/3/Figure_UCRL2_UCRL2_L_cumulative_regret_comparison.png
+INPUT ./Code/3/Figure_UCRL2_UCRL2_L_cumulative_regret_comparison.png
+INPUT ./Code/3/Figure_UCRL2_UCRL2_L_cumulative_regret_comparison.png
+INPUT ./Code/3/Figure_UCRL2_UCRL2_L_gain_comparison.png
+INPUT ./Code/3/Figure_UCRL2_UCRL2_L_gain_comparison.png
+INPUT ./Code/3/Figure_UCRL2_UCRL2_L_gain_comparison.png
+INPUT ./Code/3/Figure_UCRL2_UCRL2_L_gain_comparison.png
+INPUT ./Code/3/Figure_UCRL2_UCRL2_L_gain_comparison.png
 INPUT OReL HA8 Davide Marchi.aux
 INPUT ./OReL HA8 Davide Marchi.out
 INPUT ./OReL HA8 Davide Marchi.out
@@ -226,6 +240,7 @@ INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
+INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb
