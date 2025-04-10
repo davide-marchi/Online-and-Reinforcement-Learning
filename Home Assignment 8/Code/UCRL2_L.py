@@ -185,6 +185,7 @@ class UCRL2_L:
 		# The current policy (updated at each episode).
 		self.policy = np.zeros((self.nS,), dtype=int)
 
+		self.ep_count = 0  # Initialize episode counter
 
 	# Auxiliary function to update N the current state-action count.
 	def updateN(self):
@@ -256,6 +257,9 @@ class UCRL2_L:
 
 	# To start a new episode (init var, computes estmates and run EVI).
 	def new_episode(self):
+
+		self.ep_count += 1  # Increment episode counter at the start of a new episode
+
 		self.updateN() # We update the counter Nk.
 		self.vk = np.zeros((self.nS, self.nA))
 
@@ -374,7 +378,7 @@ def plot(data, names, y_label = "Regret", exp_name = "cumulativeRegret"):
 	name = ""
 	for n  in names:
 		name += n + "_"
-	pl.savefig("Figure_" + name + exp_name + '.pdf')
+	pl.savefig("Figure_" + name + exp_name)
 
 # Test function, plotting the cumulative regret.
 def run():
@@ -419,3 +423,213 @@ def run():
 
 
 run()
+
+# New class: UCRL2 (original confidence sets per Jaksch et al. 2010)
+class UCRL2:
+    def __init__(self, nS, nA, gamma, epsilon=0.01, delta=0.05):
+        self.nS = nS
+        self.nA = nA
+        self.gamma = gamma
+        self.delta = delta
+        self.epsilon = epsilon
+        self.s = None
+        # Counters: number of visits and counts for (s,a,s')
+        self.Nk = np.zeros((nS, nA), dtype=int)
+        self.Nsas = np.zeros((nS, nA, nS), dtype=int)
+        self.Rsa = np.zeros((nS, nA))
+        self.vk = np.zeros((nS, nA))
+        # Estimates for the dynamics and rewards
+        self.hatP = np.zeros((nS, nA, nS))
+        self.hatR = np.zeros((nS, nA))
+        # Confidence intervals for rewards and transitions
+        self.confR = np.zeros((nS, nA))
+        self.confP = np.zeros((nS, nA))
+        # Optimistic policy over states
+        self.policy = np.zeros(nS, dtype=int)
+        # Counter for episodes
+        self.ep_count = 0
+
+    def updateN(self):
+        for s in range(self.nS):
+            for a in range(self.nA):
+                self.Nk[s, a] += self.vk[s, a]
+
+    # Confidence intervals per Jaksch et al. (2010):
+    # |Rhat - R'| <= sqrt((3.5*log((2*S*A*n)/delta))/n)
+    # ||Phat - P'||₁ <= sqrt((14*S*log((2*A*n)/delta))/n)
+    def confidence(self):
+        for s in range(self.nS):
+            for a in range(self.nA):
+                n = max(1, self.Nk[s, a])
+                self.confR[s, a] = np.sqrt((3.5 * np.log((2 * self.nS * self.nA * n) / self.delta)) / n)
+                self.confP[s, a] = np.sqrt((14 * self.nS * np.log((2 * self.nA * n) / self.delta)) / n)
+
+    def max_proba(self, sorted_indices, s, a):
+        # Optimistically choose a transition model within the UCRL2 confidence set
+        min_val = min(1, self.hatP[s, a, sorted_indices[-1]] + (self.confP[s, a] / 2))
+        max_p = np.zeros(self.nS)
+        if min_val == 1:
+            max_p[sorted_indices[-1]] = 1
+        else:
+            max_p = cp.deepcopy(self.hatP[s, a])
+            max_p[sorted_indices[-1]] += self.confP[s, a] / 2
+            l = 0
+            while sum(max_p) > 1:
+                max_p[sorted_indices[l]] = max(0, 1 - sum(max_p) + max_p[sorted_indices[l]])
+                l += 1
+        return max_p
+
+    def EVI(self, max_iter=200, epsilon=1e-2):
+        niter = 0
+        sorted_indices = np.arange(self.nS)
+        # Small random noise to break ties
+        action_noise = [np.random.random_sample() * 0.1 * min(1e-6, epsilon) for _ in range(self.nA)]
+        policy = np.zeros(self.nS, dtype=int)
+        V0 = np.zeros(self.nS)
+        V1 = np.zeros(self.nS)
+        while True:
+            niter += 1
+            for s in range(self.nS):
+                for a in range(self.nA):
+                    maxp = self.max_proba(sorted_indices, s, a)
+                    temp = min(1, self.hatR[s, a] + self.confR[s, a]) + np.dot(V0, maxp)
+                    if (a == 0) or ((temp + action_noise[a]) > (V1[s] + action_noise[policy[s]])):
+                        V1[s] = temp
+                        policy[s] = a
+            diff = [abs(x - y) for (x, y) in zip(V1, V0)]
+            if (max(diff) - min(diff)) < epsilon:
+                return policy
+            else:
+                V0 = V1
+                V1 = np.zeros(self.nS)
+                sorted_indices = np.argsort(V0)
+            if niter > max_iter:
+                print("No convergence in EVI after", max_iter, "steps!")
+                return policy
+
+    def new_episode(self):
+        self.ep_count += 1
+        self.updateN()
+        self.vk = np.zeros((self.nS, self.nA))
+        # Update empirical estimates based on counts so far
+        for s in range(self.nS):
+            for a in range(self.nA):
+                div = max(1, self.Nk[s, a])
+                self.hatR[s, a] = self.Rsa[s, a] / div
+                for next_s in range(self.nS):
+                    self.hatP[s, a, next_s] = self.Nsas[s, a, next_s] / div
+        self.confidence()
+        self.policy = self.EVI()
+
+    def reset(self, init):
+        self.Nk = np.zeros((self.nS, self.nA), dtype=int)
+        self.Nsas = np.zeros((self.nS, self.nA, self.nS), dtype=int)
+        self.Rsa = np.zeros((self.nS, self.nA))
+        self.vk = np.zeros((self.nS, self.nA))
+        self.hatP = np.zeros((self.nS, self.nA, self.nS))
+        self.hatR = np.zeros((self.nS, self.nA))
+        self.confR = np.zeros((self.nS, self.nA))
+        self.confP = np.zeros((self.nS, self.nA))
+        self.policy = np.zeros(self.nS, dtype=int)
+        self.s = init
+        self.last_action = -1
+        self.ep_count = 0
+        self.new_episode()
+
+    def play(self, state, reward):
+        if self.last_action >= 0:  # Not first move: update counts based on previous (s, a)
+            self.Nsas[self.s, self.last_action, state] += 1
+            self.Rsa[self.s, self.last_action] += reward
+        action = self.policy[state]
+        if self.vk[state, action] > max(1, self.Nk[state, action]):
+            self.new_episode()
+            action = self.policy[state]
+        self.vk[state, action] += 1
+        self.s = state
+        self.last_action = action
+        return action, self.policy
+
+
+# Modified experiment: run both UCRL2 and UCRL2-L on 6-state RiverSwim
+def run_experiment():
+    nS = 6
+    T = int(3.5e5)
+    nb_Replicates = 50
+    epsilon = 0.01
+
+    # Estimate the optimal gain g* via Value Iteration
+    env_for_vi = riverswim(nS)
+    _, _, _, gstar = VI(env_for_vi, 10**6, 1e-6)
+
+    # Initialize containers for regrets, gain curves, and episode counts
+    regret_ucrl2 = []     # For UCRL2
+    regret_ucrl2_l = []   # For UCRL2-L
+    gain_ucrl2 = []
+    gain_ucrl2_l = []
+    episodes_ucrl2 = []
+    episodes_ucrl2_l = []
+
+    for rep in range(nb_Replicates):
+        # ------------------------
+        # UCRL2 experiment (δ = 0.05)
+        env1 = riverswim(nS)
+        env1.reset()
+        agent_ucrl2 = UCRL2(nS, 2, epsilon, delta=0.05)
+        agent_ucrl2.reset(env1.s)
+        cum_regret = [0]
+        rewards = []
+        current_state = env1.s
+        # For UCRL2, initialize reward (the first reward is taken as 0)
+        reward = 0
+        for t in range(T):
+            action, _ = agent_ucrl2.play(current_state, reward)
+            next_state, reward = env1.step(action)
+            cum_regret.append(cum_regret[-1] + gstar - reward)
+            rewards.append(reward)
+            current_state = next_state
+        regret_ucrl2.append(cum_regret)
+        gain_ucrl2.append(np.cumsum(rewards) / np.arange(1, T + 1))
+        episodes_ucrl2.append(agent_ucrl2.ep_count)
+
+        # ------------------------
+        # UCRL2-L experiment (δ = 0.0125)
+        env2 = riverswim(nS)
+        env2.reset()
+        agent_ucrl2_l = UCRL2_L(nS, 2, epsilon, delta=0.0125)
+        agent_ucrl2_l.reset(env2.s)
+        cum_regret_l = [0]
+        rewards_l = []
+        current_state_l = env2.s
+        reward_l = 0
+        for t in range(T):
+            action, _ = agent_ucrl2_l.play(current_state_l, reward_l)
+            next_state_l, reward_l = env2.step(action)
+            cum_regret_l.append(cum_regret_l[-1] + gstar - reward_l)
+            rewards_l.append(reward_l)
+            current_state_l = next_state_l
+        regret_ucrl2_l.append(cum_regret_l)
+        gain_ucrl2_l.append(np.cumsum(rewards_l) / np.arange(1, T + 1))
+        episodes_ucrl2_l.append(agent_ucrl2_l.ep_count)
+
+        print(f"Replicate {rep + 1}/{nb_Replicates} completed.")
+
+    # Plot cumulative regret (using the provided 'plot' function)
+    plot([regret_ucrl2, regret_ucrl2_l],
+         ["UCRL2", "UCRL2_L"],
+         y_label="Cumulative Regret",
+         exp_name="cumulative_regret_comparison")
+    
+    # Plot average gain curves
+    plot([gain_ucrl2, gain_ucrl2_l],
+         ["UCRL2", "UCRL2_L"],
+         y_label="Empirical Average Gain",
+         exp_name="gain_comparison")
+
+    # Report average number of episodes
+    print("Average number of episodes initiated:")
+    print("UCRL2:", np.mean(episodes_ucrl2))
+    print("UCRL2_L:", np.mean(episodes_ucrl2_l))
+
+
+# Run the experiment
+run_experiment()
