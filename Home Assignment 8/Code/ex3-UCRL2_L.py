@@ -346,39 +346,43 @@ class UCRL2_L:
 
 
 # Plotting function.
-def plot(data, names, y_label = "Regret", exp_name = "cumulativeRegret"):
-	timeHorizon = len(data[0][0])
-	colors= ['black', 'blue', 'purple','cyan','yellow', 'orange', 'red']
-	nbFigure = pl.gcf().number+1
+def plot(data, names, y_label="Regret", exp_name="cumulativeRegret", horizontal_line=None):
+    # Determine the time horizon based on the first experiment's data
+    timeHorizon = len(data[0][0])
+    colors = ['black', 'blue', 'purple', 'cyan', 'yellow', 'orange', 'red']
+    nbFigure = pl.gcf().number + 1
 
-	# Average the results and plot them.
-	avg_data = []
-	pl.figure(nbFigure)
-	for i in range(len(data)):
-		avg_data.append(np.mean(data[i], axis=0))
-		pl.plot(avg_data[i], label=names[i], color=colors[i%len(colors)])
+    # Calculate average data for each experiment and plot it
+    avg_data = []
+    pl.figure(nbFigure)
+    for i in range(len(data)):
+        avg_data.append(np.mean(data[i], axis=0))
+        pl.plot(avg_data[i], label=names[i], color=colors[i % len(colors)])
 
-	# Compute standard deviantion and plot the associated error bars.
-	step=(timeHorizon//10)
-	for i in range(len(data)):
-		std_data = 1.96 * np.std(data[i], axis=0) / np.sqrt(len(data[i]))
-		pl.errorbar(np.arange(0,timeHorizon,step), avg_data[i][0:timeHorizon:step], std_data[0:timeHorizon:step], color=colors[i%len(colors)], linestyle='None', capsize=10)
-	
-	# Label and format the plot.
-	pl.legend()
-	pl.xlabel("Time steps", fontsize=13, fontname = "Arial")
-	pl.ylabel(y_label, fontsize=13, fontname = "Arial")
-	pl.ticklabel_format(axis='both', useMathText = True, useOffset = True, style='sci', scilimits=(0, 0))
-
-	# Uncomment below to get log scale y-axis.
-	#pl.yscale('log')
-	#pl.ylim(1)
-
-	# Save the plot.
-	name = ""
-	for n  in names:
-		name += n + "_"
-	pl.savefig("Home Assignment 8/Code/3/Figure_" + name + exp_name)
+    # Compute standard deviation and add error bars
+    step = timeHorizon // 10
+    for i in range(len(data)):
+        std_data = 1.96 * np.std(data[i], axis=0) / np.sqrt(len(data[i]))
+        pl.errorbar(np.arange(0, timeHorizon, step),
+                    avg_data[i][0:timeHorizon:step],
+                    std_data[0:timeHorizon:step],
+                    color=colors[i % len(colors)], linestyle='None', capsize=10)
+    
+    # If a horizontal line value is provided, draw it
+    if horizontal_line is not None:
+        pl.axhline(y=horizontal_line, color='red', linestyle='--', label='Optimal Gain')
+    
+    # Label and format the plot
+    pl.legend()
+    pl.xlabel("Time steps", fontsize=13, fontname="Arial")
+    pl.ylabel(y_label, fontsize=13, fontname="Arial")
+    pl.ticklabel_format(axis='both', useMathText=True, useOffset=True, style='sci', scilimits=(0, 0))
+    
+    # Save the plot using a constructed file name
+    file_name = ""
+    for n in names:
+        file_name += n + "_"
+    pl.savefig("Home Assignment 8/Code/3/Figure_" + file_name + exp_name)
 
 # Test function, plotting the cumulative regret.
 def run():
@@ -619,11 +623,12 @@ def run_experiment():
          y_label="Cumulative Regret",
          exp_name="cumulative_regret_comparison")
     
-    # Plot average gain curves
+    # Plot average gain curves, adding a horizontal line for the optimal gain (gstar)
     plot([gain_ucrl2, gain_ucrl2_l],
-         ["UCRL2", "UCRL2_L"],
-         y_label="Empirical Average Gain",
-         exp_name="gain_comparison")
+		["UCRL2", "UCRL2_L"],
+		y_label="Empirical Average Gain",
+		exp_name="gain_comparison",
+		horizontal_line=gstar)
 
     # Report average number of episodes
     print("Average number of episodes initiated:")
