@@ -378,7 +378,7 @@ def plot(data, names, y_label = "Regret", exp_name = "cumulativeRegret"):
 	name = ""
 	for n  in names:
 		name += n + "_"
-	pl.savefig("Figure_" + name + exp_name)
+	pl.savefig("Home Assignment 8/Code/3/Figure_" + name + exp_name)
 
 # Test function, plotting the cumulative regret.
 def run():
