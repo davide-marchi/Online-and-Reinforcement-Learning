@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  11 APR 2025 18:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.8)  11 APR 2025 19:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -421,10 +421,10 @@ Overfull \hbox (14.65526pt too wide) in paragraph at lines 7--7
 [9]
 
 [10]
-<Code/4/Figure_UCRL2_L_supp_cumulative_regret_supp.png, id=159, 462.528pt x 346.896pt>
+<Code/4/Figure_UCRL2_L_supp_cumulative_regret_supp.png, id=156, 462.528pt x 346.896pt>
 File: Code/4/Figure_UCRL2_L_supp_cumulative_regret_supp.png Graphic file (type png)
 <use Code/4/Figure_UCRL2_L_supp_cumulative_regret_supp.png>
-Package pdftex.def Info: Code/4/Figure_UCRL2_L_supp_cumulative_regret_supp.png  used on input line 86.
+Package pdftex.def Info: Code/4/Figure_UCRL2_L_supp_cumulative_regret_supp.png  used on input line 88.
 (pdftex.def)             Requested size: 368.57838pt x 276.44794pt.
 
 
@@ -432,7 +432,7 @@ Package pdftex.def Info: Code/4/Figure_UCRL2_L_supp_cumulative_regret_supp.png  
 <Code/4/Figure_UCRL2_L_cumulative_regret.png, id=170, 462.528pt x 346.896pt>
 File: Code/4/Figure_UCRL2_L_cumulative_regret.png Graphic file (type png)
 <use Code/4/Figure_UCRL2_L_cumulative_regret.png>
-Package pdftex.def Info: Code/4/Figure_UCRL2_L_cumulative_regret.png  used on input line 99.
+Package pdftex.def Info: Code/4/Figure_UCRL2_L_cumulative_regret.png  used on input line 101.
 (pdftex.def)             Requested size: 368.57838pt x 276.44794pt.
 )
 No file "OReL HA8 Davide Marchi".bbl.
@@ -447,15 +447,15 @@ Package rerunfilecheck Info: File `"OReL HA8 Davide Marchi".out' has not changed
 (rerunfilecheck)             Checksum: C9444409FA8805DC985CDEA78FD10A11;1106.
  ) 
 Here is how much of TeX's memory you used:
- 13129 strings out of 473201
- 200341 string characters out of 5720300
- 1453166 words of memory out of 5000000
- 36113 multiletter control sequences out of 15000+600000
+ 13136 strings out of 473201
+ 200406 string characters out of 5720300
+ 1452166 words of memory out of 5000000
+ 36120 multiletter control sequences out of 15000+600000
  568790 words of font info for 75 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 79i,14n,93p,801b,1310s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 79i,14n,93p,801b,1991s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on "OReL HA8 Davide Marchi.pdf" (12 pages, 294663 bytes).
+Output written on "OReL HA8 Davide Marchi.pdf" (12 pages, 294996 bytes).
 PDF statistics:
  267 PDF objects out of 1000 (max. 8388607)
  210 compressed objects within 3 object streams

@@ -38,39 +38,41 @@ This modification is straightforward to implement by forcing the empirical estim
   \item \emph{Support Enforcement}: Immediately zero out probabilities for any state not in $K_{s,a}$ after updating the empirical model.
 \end{itemize}
 
-\begin{lstlisting}[language=Python]
+Below is a Python code snippet that shows the main changes implemented for the support-based variant:
+
+\begin{lstlisting}
+import numpy as np
+from math import sqrt, log
+
 class UCRL2_L_supp(UCRL2_L):
     def __init__(self, nS, nA, gamma, known_support, epsilon=0.01, delta=0.05):
         super().__init__(nS, nA, gamma, epsilon, delta)
-        self.known_support = known_support
+        self.known_support = known_support  # known_support is a list of lists: known_support[s][a] gives allowed states
 
     def confidence(self):
-        # Here we use |K_{s,a}| instead of |S|
         d = self.delta / (self.nS * self.nA)
         for s in range(self.nS):
             for a in range(self.nA):
-                n = max(1, self.Nk[s,a])
+                n = max(1, self.Nk[s, a])
+                # Use the size of the known support for state-action (s,a)
                 k = len(self.known_support[s][a])
-                factor = (2**k - 2) if (2**k - 2) > 0 else 1
-                self.confR[s,a] = sqrt(((1 + 1/n) * log(2 * sqrt(n+1) / d)) / (2*n))
-                self.confP[s,a] = sqrt((2*(1 + 1/n) * log(sqrt(n+1)*factor / d)) / n)
+                factor = (2 ** k - 2) if (2 ** k - 2) > 0 else 1
+                self.confR[s, a] = sqrt(((1 + 1/n) * log(2 * np.sqrt(n + 1) / d)) / (2 * n))
+                self.confP[s, a] = sqrt((2 * (1 + 1/n) * log(np.sqrt(n + 1) * factor / d)) / n)
 
     def new_episode(self):
-        # After updating counts, force the estimated P to be zero outside known support
         self.updateN()
         self.vk = np.zeros((self.nS, self.nA))
         for s in range(self.nS):
             for a in range(self.nA):
-                div = max(1, self.Nk[s,a])
-                self.hatR[s,a] = self.Rsa[s,a]/div
+                div = max(1, self.Nk[s, a])
+                self.hatR[s, a] = self.Rsa[s, a] / div
                 for next_s in range(self.nS):
-                    # Empirical probability from counts
-                    self.hatP[s,a,next_s] = self.Nsas[s,a,next_s]/div
-                # Enforce K_{s,a}
+                    self.hatP[s, a, next_s] = self.Nsas[s, a, next_s] / div
+                # Enforce prior knowledge: set estimated probability to 0 outside K_{s,a}
                 for next_s in range(self.nS):
                     if next_s not in self.known_support[s][a]:
-                        self.hatP[s,a,next_s] = 0.0
-        
+                        self.hatP[s, a, next_s] = 0.0
         self.confidence()
         self.policy = self.EVI_supp()
 \end{lstlisting}
