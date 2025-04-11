@@ -411,7 +411,7 @@ class UCRL2_L_supp(UCRL2_L):
 		self.policy = self.EVI_supp()
 
 	# Modified Extended Value Iteration that will use our new max_proba_supp function.
-	def EVI_supp(self, max_iter=2*10**2, epsilon=1e-2):
+	def EVI_supp(self, max_iter=2*10**3, epsilon=1e-2):
 		niter = 0
 		sorted_indices = np.arange(self.nS)
 		action_noise = [(np.random.random_sample() * 0.1 * min(1e-6, epsilon)) for _ in range(self.nA)]
