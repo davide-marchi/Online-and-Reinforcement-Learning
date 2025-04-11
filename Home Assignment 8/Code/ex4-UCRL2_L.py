@@ -473,8 +473,8 @@ def run():
 	delta = 0.05
 
 	# Set the time horizon:
-	T = 2*10**4
-	nb_Replicates = 100
+	T = int(4e5)
+	nb_Replicates = 40
 
 	# Set the learning agents:
 	UCRL2L = UCRL2_L(nS, 2, epsilon, delta)
