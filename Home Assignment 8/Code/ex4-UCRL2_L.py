@@ -374,7 +374,95 @@ def plot(data, names, y_label = "Regret", exp_name = "cumulativeRegret"):
 	name = ""
 	for n  in names:
 		name += n + "_"
-	pl.savefig("Figure_" + name + exp_name + '.pdf')
+	pl.savefig("Home Assignment 8/Code/4/Figure_" + name + exp_name)
+
+class UCRL2_L_supp(UCRL2_L):
+	def __init__(self, nS, nA, gamma, known_support, epsilon=0.01, delta=0.05):
+		super().__init__(nS, nA, gamma, epsilon, delta) # known_support is assumed to be a two-dimensional list with known_support[s][a] self.known_support = known_support
+		self.known_support = known_support
+
+	# Override the confidence method to use the size of the allowed support
+	def confidence(self):
+		d = self.delta / (self.nS * self.nA)
+		for s in range(self.nS):
+			for a in range(self.nA):
+				n = max(1, self.Nk[s, a])
+				# Use |K_{s,a}| instead of the full state space
+				k = len(self.known_support[s][a])
+				factor = (2 ** k - 2) if (2 ** k - 2) > 0 else 1
+				self.confR[s, a] = np.sqrt(((1 + 1 / n) * np.log(2 * np.sqrt(n + 1) / d)) / (2 * n))
+				self.confP[s, a] = np.sqrt((2 * (1 + 1 / n) * np.log(np.sqrt(n + 1) * factor / d)) / n)
+
+	# Override new_episode to force hatP to respect the known support set
+	def new_episode(self):
+		self.updateN()
+		self.vk = np.zeros((self.nS, self.nA))
+		for s in range(self.nS):
+			for a in range(self.nA):
+				div = max(1, self.Nk[s, a])
+				self.hatR[s, a] = self.Rsa[s, a] / div
+				for next_s in range(self.nS):
+					self.hatP[s, a, next_s] = self.Nsas[s, a, next_s] / div
+				# Enforce the prior knowledge: set estimated probability to 0 outside known support
+				for next_s in range(self.nS):
+					if next_s not in self.known_support[s][a]:
+						self.hatP[s, a, next_s] = 0
+		self.confidence()
+		self.policy = self.EVI_supp()
+
+	# Modified Extended Value Iteration that will use our new max_proba_supp function.
+	def EVI_supp(self, max_iter=2*10**2, epsilon=1e-2):
+		niter = 0
+		sorted_indices = np.arange(self.nS)
+		action_noise = [(np.random.random_sample() * 0.1 * min(1e-6, epsilon)) for _ in range(self.nA)]
+		policy = np.zeros(self.nS, dtype=int)
+		V0 = np.zeros(self.nS)
+		V1 = np.zeros(self.nS)
+		while True:
+			niter += 1
+			for s in range(self.nS):
+				for a in range(self.nA):
+					# Compute the optimistic probability vector restricted to allowed states
+					maxp = self.max_proba_supp(sorted_indices, s, a)
+					temp = min(1, self.hatR[s, a] + self.confR[s, a]) + sum(V0[i] * maxp[i] for i in range(self.nS))
+					if (a == 0) or ((temp + action_noise[a]) > (V1[s] + action_noise[policy[s]])):
+						V1[s] = temp
+						policy[s] = a
+			diff = [abs(x - y) for x, y in zip(V1, V0)]
+			if (max(diff) - min(diff)) < epsilon:
+				return policy
+			else:
+				V0 = V1.copy()
+				V1 = np.zeros(self.nS)
+				sorted_indices = np.argsort(V0)
+			if niter > max_iter:
+				print("No convergence in EVI_supp after", max_iter, "steps!")
+				return policy
+
+	# Modified max_proba that restricts optimization to the allowed support set
+	def max_proba_supp(self, sorted_indices, s, a):
+		# Restrict sorted_indices to those states in the known support for (s,a)
+		allowed = [x for x in sorted_indices if x in self.known_support[s][a]]
+		if not allowed:
+			return np.zeros(self.nS)
+		min1 = min(1, self.hatP[s, a, allowed[-1]] + (self.confP[s, a] / 2))
+		max_p = np.zeros(self.nS)
+		if min1 == 1:
+			max_p[allowed[-1]] = 1
+		else:
+			max_p = cp.deepcopy(self.hatP[s, a])
+			# Force probabilities outside allowed set to be zero
+			for x in range(self.nS):
+				if x not in self.known_support[s][a]:
+					max_p[x] = 0
+			max_p[allowed[-1]] += self.confP[s, a] / 2
+			l = 0
+			while max_p.sum() > 1 and l < len(allowed):
+				idx = allowed[l]
+				max_p[idx] = max(0, 1 - max_p.sum() + max_p[idx])
+				l += 1
+		return max_p
+
 
 # Test function, plotting the cumulative regret.
 def run():
@@ -417,5 +505,39 @@ def run():
 	plot([cumregret_UCRL2L], ["UCRL2_L"], y_label = "Cumulative Regret", exp_name = "cumulative_regret")
 	print('Done!')
 
+def run_supp(): # Settings for exercise 4 (6-state ergodic RiverSwim, T = 4e5, δ = 0.05, 40 runs)
+	nS = 6
+	env = riverswim(nS)
+	epsilon = 0.01
+	delta = 0.05
+	T = int(4e5)
+	nb_Replicates = 40
+
+	# Initialize UCRL2_L_supp with the environment's support information (env.support)
+	UCRL2L_supp = UCRL2_L_supp(nS, 2, epsilon, env.support, delta=delta)
+	cumregret_UCRL2L_supp = [[0] for _ in range(nb_Replicates)]
+
+	print("Estimating the optimal gain...")
+	_, _, _, gstar = VI(env, 10**6, 1e-6)
+
+	print("Running experiments for UCRL2_L_supp...")
+	for i in range(nb_Replicates):
+		env.reset()
+		UCRL2L_supp.reset(env.s)
+		reward = 0
+		new_s = env.s
+		for t in range(T):
+			action, _ = UCRL2L_supp.play(new_s, reward)
+			new_s, reward = env.step(action)
+			cumregret_UCRL2L_supp[i].append(cumregret_UCRL2L_supp[i][-1] + gstar - reward)
+		print("|" + "#" * int(i / ((nb_Replicates - 1) / 33)) +
+			" " * (33 - int(i / ((nb_Replicates - 1) / 33))) + "|", end="\r")
+	print("\nPlotting...")
+	plot([cumregret_UCRL2L_supp], ["UCRL2_L_supp"],
+		y_label="Cumulative Regret", exp_name="cumulative_regret_supp")
+	print("Done!")
+
 
 run()
+
+run_supp()
